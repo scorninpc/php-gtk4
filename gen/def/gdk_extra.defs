@@ -1,0 +1,69 @@
+;; Stuff from gtk headers that really belongs in Gdk:
+
+(define-function gtk_drag_finish
+  (c-name "gtk_drag_finish")
+  (return-type "none")
+  (parameters
+    '("GdkDragContext*" "context")
+    '("gboolean" "success")
+    '("guint32" "time")
+  )
+)
+
+(define-function gtk_drag_get_source_widget
+  (c-name "gtk_drag_get_source_widget")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GdkDragContext*" "context")
+  )
+)
+
+(define-function gtk_drag_set_icon_widget
+  (c-name "gtk_drag_set_icon_widget")
+  (return-type "none")
+  (parameters
+    '("GdkDragContext*" "context")
+    '("GtkWidget*" "widget")
+    '("gint" "hot_x")
+    '("gint" "hot_y")
+  )
+)
+
+(define-function gtk_drag_set_icon_pixbuf
+  (c-name "gtk_drag_set_icon_pixbuf")
+  (return-type "none")
+  (parameters
+    '("GdkDragContext*" "context")
+    '("GdkPixbuf*" "pixbuf")
+    '("gint" "hot_x")
+    '("gint" "hot_y")
+  )
+)
+
+(define-function gtk_drag_set_icon_name
+  (c-name "gtk_drag_set_icon_name")
+  (return-type "none")
+  (parameters
+    '("GdkDragContext*" "context")
+    '("const-gchar*" "icon_name")
+    '("gint" "hot_x")
+    '("gint" "hot_y")
+  )
+)
+
+(define-function gtk_drag_set_icon_default
+  (c-name "gtk_drag_set_icon_default")
+  (return-type "none")
+  (parameters
+    '("GdkDragContext*" "context")
+  )
+)
+
+(define-function gtk_drag_set_icon_surface
+  (c-name "gtk_drag_set_icon_surface")
+  (return-type "none")
+  (parameters
+    '("GdkDragContext*" "context")
+    '("cairo_surface_t*" "surface")
+  )
+)
