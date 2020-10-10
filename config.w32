@@ -1,0 +1,7 @@
+ARG_ENABLE('gtk4', 'gtk4 support', 'no');
+
+if (PHP_GTK4 != 'no') {
+	AC_DEFINE('HAVE_GTK4', 1, 'gtk4 support enabled');
+
+	EXTENSION('gtk4', 'gtk4.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+}
