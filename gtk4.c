@@ -39,9 +39,13 @@ static PHP_MINIT_FUNCTION(gtk4)
     INIT_CLASS_ENTRY(tmp_gtk_ce, "Gtk", gtk_functions);
     gtk4_gtk_ce = zend_register_internal_class(&tmp_gtk_ce);
 
+    zend_class_entry tmp_gtk_widget_ce;
+    INIT_CLASS_ENTRY(tmp_gtk_widget_ce, "Gtk\\Widget", gtk_widget_functions);
+    gtk4_gtk_widget_ce = zend_register_internal_class_ex(&tmp_gtk_widget_ce, gtk4_g_gobject_ce);	// extends GObject
+
     zend_class_entry tmp_gtk_window_ce;
     INIT_CLASS_ENTRY(tmp_gtk_window_ce, "Gtk\\Window", gtk_window_functions);
-    gtk4_gtk_window_ce = zend_register_internal_class_ex(&tmp_gtk_window_ce, gtk4_g_gobject_ce);	// extends GObject
+    gtk4_gtk_window_ce = zend_register_internal_class_ex(&tmp_gtk_window_ce, gtk4_gtk_widget_ce);	// extends Widget
 	
 	return SUCCESS;
 }

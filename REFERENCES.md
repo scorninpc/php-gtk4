@@ -18,3 +18,9 @@ https://stackoverflow.com/questions/37739699/php-extension-working-with-class-ob
 	Classes
 	INIT_NS_CLASS_ENTRY
 	zend_update_property
+
+https://github.com/motecshine/php-ext-example/blob/1a74d6cb9b8cc02c6647c60cbb309f3df0b125c6/closure/closure.c#L16
+	Z_PARAM_VARIADIC
+	zend_call_function
+	zend_unwrap_reference
+	ZVAL_COPY_VALUE

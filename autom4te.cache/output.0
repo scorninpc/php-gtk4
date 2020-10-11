@@ -4104,6 +4104,7 @@ $as_echo "@%:@define HAVE_GTK4 1" >>confdefs.h
   for ac_src in gtk4.c \
       src/G/GObject.c \
       src/Gtk/Gtk.c \
+      src/Gtk/GtkWidget.c \
       src/Gtk/GtkWindow.c; do
 
       IFS=.
@@ -4156,6 +4157,7 @@ EOF
   for ac_src in gtk4.c \
       src/G/GObject.c \
       src/Gtk/Gtk.c \
+      src/Gtk/GtkWidget.c \
       src/Gtk/GtkWindow.c; do
 
       IFS=.
@@ -4240,6 +4242,7 @@ _ACEOF
   for ac_src in gtk4.c \
       src/G/GObject.c \
       src/Gtk/Gtk.c \
+      src/Gtk/GtkWidget.c \
       src/Gtk/GtkWindow.c; do
 
       IFS=.
@@ -4289,6 +4292,7 @@ EOF
   for ac_src in gtk4.c \
       src/G/GObject.c \
       src/Gtk/Gtk.c \
+      src/Gtk/GtkWidget.c \
       src/Gtk/GtkWindow.c; do
 
       IFS=.

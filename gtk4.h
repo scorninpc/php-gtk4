@@ -3,6 +3,7 @@
 
 	#include "src/G/GObject.h"
 	#include "src/Gtk/Gtk.h"
+	#include "src/Gtk/GtkWidget.h"
 	#include "src/Gtk/GtkWindow.h"
 
 #endif

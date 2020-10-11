@@ -23,5 +23,6 @@ if test "$PHP_GTK4" != "no"; then
   PHP_NEW_EXTENSION(gtk4, gtk4.c \
       src/G/GObject.c \
       src/Gtk/Gtk.c \
+      src/Gtk/GtkWidget.c \
       src/Gtk/GtkWindow.c, $ext_shared)
 fi
