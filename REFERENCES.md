@@ -24,3 +24,9 @@ https://github.com/motecshine/php-ext-example/blob/1a74d6cb9b8cc02c6647c60cbb309
 	zend_call_function
 	zend_unwrap_reference
 	ZVAL_COPY_VALUE
+
+https://github.com/haowei4032/logger-src/blob/46e5d48a0f6dd289df8ada74f889c472c85991a2/logger.c#L94
+https://www.php.net/manual/pt_BR/internals2.variables.arrays.php
+	add_next_index_string
+	array_init
+	add_next_index_string

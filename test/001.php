@@ -29,16 +29,24 @@ var_dump($obj1->test());*/
 // Working with callbacks
 function callback_test($a=NULL, $b=NULL, $c=NULL, $d=NULL)
 {
-	echo "param \$a = " . $a . "\n";
-	echo "param \$b = " . $b . "\n";
-	echo "param \$c = " . $c . "\n";
-	echo "param \$d = " . $d . "\n";
+	echo "\n-- param \$a\n";
+	var_dump($a);
+
+	echo "\n-- param \$b\n";
+	var_dump($b);
+
+	echo "\n-- param \$c\n";
+	var_dump($c);
+
+	echo "\n-- param \$d\n";
+	var_dump($d);
+
 
 	\Gtk::main_quit();
 }
 
 $obj = new \Gtk\Window();
-$obj->connect("destroy", "callback_test", "param a", "param b", "param c", "param d");
+$obj->connect("destroy", "callback_test", "1", "2", 3, [1,2,3]);
 
 $obj->show_all();
 \Gtk::main();
