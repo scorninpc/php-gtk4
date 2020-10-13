@@ -27,7 +27,7 @@ var_dump($obj1->test());*/
 
 
 // Working with callbacks
-function callback_test($a=NULL, $b=NULL, $c=NULL, $d=NULL)
+function callback_test($a=NULL, $b=NULL, $c=NULL, $d=NULL, $e=NULL)
 {
 	echo "\n-- param \$a\n";
 	var_dump($a);
@@ -41,6 +41,11 @@ function callback_test($a=NULL, $b=NULL, $c=NULL, $d=NULL)
 	echo "\n-- param \$d\n";
 	var_dump($d);
 
+	echo "\n-- param \$e\n";
+	var_dump($e);
+
+	echo "\n-- GtkWindow->test()\n";
+	var_dump($a->test());
 
 	\Gtk::main_quit();
 }

@@ -18,7 +18,32 @@
 
 	// ----------------
 	// Callback signal info
-	struct st_callback;
+	typedef struct {
+		// Php::Value callback_name;
+		// Php::Array callback_params;
+		// Php::Object self_widget;
+		// Php::Parameters parameters;
+
+		// Store function name
+		zend_fcall_info fci;
+		zend_fcall_info_cache fcc;
+
+		zval *extra_params;
+		int extra_params_n;
+
+		zval *self;
+		gtk4_gobject_object *self_object;
+
+		// Store signal infos
+		guint signal_id;
+		const gchar *signal_name;
+		GType itype;
+		GSignalFlags signal_flags;
+		GType return_type;
+		guint n_params;
+		const GType *param_types;
+	} st_callback;
+
 
 	// ----------------
 	zend_object *g_object_create_object(zend_class_entry *class_type);

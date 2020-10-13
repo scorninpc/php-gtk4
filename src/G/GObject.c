@@ -2,30 +2,6 @@
 #include "GObject.h"
 
 
-struct st_callback {
-    // Php::Value callback_name;
-    // Php::Array callback_params;
-    // Php::Object self_widget;
-    // Php::Parameters parameters;
-
-	// Store function name
-	zend_fcall_info fci;
-	zend_fcall_info_cache fcc;
-
-	zval *extra_params;
-	int extra_params_n;
-
-	// Store signal infos
-    guint signal_id;
-    const gchar *signal_name;
-    GType itype;
-    GSignalFlags signal_flags;
-    GType return_type;
-    guint n_params;
-    const GType *param_types;
-};
-
-
 /*
 	
 	========================================================================== */
@@ -81,6 +57,7 @@ PHP_METHOD(GObject, test)
 
 	zval *object = getThis();
 	gtk4_gobject_object *obj;
+
 	obj = (gtk4_gobject_object*)Z_OBJ_P(object);
 
 	/*zval *item, *obj, rv;
@@ -92,8 +69,9 @@ PHP_METHOD(GObject, test)
 
 	item = zend_read_property(ce, obj, "prop_gpointer", sizeof("prop_gpointer") - 1, 0, &rv);
 */
-	
+
 	RETURN_LONG(obj->test);
+	// RETURN_ZVAL(object, 1, 0);
 }
 
 /*
@@ -110,8 +88,7 @@ PHP_METHOD(GObject, connect)
 
 	// ----------------
 	// Create callback info object
-	struct st_callback *callback_object = (struct st_callback *)malloc(sizeof(struct st_callback));
-	memset(callback_object, 0, sizeof(struct st_callback));
+    st_callback *callback_object = malloc(sizeof(st_callback));
 
 	// ----------------
 	ZEND_PARSE_PARAMETERS_START(2, -1)
@@ -129,20 +106,21 @@ PHP_METHOD(GObject, connect)
 	gtk4_gobject_object *obj;
 	obj = (gtk4_gobject_object*)Z_OBJ_P(object);
 
-	// php_printf("%d", fci.param_count);
 	callback_object->fci = fci;
 	callback_object->fcc = fcc;
+	callback_object->self = object;
+	callback_object->self_object = obj;
 
 	// ----------------
 	// Retriave and store signal query parameters , to be used on callback
 	GSignalQuery signal_info;
 
 	if(G_IS_OBJECT(obj->gtk4_gpointer)) {
-		g_signal_query(g_signal_lookup (signal_name, G_OBJECT_TYPE (obj->gtk4_gpointer)), &signal_info);
+		g_signal_query(g_signal_lookup(signal_name, G_OBJECT_TYPE (obj->gtk4_gpointer)), &signal_info);
 	}
 
 	if(G_IS_OBJECT_CLASS(obj->gtk4_gpointer)) {
-		g_signal_query(g_signal_lookup (signal_name, G_OBJECT_CLASS_TYPE (obj->gtk4_gpointer)), &signal_info);
+		g_signal_query(g_signal_lookup(signal_name, G_OBJECT_CLASS_TYPE (obj->gtk4_gpointer)), &signal_info);
 	}
 
 	callback_object->signal_id = signal_info.signal_id;
@@ -152,12 +130,12 @@ PHP_METHOD(GObject, connect)
 	callback_object->return_type = signal_info.return_type;
 	callback_object->n_params = signal_info.n_params;
 	callback_object->param_types = signal_info.param_types;
-
+	
 	// ----------------
 	// Do the connection
 	GClosure  *closure;
-	closure = g_cclosure_new_swap (G_CALLBACK (connect_callback), callback_object, NULL);
-	int ret = g_signal_connect_closure (obj->gtk4_gpointer, signal_name, closure, after);
+	closure = g_cclosure_new_swap(G_CALLBACK (connect_callback), callback_object, NULL);
+	int ret = g_signal_connect_closure(obj->gtk4_gpointer, signal_name, closure, after);
 
 	// Return handler id
 	RETURN_LONG(ret);
@@ -169,39 +147,76 @@ PHP_METHOD(GObject, connect)
 bool connect_callback(gpointer user_data, ...)
 {
 	// Return to st_callback
-	struct st_callback *callback_object = (struct st_callback *) user_data;
+	st_callback *callback_object = (st_callback *)user_data;
+
+	int params_n = callback_object->extra_params_n + 1;
+
+	// ----------------
+	zval retval;
+	callback_object->fci.retval = &retval;
+	callback_object->fci.param_count = params_n;
+	callback_object->fci.params = safe_emalloc(sizeof(zval *), params_n, 0);
+
+	// ZVAL_COPY_VALUE(&callback_object->fci.params[0], callback_object->self);
+	callback_object->fci.params[0] = *callback_object->self;
+
+	for(int i=0; i<callback_object->extra_params_n; i++) {
+		callback_object->fci.params[i+1] = callback_object->extra_params[i];
+	}
+
+	// ----------------
+
+
+
+
+
+	// ----------------
+	// Call
+	if(zend_call_function(&callback_object->fci, &callback_object->fcc) == FAILURE) {
+		php_error_docref(NULL, E_CORE_ERROR, "Cannot call");
+	}
+
+
+
+/*
+	int params_n = 3;//callback_object->extra_params_n + 1;
 
 	// ----------------
 	// Populate fci for call
-	zend_fcall_info fci;
+	zend_fcall_info fci = {0};
 	fci = callback_object->fci;
 	
 	zval retval;
 	fci.retval = &retval;
 
+	fci.param_count = params_n;
+
 	// alloc parameters
-	fci.params = safe_emalloc(sizeof(zval *), callback_object->extra_params_n, 0);
+	fci.params = safe_emalloc(sizeof(zval *), params_n, 0);
+	// fci.params = emalloc(fci.param_count * sizeof *fci.params);
+    // memset(callback_object, 0, sizeof(zval));
+
+	// self
+	// zval *self = callback_object->self;
+	// ZVAL_COPY_VALUE(&fci.params[0], self);
+	fci.params[0] = callback_object->self;
 
 	// Add extra parameters
-	for(int i=0; i<callback_object->extra_params_n; i++) {
-		fci.params[i] = callback_object->extra_params[i];
-	}
+	/*for(int i=0; i<callback_object->extra_params_n; i++) {
+		fci.params[i+1] = callback_object->extra_params[i];
+	}* /
 
-	// zval p1;
-	// ZVAL_STRING(&p1, "param1");
-	// fci.params[0] = p1;
+	zval p1;
+	ZVAL_STRING(&p1, "param1");
+	// fci.params[1] = p1;
+	ZVAL_COPY_VALUE(&fci.params[1], &p1);
 
-	// zval p2;
-	// ZVAL_STRING(&p2, "param2");
-	// fci.params[1] = p2;
+	zval p2;
+	ZVAL_STRING(&p2, "param2");
+	fci.params[2] = p2;
+	*/
 
-	fci.param_count = callback_object->extra_params_n;
-
-	// ----------------
-	// Call
-	if(zend_call_function(&fci, &callback_object->fcc) == FAILURE) {
-		php_error_docref(NULL, E_CORE_ERROR, "Cannot call");
-	}
+	
 
 	return 1;
 }
