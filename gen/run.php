@@ -36,30 +36,24 @@ class Run
 		// }
 
 
-
+		// Loop all parsed def methods
 		foreach($this->parser->methods as $method) {
 			$object_name = $method->of_object;
 
+			// If class not exists yet, create new template
 			if(!isset($this->classes[$object_name])) {
 				$this->classes[$object_name] = new \Templates\TClass();
 			}
 
-			// if($object_name == "GtkWindow") {
-			// 	echo $method->name . "\n";
-			// }
-
+			// Add method to class template
 			$this->classes[$object_name]->addMethod($method);
 		}
 
-
-
+		// Loop classes
 		foreach($this->classes as $class) {
 
 			if($class->getName() == "GtkWindow") {
-
-				$return = $class->parse();
-				// var_dump($return);
-
+				$class->parse();
 			}
 
 		}
