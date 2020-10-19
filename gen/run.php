@@ -31,13 +31,39 @@ class Run
 		// }
 
 		// foreach($this->parser->constructors as $constructor) {
+		// 	if($constructor->is_constructor_of != "GtkWindow") {
+		// 		continue;
+		// 	}
+
 		// 	echo $constructor->is_constructor_of . "\n";
 		// 	var_dump($constructor);
 		// }
 
+		// var_dump($this->parser->enums);
+		// die();
+
+		// Loop all constructors
+		foreach($this->parser->constructors as $method) {
+			$object_name = $method->is_constructor_of;
+
+			// If class not exists yet, create new template
+			if(!isset($this->classes[$object_name])) {
+				$this->classes[$object_name] = new \Templates\TClass();
+			}
+
+			// Add method to class template
+			$this->classes[$object_name]->addMethod($method);
+		}
 
 		// Loop all parsed def methods
-		foreach($this->parser->methods as $method) {
+		foreach($this->parser->functions as $method) {
+			if(!isset($method->of_object)) {
+
+				if($method->name == "gtk_label_new_with_mnemonic") {
+					var_dump($method);
+				}
+				continue;
+			}
 			$object_name = $method->of_object;
 
 			// If class not exists yet, create new template
@@ -49,10 +75,10 @@ class Run
 			$this->classes[$object_name]->addMethod($method);
 		}
 
-		// Loop classes
+		// Loop classes for parse
 		foreach($this->classes as $class) {
 
-			if($class->getName() == "GtkWindow") {
+			if($class->getName() == "GtkLabel") {
 				$class->parse();
 			}
 

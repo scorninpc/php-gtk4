@@ -13,9 +13,10 @@ class TMethod
 	/**
 	 *
 	 */
-	public function __construct($method)
+	public function __construct($method, $object_name)
 	{
 		$this->_method = $method;
+		$this->of_object = $object_name;
 	}
 
 	public function getC()
@@ -33,13 +34,19 @@ class TMethod
 	 */
 	public function parse()
 	{
-		// if (
-		// 	(strtolower($this->_method->c_name) != "gtk_window_get_title") 
-		// 	&&
-		// 	(strtolower($this->_method->c_name) != "gtk_window_set_title") 
-		// ) {
-		// 	return;
-		// }
+		if (
+			(strtolower($this->_method->c_name) != "gtk_label_new_with_mnemonic") 
+			// &&
+			// (strtolower($this->_method->c_name) != "gtk_window_set_title") 
+		) {
+			return;
+		}
+
+		// Verify if is a constructor
+		$this->method_name = $this->_method->name;
+		if($this->_method->name) {
+			$this->method_name = "__construct";
+		}
 
 		// Parse the params
 		$parsed_params = [];
@@ -51,16 +58,16 @@ class TMethod
 		$param_count = count($this->_method->params);
 
 		// Write header def of method (args and method def)
-		$this->_output_h .= "ZEND_BEGIN_ARG_INFO_EX(arginfo_" . strtolower($this->_method->of_object) . "_" . strtolower($this->_method->name) . ", 0, 0, " . $param_count . ")\n";
+		$this->_output_h .= "ZEND_BEGIN_ARG_INFO_EX(arginfo_" . strtolower($this->object_of) . "_" . strtolower($this->method_name) . ", 0, 0, " . $param_count . ")\n";
 		foreach($parsed_params as $param) {
 			$this->_output_h .= $param['args'];
 		}
 		$this->_output_h .= "ZEND_END_ARG_INFO()\n";
 
-		$this->_output_h .= sprintf("PHP_METHOD(%s, %s);", $this->_method->of_object, $this->_method->name);
+		$this->_output_h .= sprintf("PHP_METHOD(%s, %s);", $this->object_of, $this->method_name);
 
 		// Write C method
-		$this->_output_c .= sprintf("PHP_METHOD(%s, %s)\n", $this->_method->of_object, $this->_method->name);
+		$this->_output_c .= sprintf("PHP_METHOD(%s, %s)\n", $this->object_of, $this->method_name);
 		$this->_output_c .= "{\n";
 
 		// Write vars
@@ -109,6 +116,8 @@ class TMethod
 		$z_params = "";
 		$c_params = "";
 
+		// -------------------
+		// String
 		if($param[0] == "const-char*") {
 			$vars .= "\tchar * " . $param[1] . ";\n";
 			$vars .= "\tsize_t " . $param[1] . "_len;\n";
@@ -116,8 +125,24 @@ class TMethod
 			$z_params = "\t\tZ_PARAM_STRING(" . $param[1] . ", " . $param[1] . "_len)\n";
 		}
 
+		// Boolean
+		else if($param[0] == "gboolean") {
+			$vars .= "\tbool " . $param[1] . ";\n";
+
+			$z_params = "\t\tZ_PARAM_BOOL(" . $param[1] . ")\n";
+		}
+
+		// Integer
+		else if($param[0] == "int") {
+			$vars .= "\tint " . $param[1] . ";\n";
+
+			$z_params = "\t\tZ_PARAM_LONG(" . $param[1] . ")\n";
+		}
+
+		// Close macro
 		$args = "\tZEND_ARG_INFO(0, " . $param[1] . ")\n";
 
+		// -------------------
 		$c_params = $param[1];
 
 

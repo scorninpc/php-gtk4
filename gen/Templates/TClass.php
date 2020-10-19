@@ -19,9 +19,14 @@ class TClass
 	{
 		$method_name = $method->name;
 
-		$this->_name = $method->of_object;
+		if(isset($method->of_object)) {
+			$this->_name = $method->of_object;
+		}
+		else if(isset($method->is_constructor_of)) {
+			$this->_name = $method->is_constructor_of;
+		}
 
-		$this->_methods[$method_name] = new TMethod($method);
+		$this->_methods[$method_name] = new TMethod($method, $this->_name);
 	}
 
 
