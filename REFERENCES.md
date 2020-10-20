@@ -1,5 +1,9 @@
 ## References
 
+https://developer.gnome.org/gtkmm-tutorial/unstable/sec-wrapping-defs-files.html.pt_BR
+	./h2def.py /usr/include/atk-1.0/atk/*.h > atk_methods.defs
+	./h2def.py /usr/include/gtk-3.0/gtk/*.h > gtk_methods.defs
+
 https://github.com/qzfzz/php7-extension-dev-book/blob/master/11.2.md
 	zend_update_property
 	zend_update_static_property

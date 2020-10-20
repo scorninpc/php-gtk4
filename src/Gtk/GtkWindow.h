@@ -30,7 +30,7 @@
 		PHP_ME(GtkWindow, __construct, arginfo_gtkwindow_construct, ZEND_ACC_PUBLIC)
 		PHP_ME(GtkWindow, set_title, arginfo_gtkwindow_set_title, ZEND_ACC_PUBLIC)
 		PHP_ME(GtkWindow, get_title, arginfo_gtkwindow_get_title, ZEND_ACC_PUBLIC)
-	    PHP_FE_END
+		PHP_FE_END
 	};
 
 	

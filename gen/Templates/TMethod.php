@@ -13,10 +13,11 @@ class TMethod
 	/**
 	 *
 	 */
-	public function __construct($method, $object_name)
+	public function __construct($method, $object, $construct=FALSE)
 	{
 		$this->_method = $method;
-		$this->of_object = $object_name;
+		$this->_construct = $construct;
+		$this->object_of = $object;
 	}
 
 	public function getC()
@@ -34,17 +35,21 @@ class TMethod
 	 */
 	public function parse()
 	{
-		if (
-			(strtolower($this->_method->c_name) != "gtk_label_new_with_mnemonic") 
-			// &&
-			// (strtolower($this->_method->c_name) != "gtk_window_set_title") 
-		) {
-			return;
-		}
+		// if (
+		// 	(strtolower($this->_method->c_name) != "atk_action_get_n_actions") 
+		// 	// &&
+		// 	// (strtolower($this->_method->c_name) != "gtk_window_set_title") 
+		// ) {
+		// 	return;
+		// }
+
+
+
+
 
 		// Verify if is a constructor
 		$this->method_name = $this->_method->name;
-		if($this->_method->name) {
+		if($this->_construct) {
 			$this->method_name = "__construct";
 		}
 
@@ -62,7 +67,7 @@ class TMethod
 		foreach($parsed_params as $param) {
 			$this->_output_h .= $param['args'];
 		}
-		$this->_output_h .= "ZEND_END_ARG_INFO()\n";
+		$this->_output_h .= "ZEND_END_ARG_INFO()\n\n";
 
 		$this->_output_h .= sprintf("PHP_METHOD(%s, %s);", $this->object_of, $this->method_name);
 
@@ -118,7 +123,7 @@ class TMethod
 
 		// -------------------
 		// String
-		if($param[0] == "const-char*") {
+		if(($param[0] == "const-char*") || ($param[0] == "const-gchar*")) {
 			$vars .= "\tchar * " . $param[1] . ";\n";
 			$vars .= "\tsize_t " . $param[1] . "_len;\n";
 
@@ -162,10 +167,15 @@ class TMethod
 		$output = "";
 
 		// Macro
-		$macro = strtoupper(substr($object->of_object, 0, 3) . "_" . substr($object->of_object, 3));
+		$macro = strtoupper(substr($this->object_of, 0, 3) . "_" . substr($this->object_of, 3));
 
+		// If construct
+		if($this->_construct) {
+			$output .= "obj->gtk4_gpointer = (gpointer)";
+			$this->_parsed_return = "";
+		}
 		// Return string
-		if($object->return_type == "const-char*") {
+		else if(($object->return_type == "const-char*") || ($object->return_type == "const-gchar*")) {
 			$output .= "const gchar *ret = ";
 			$this->_parsed_return = "RETURN_STRING(ret);";
 		}
@@ -178,7 +188,12 @@ class TMethod
 			$this->_parsed_return = "";
 		}
 
-		$output .= $object->c_name . "(" . $macro . "(obj->gtk4_gpointer)";
+
+		$output .= $object->c_name . "(";
+
+		if(!$this->_construct) {
+			$output .= $macro . "(obj->gtk4_gpointer)";
+		}
 
 		// White params
 		foreach($parsed_params as $param) {

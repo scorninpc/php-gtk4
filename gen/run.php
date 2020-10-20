@@ -39,8 +39,18 @@ class Run
 		// 	var_dump($constructor);
 		// }
 
+		// foreach($this->parser->methods as $method) {
+		// 	echo $method->of_object . "::" . $method->name . "\n";
+		// }
+
+		// die();
+
 		// var_dump($this->parser->enums);
 		// die();
+
+
+
+
 
 		// Loop all constructors
 		foreach($this->parser->constructors as $method) {
@@ -52,18 +62,16 @@ class Run
 			}
 
 			// Add method to class template
-			$this->classes[$object_name]->addMethod($method);
+			$this->classes[$object_name]->addMethod($method, TRUE);
 		}
 
-		// Loop all parsed def methods
-		foreach($this->parser->functions as $method) {
-			if(!isset($method->of_object)) {
 
-				if($method->name == "gtk_label_new_with_mnemonic") {
-					var_dump($method);
-				}
-				continue;
-			}
+
+
+
+		// Loop all parsed def methods
+		foreach($this->parser->methods as $method) {
+			
 			$object_name = $method->of_object;
 
 			// If class not exists yet, create new template
@@ -75,13 +83,30 @@ class Run
 			$this->classes[$object_name]->addMethod($method);
 		}
 
+
+
+
+		$module = "Atk";
+
 		// Loop classes for parse
 		foreach($this->classes as $class) {
 
-			if($class->getName() == "GtkLabel") {
-				$class->parse();
+
+			if($class->getName() != "AtkPlug") {
+				continue;
 			}
 
+
+
+
+			$class->parse();
+
+			$dir = "/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/" . $module . "/";
+			$header_file = $dir . $class->getName() . ".h";
+			$code_file = $dir . $class->getName() . ".c";
+
+			file_put_contents($header_file, $class->getHeaderContent());
+			file_put_contents($code_file, $class->getCodeContent());
 		}
 			
 
@@ -92,5 +117,5 @@ class Run
 
 }
 
-new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gtk.defs");
+new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/atk_methods.defs");
 // new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gdk.defs");

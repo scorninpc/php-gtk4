@@ -1,4 +1,0 @@
-
-(include gdk.defs)
-(include gtk_methods.defs)
-(include gtk_extra_objects.defs)

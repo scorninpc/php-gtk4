@@ -1,4 +1,0 @@
-(include gdk_methods.defs)
-(include gdk_extra_objects.defs)
-(include gdk_pixbuf_methods.defs)
-(include gdk_extra.defs)

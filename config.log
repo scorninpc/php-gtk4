@@ -217,178 +217,178 @@ configure:3820: checking if nawk is broken
 configure:3827: result: no
 configure:3842: checking whether to enable gtk4 support
 configure:3881: result: yes, shared
-configure:4363: checking how to print strings
-configure:4390: result: printf
-configure:4411: checking for a sed that does not truncate output
-configure:4475: result: /usr/bin/sed
-configure:4493: checking for fgrep
-configure:4555: result: /usr/bin/grep -F
-configure:4590: checking for ld used by cc
-configure:4657: result: /usr/bin/ld
-configure:4664: checking if the linker (/usr/bin/ld) is GNU ld
-configure:4679: result: yes
-configure:4691: checking for BSD- or MS-compatible name lister (nm)
-configure:4745: result: /usr/bin/nm -B
-configure:4875: checking the name lister (/usr/bin/nm -B) interface
-configure:4882: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:4885: /usr/bin/nm -B "conftest.o"
-configure:4888: output
+configure:4367: checking how to print strings
+configure:4394: result: printf
+configure:4415: checking for a sed that does not truncate output
+configure:4479: result: /usr/bin/sed
+configure:4497: checking for fgrep
+configure:4559: result: /usr/bin/grep -F
+configure:4594: checking for ld used by cc
+configure:4661: result: /usr/bin/ld
+configure:4668: checking if the linker (/usr/bin/ld) is GNU ld
+configure:4683: result: yes
+configure:4695: checking for BSD- or MS-compatible name lister (nm)
+configure:4749: result: /usr/bin/nm -B
+configure:4879: checking the name lister (/usr/bin/nm -B) interface
+configure:4886: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:4889: /usr/bin/nm -B "conftest.o"
+configure:4892: output
 0000000000000000 B some_variable
-configure:4889: result: BSD nm
-configure:4892: checking whether ln -s works
-configure:4896: result: yes
-configure:4904: checking the maximum length of command line arguments
-configure:5035: result: 1572864
-configure:5083: checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format
-configure:5123: result: func_convert_file_noop
-configure:5130: checking how to convert x86_64-pc-linux-gnu file names to toolchain format
-configure:5150: result: func_convert_file_noop
-configure:5157: checking for /usr/bin/ld option to reload object files
-configure:5164: result: -r
-configure:5238: checking for objdump
-configure:5254: found /usr/bin/objdump
-configure:5265: result: objdump
-configure:5297: checking how to recognize dependent libraries
-configure:5497: result: pass_all
-configure:5582: checking for dlltool
-configure:5612: result: no
-configure:5642: checking how to associate runtime and link libraries
-configure:5669: result: printf %s\n
-configure:5729: checking for ar
-configure:5745: found /usr/bin/ar
-configure:5756: result: ar
-configure:5793: checking for archiver @FILE support
-configure:5810: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:5810: $? = 0
-configure:5813: ar cru libconftest.a @conftest.lst >&5
+configure:4893: result: BSD nm
+configure:4896: checking whether ln -s works
+configure:4900: result: yes
+configure:4908: checking the maximum length of command line arguments
+configure:5039: result: 1572864
+configure:5087: checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format
+configure:5127: result: func_convert_file_noop
+configure:5134: checking how to convert x86_64-pc-linux-gnu file names to toolchain format
+configure:5154: result: func_convert_file_noop
+configure:5161: checking for /usr/bin/ld option to reload object files
+configure:5168: result: -r
+configure:5242: checking for objdump
+configure:5258: found /usr/bin/objdump
+configure:5269: result: objdump
+configure:5301: checking how to recognize dependent libraries
+configure:5501: result: pass_all
+configure:5586: checking for dlltool
+configure:5616: result: no
+configure:5646: checking how to associate runtime and link libraries
+configure:5673: result: printf %s\n
+configure:5733: checking for ar
+configure:5749: found /usr/bin/ar
+configure:5760: result: ar
+configure:5797: checking for archiver @FILE support
+configure:5814: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:5814: $? = 0
+configure:5817: ar cru libconftest.a @conftest.lst >&5
 ar: `u' modifier ignored since `D' is the default (see `U')
-configure:5816: $? = 0
-configure:5821: ar cru libconftest.a @conftest.lst >&5
+configure:5820: $? = 0
+configure:5825: ar cru libconftest.a @conftest.lst >&5
 ar: `u' modifier ignored since `D' is the default (see `U')
 ar: conftest.o: No such file or directory
-configure:5824: $? = 1
-configure:5823: result: @
-configure:5881: checking for strip
-configure:5897: found /usr/bin/strip
-configure:5908: result: strip
-configure:5980: checking for ranlib
-configure:5996: found /usr/bin/ranlib
-configure:6007: result: ranlib
-configure:6084: checking for gawk
-configure:6111: result: nawk
-configure:6151: checking command to parse /usr/bin/nm -B output from cc object
-configure:6304: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:6307: $? = 0
-configure:6311: /usr/bin/nm -B conftest.o | sed -n -e 's/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p' | sed '/ __gnu_lto/d' > conftest.nm
-configure:6377: cc -o conftest -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0   conftest.c conftstm.o >&5
-configure:6380: $? = 0
-configure:6418: result: ok
-configure:6465: checking for sysroot
-configure:6495: result: no
-configure:6502: checking for a working dd
-configure:6540: result: /usr/bin/dd
-configure:6544: checking how to truncate binary pipes
-configure:6559: result: /usr/bin/dd bs=4096 count=1
-configure:6695: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:6698: $? = 0
-configure:6888: checking for mt
-configure:6904: found /usr/bin/mt
-configure:6915: result: mt
-configure:6938: checking if mt is a manifest tool
-configure:6944: mt '-?'
-configure:6952: result: no
-configure:7624: checking for ANSI C header files
-configure:7644: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7644: $? = 0
-configure:7717: cc -o conftest -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0   conftest.c  >&5
-configure:7717: $? = 0
-configure:7717: ./conftest
-configure:7717: $? = 0
-configure:7728: result: yes
-configure:7741: checking for sys/types.h
-configure:7741: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7741: $? = 0
-configure:7741: result: yes
-configure:7741: checking for sys/stat.h
-configure:7741: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7741: $? = 0
-configure:7741: result: yes
-configure:7741: checking for stdlib.h
-configure:7741: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7741: $? = 0
-configure:7741: result: yes
-configure:7741: checking for string.h
-configure:7741: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7741: $? = 0
-configure:7741: result: yes
-configure:7741: checking for memory.h
-configure:7741: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7741: $? = 0
-configure:7741: result: yes
-configure:7741: checking for strings.h
-configure:7741: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7741: $? = 0
-configure:7741: result: yes
-configure:7741: checking for inttypes.h
-configure:7741: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7741: $? = 0
-configure:7741: result: yes
-configure:7741: checking for stdint.h
-configure:7741: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7741: $? = 0
-configure:7741: result: yes
-configure:7741: checking for unistd.h
-configure:7741: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7741: $? = 0
-configure:7741: result: yes
-configure:7755: checking for dlfcn.h
-configure:7755: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:7755: $? = 0
-configure:7755: result: yes
-configure:8011: checking for objdir
-configure:8026: result: .libs
-configure:8290: checking if cc supports -fno-rtti -fno-exceptions
-configure:8308: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  -fno-rtti -fno-exceptions conftest.c >&5
+configure:5828: $? = 1
+configure:5827: result: @
+configure:5885: checking for strip
+configure:5901: found /usr/bin/strip
+configure:5912: result: strip
+configure:5984: checking for ranlib
+configure:6000: found /usr/bin/ranlib
+configure:6011: result: ranlib
+configure:6088: checking for gawk
+configure:6115: result: nawk
+configure:6155: checking command to parse /usr/bin/nm -B output from cc object
+configure:6308: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:6311: $? = 0
+configure:6315: /usr/bin/nm -B conftest.o | sed -n -e 's/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p' | sed '/ __gnu_lto/d' > conftest.nm
+configure:6381: cc -o conftest -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0   conftest.c conftstm.o >&5
+configure:6384: $? = 0
+configure:6422: result: ok
+configure:6469: checking for sysroot
+configure:6499: result: no
+configure:6506: checking for a working dd
+configure:6544: result: /usr/bin/dd
+configure:6548: checking how to truncate binary pipes
+configure:6563: result: /usr/bin/dd bs=4096 count=1
+configure:6699: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:6702: $? = 0
+configure:6892: checking for mt
+configure:6908: found /usr/bin/mt
+configure:6919: result: mt
+configure:6942: checking if mt is a manifest tool
+configure:6948: mt '-?'
+configure:6956: result: no
+configure:7628: checking for ANSI C header files
+configure:7648: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7648: $? = 0
+configure:7721: cc -o conftest -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0   conftest.c  >&5
+configure:7721: $? = 0
+configure:7721: ./conftest
+configure:7721: $? = 0
+configure:7732: result: yes
+configure:7745: checking for sys/types.h
+configure:7745: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7745: $? = 0
+configure:7745: result: yes
+configure:7745: checking for sys/stat.h
+configure:7745: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7745: $? = 0
+configure:7745: result: yes
+configure:7745: checking for stdlib.h
+configure:7745: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7745: $? = 0
+configure:7745: result: yes
+configure:7745: checking for string.h
+configure:7745: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7745: $? = 0
+configure:7745: result: yes
+configure:7745: checking for memory.h
+configure:7745: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7745: $? = 0
+configure:7745: result: yes
+configure:7745: checking for strings.h
+configure:7745: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7745: $? = 0
+configure:7745: result: yes
+configure:7745: checking for inttypes.h
+configure:7745: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7745: $? = 0
+configure:7745: result: yes
+configure:7745: checking for stdint.h
+configure:7745: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7745: $? = 0
+configure:7745: result: yes
+configure:7745: checking for unistd.h
+configure:7745: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7745: $? = 0
+configure:7745: result: yes
+configure:7759: checking for dlfcn.h
+configure:7759: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:7759: $? = 0
+configure:7759: result: yes
+configure:8015: checking for objdir
+configure:8030: result: .libs
+configure:8294: checking if cc supports -fno-rtti -fno-exceptions
+configure:8312: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  -fno-rtti -fno-exceptions conftest.c >&5
 cc1: warning: command line option '-fno-rtti' is valid for C++/ObjC++ but not for C
-configure:8312: $? = 0
-configure:8325: result: no
-configure:8683: checking for cc option to produce PIC
-configure:8690: result: -fPIC -DPIC
-configure:8698: checking if cc PIC flag -fPIC -DPIC works
-configure:8716: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  -fPIC -DPIC -DPIC conftest.c >&5
-configure:8720: $? = 0
-configure:8733: result: yes
-configure:8762: checking if cc static flag -static works
-configure:8790: result: no
-configure:8805: checking if cc supports -c -o file.o
-configure:8826: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  -o out/conftest2.o conftest.c >&5
-configure:8830: $? = 0
-configure:8852: result: yes
-configure:8860: checking if cc supports -c -o file.o
-configure:8907: result: yes
-configure:8940: checking whether the cc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
-configure:10203: result: yes
-configure:10240: checking whether -lc should be explicitly linked in
-configure:10248: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
-configure:10251: $? = 0
-configure:10266: cc -shared  -fPIC -DPIC conftest.o  -v -Wl,-soname -Wl,conftest -o conftest 2\>\&1 \| /usr/bin/grep  -lc  \>/dev/null 2\>\&1
-configure:10269: $? = 0
-configure:10283: result: no
-configure:10443: checking dynamic linker characteristics
-configure:11024: cc -o conftest -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0   -Wl,-rpath -Wl,/foo conftest.c  >&5
-configure:11024: $? = 0
-configure:11273: result: GNU/Linux ld.so
-configure:11395: checking how to hardcode library paths into programs
-configure:11420: result: immediate
-configure:11968: checking whether stripping libraries is possible
-configure:11973: result: yes
-configure:12008: checking if libtool supports shared libraries
-configure:12010: result: yes
-configure:12013: checking whether to build shared libraries
-configure:12038: result: yes
-configure:12041: checking whether to build static libraries
-configure:12045: result: no
-configure:9088: creating ./config.status
+configure:8316: $? = 0
+configure:8329: result: no
+configure:8687: checking for cc option to produce PIC
+configure:8694: result: -fPIC -DPIC
+configure:8702: checking if cc PIC flag -fPIC -DPIC works
+configure:8720: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  -fPIC -DPIC -DPIC conftest.c >&5
+configure:8724: $? = 0
+configure:8737: result: yes
+configure:8766: checking if cc static flag -static works
+configure:8794: result: no
+configure:8809: checking if cc supports -c -o file.o
+configure:8830: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  -o out/conftest2.o conftest.c >&5
+configure:8834: $? = 0
+configure:8856: result: yes
+configure:8864: checking if cc supports -c -o file.o
+configure:8911: result: yes
+configure:8944: checking whether the cc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
+configure:10207: result: yes
+configure:10244: checking whether -lc should be explicitly linked in
+configure:10252: cc -c -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0  conftest.c >&5
+configure:10255: $? = 0
+configure:10270: cc -shared  -fPIC -DPIC conftest.o  -v -Wl,-soname -Wl,conftest -o conftest 2\>\&1 \| /usr/bin/grep  -lc  \>/dev/null 2\>\&1
+configure:10273: $? = 0
+configure:10287: result: no
+configure:10447: checking dynamic linker characteristics
+configure:11028: cc -o conftest -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0   -Wl,-rpath -Wl,/foo conftest.c  >&5
+configure:11028: $? = 0
+configure:11277: result: GNU/Linux ld.so
+configure:11399: checking how to hardcode library paths into programs
+configure:11424: result: immediate
+configure:11972: checking whether stripping libraries is possible
+configure:11977: result: yes
+configure:12012: checking if libtool supports shared libraries
+configure:12014: result: yes
+configure:12017: checking whether to build shared libraries
+configure:12042: result: yes
+configure:12045: checking whether to build static libraries
+configure:12049: result: no
+configure:9092: creating ./config.status
 
 ## ---------------------- ##
 ## Running config.status. ##
