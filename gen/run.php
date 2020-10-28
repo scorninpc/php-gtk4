@@ -86,13 +86,13 @@ class Run
 
 
 
-		$module = "Atk";
+		$module = "G";
 
 		// Loop classes for parse
 		foreach($this->classes as $class) {
 
 
-			if($class->getName() != "AtkPlug") {
+			if($class->getName() != "GApplication") {
 				continue;
 			}
 
@@ -117,5 +117,7 @@ class Run
 
 }
 
-new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/atk_methods.defs");
+// new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/atk_methods.defs");
+new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gio_methods.defs");
 // new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gdk.defs");
+// new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gtk_methods.defs");

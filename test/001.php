@@ -1,6 +1,16 @@
 <?php
 
-\Gtk::init(NULL);
+// \Gtk::init(NULL);
+
+$app = new \Gtk\Application(1,1);
+
+$app->connect("activate", function() {
+	echo "\n\nOK\n\n";
+});
+
+$app->run($argc, $argv);
+
+var_dump($id);
 
 
 /*
@@ -15,7 +25,9 @@ sleep(1);
 $obj2 = new \Gtk\Window();
 var_dump($obj2->test());
 
-var_dump($obj1->test());*/
+var_dump($obj1->test());
+
+*/
 
 
 
@@ -24,7 +36,7 @@ var_dump($obj1->test());*/
 
 
 
-
+/*
 
 // Working with callbacks
 function callback_test($a=NULL, $b=NULL, $c=NULL, $d=NULL, $e=NULL)
@@ -59,3 +71,4 @@ var_dump($obj->get_title());
 $obj->show_all();
 \Gtk::main();
 
+*/

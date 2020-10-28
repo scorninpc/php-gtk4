@@ -40,6 +40,7 @@ class TClass
 	{
 		$_output_h = "";
 		$_output_c = "";
+		$_output_fe = "";
 
 		// -------------------
 		// Start create header 
@@ -47,7 +48,7 @@ class TClass
 		$_output_h .= "#define _PHPGTK_" . strtolower($this->getName()) . "_H_\n\n";
 		$_output_h .= "#include <php.h>\n";
 		$_output_h .= "#include <gtk/gtk.h>\n\n";
-		$_output_h .= "#include \"../../gtk4.h\"\n\n";
+		$_output_h .= "#include \"../G/GObject.h\"\n\n";
 
 
 		// -------------------
@@ -66,6 +67,8 @@ class TClass
 
 				$_output_c .= "// -------------------\n";
 				$_output_c .= $method->getC() . "\n\n";
+
+				$_output_fe .= $method->getFE() . "\n";
 			}
 		}
 
@@ -74,6 +77,7 @@ class TClass
 		$_output_h .= "// -------------------\n";
 		$_output_h .= "static zend_class_entry *gtk4_" . strtolower($this->getName()) . "_ce = NULL;\n";
 		$_output_h .= "static const zend_function_entry " . strtolower($this->getName()) . "_functions[] = {\n";
+		$_output_h .= $_output_fe;
 		$_output_h .= "\tPHP_FE_END\n";
 		$_output_h .= "};\n\n";
 

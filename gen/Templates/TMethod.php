@@ -8,6 +8,7 @@ class TMethod
 
 	private $_output_c;
 	private $_output_h;
+	private $_output_fe;
 
 
 	/**
@@ -30,6 +31,11 @@ class TMethod
 		return $this->_output_h;
 	}
 
+	public function getFE()
+	{
+		return $this->_output_fe;
+	}
+
 	/**
 	 *
 	 */
@@ -42,9 +48,6 @@ class TMethod
 		// ) {
 		// 	return;
 		// }
-
-
-
 
 
 		// Verify if is a constructor
@@ -108,6 +111,9 @@ class TMethod
 
 		// Close method
 		$this->_output_c .= "}";
+
+		// Add FE
+		$this->_output_fe = "\tPHP_ME(" . $this->object_of . ", " . $this->method_name . ", arginfo_" . strtolower($this->object_of) . "_" . strtolower($this->method_name) . ", ZEND_ACC_PUBLIC)";
 
 	}
 
