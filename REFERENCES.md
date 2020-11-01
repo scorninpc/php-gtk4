@@ -34,3 +34,9 @@ https://www.php.net/manual/pt_BR/internals2.variables.arrays.php
 	add_next_index_string
 	array_init
 	add_next_index_string
+
+
+https://github.com/p1ncet/obcast/blob/c0763015e1e85d150516de1cae2205bf17d513a9/obcast.c
+	zend_objects_new
+	object_properties_init
+	create_object

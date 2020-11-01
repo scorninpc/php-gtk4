@@ -2,30 +2,26 @@
 // -------------------
 PHP_METHOD(GApplication, __construct)
 {
-	// char * application_id;
-	// size_t application_id_len;
+	char * application_id;
+	size_t application_id_len;
 
-	// ZEND_PARSE_PARAMETERS_START(2, 2)
-	// 	Z_PARAM_STRING(application_id, application_id_len)
-	// ZEND_PARSE_PARAMETERS_END();
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_STRING(application_id, application_id_len)
+	ZEND_PARSE_PARAMETERS_END();
 
-	// zval *object = getThis();
-	// gtk4_gobject_object *obj;
-	// obj = (gtk4_gobject_object*)Z_OBJ_P(object);
+	gtk4_gobject_object *obj = ((gtk4_gobject_object*)(Z_OBJ_P(getThis()) + 1)) - 1;
 
-	// obj->gtk4_gpointer = (gpointer)g_application_new(, application_id, flags);
+	obj->gtk4_gpointer = (gpointer *)g_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE);
 }
 
 // -------------------
 PHP_METHOD(GApplication, get_application_id)
 {
-	// zval *object = getThis();
-	// gtk4_gobject_object *obj;
-	// obj = (gtk4_gobject_object*)Z_OBJ_P(object);
+	gtk4_gobject_object *obj = ((gtk4_gobject_object*)(Z_OBJ_P(getThis()) + 1)) - 1;
 
-	// const gchar *ret = g_application_get_application_id(GAP_PLICATION(obj->gtk4_gpointer));
+	const gchar *ret = g_application_get_application_id(G_APPLICATION(obj->gtk4_gpointer));
 
-	// RETURN_STRING(ret);
+	RETURN_STRING(ret);
 }
 
 // -------------------
@@ -42,7 +38,7 @@ PHP_METHOD(GApplication, set_application_id)
 	// gtk4_gobject_object *obj;
 	// obj = (gtk4_gobject_object*)Z_OBJ_P(object);
 
-	// g_application_set_application_id(GAP_PLICATION(obj->gtk4_gpointer), application_id);
+	// g_application_set_application_id(G_APPLICATION(obj->gtk4_gpointer), application_id);
 }
 
 // -------------------
@@ -52,7 +48,7 @@ PHP_METHOD(GApplication, get_dbus_connection)
 	// gtk4_gobject_object *obj;
 	// obj = (gtk4_gobject_object*)Z_OBJ_P(object);
 
-	// g_application_get_dbus_connection(GAP_PLICATION(obj->gtk4_gpointer));
+	// g_application_get_dbus_connection(G_APPLICATION(obj->gtk4_gpointer));
 }
 
 // -------------------
@@ -193,9 +189,7 @@ PHP_METHOD(GApplication, run)
 	bool argc_is_null = 1;
 	zval *php_argv;
 
-	zval *object = getThis();
-	gtk4_gobject_object *obj;
-	obj = (gtk4_gobject_object*)Z_OBJ_P(object);
+	gtk4_gobject_object *obj = ((gtk4_gobject_object*)(Z_OBJ_P(getThis()) + 1)) - 1;
 
 	// Get vars
 	ZEND_PARSE_PARAMETERS_START(0, 2)

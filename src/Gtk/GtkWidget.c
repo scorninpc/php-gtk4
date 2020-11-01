@@ -9,9 +9,7 @@
 
 PHP_METHOD(GtkWidget, show_all)
 {
-	zval *object = getThis();
-	gtk4_gobject_object *obj;
-	obj = (gtk4_gobject_object*)Z_OBJ_P(object);
+	gtk4_gobject_object *obj = ((gtk4_gobject_object*)(Z_OBJ_P(getThis()) + 1)) - 1;
 
 	gtk_widget_show_all(GTK_WIDGET(obj->gtk4_gpointer));
 }

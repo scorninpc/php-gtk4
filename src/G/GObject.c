@@ -5,24 +5,28 @@
 /*
 	
 	========================================================================== */
-
-
-static zend_object_handlers g_object_object_handlers;
 zend_object *g_object_create_object(zend_class_entry *class_type) 
 {
-	gtk4_gobject_object *intern = (gtk4_gobject_object *) emalloc(sizeof(gtk4_gobject_object));
+	php_printf("\n\t++ Creating\n");
+
+	gtk4_gobject_object *intern = ecalloc(1, sizeof(gtk4_gobject_object));
 	memset(intern, 0, sizeof(gtk4_gobject_object));
 
-	// zend_object_std_init(&intern->zo, class_type);
-	// object_properties_init(&intern->zo, class_type);
+	// zend_object_std_init(&intern->std, class_type);
+	// object_properties_init(&intern->std, class_type);
 
-	zend_object_std_init(&intern->zo, class_type);
-	object_properties_init(&intern->zo, class_type);
+	intern->gtk4_gpointer = NULL;
+	zend_object_std_init(&intern->std, class_type);
+	object_properties_init(&intern->std, class_type);
+
 
 	memcpy(&g_object_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
-	intern->zo.handlers = &g_object_object_handlers;
+	g_object_object_handlers.offset = XtOffsetOf(gtk4_gobject_object, std);
+	g_object_object_handlers.clone_obj = NULL;
 
-	return &intern->zo;
+	intern->std.handlers = &g_object_object_handlers;
+
+	return &intern->std;
 }
 
 /*
@@ -40,12 +44,12 @@ PHP_METHOD(GObject, __construct)
 	// assert(tobj != NULL);
 
 
-	zval *object = getThis();
-	gtk4_gobject_object *obj;
-	obj = (gtk4_gobject_object*)Z_OBJ_P(object);
+	// zval *object = getThis();
+	// gtk4_gobject_object *obj;
+	// obj = (gtk4_gobject_object*)Z_OBJ_P(object);
 
 
-	obj->test = rand()%50;
+	// obj->test = rand()%50;
 }
 
 
@@ -55,10 +59,10 @@ PHP_METHOD(GObject, __construct)
 PHP_METHOD(GObject, test)
 {
 
-	zval *object = getThis();
-	gtk4_gobject_object *obj;
+	// zval *object = getThis();
+	// gtk4_gobject_object *obj;
 
-	obj = (gtk4_gobject_object*)Z_OBJ_P(object);
+	// obj = (gtk4_gobject_object*)Z_OBJ_P(object);
 
 	/*zval *item, *obj, rv;
 
@@ -70,7 +74,7 @@ PHP_METHOD(GObject, test)
 	item = zend_read_property(ce, obj, "prop_gpointer", sizeof("prop_gpointer") - 1, 0, &rv);
 */
 
-	RETURN_LONG(obj->test);
+	// RETURN_LONG(obj->test);
 	// RETURN_ZVAL(object, 1, 0);
 }
 
@@ -79,6 +83,7 @@ PHP_METHOD(GObject, test)
 	========================================================================== */
 PHP_METHOD(GObject, connect)
 {
+
 
 	zend_fcall_info fci;
 	zend_fcall_info_cache fcc;
@@ -103,13 +108,13 @@ PHP_METHOD(GObject, connect)
 	// ----------------
 	// Get gpointer
 	zval *object = getThis();
-	gtk4_gobject_object *obj;
-	obj = (gtk4_gobject_object*)Z_OBJ_P(object);
+	gtk4_gobject_object *obj = ((gtk4_gobject_object*)(Z_OBJ_P(getThis()) + 1)) - 1;
 
 	callback_object->fci = fci;
 	callback_object->fcc = fcc;
 	callback_object->self = object;
 	callback_object->self_object = obj;
+
 
 	// ----------------
 	// Retriave and store signal query parameters , to be used on callback

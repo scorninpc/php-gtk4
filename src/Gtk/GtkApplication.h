@@ -5,6 +5,7 @@
 #include <gtk/gtk.h>
 
 #include "../G/GObject.h"
+#include "./GtkWindow.h"
 
 // -------------------
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication___construct, 0, 0, 2)
@@ -16,10 +17,10 @@ PHP_METHOD(GtkApplication, __construct);
 
 
 // -------------------
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication_run, 0, 0, 0)
+/*ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication_run, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
-PHP_METHOD(GtkApplication, run);
+PHP_METHOD(GtkApplication, run);*/
 
 // -------------------
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication_add_window, 0, 0, 1)
@@ -171,7 +172,9 @@ PHP_METHOD(GtkApplication, window_new);
 static zend_class_entry *gtk4_gtkapplication_ce = NULL;
 static const zend_function_entry gtkapplication_functions[] = {
 	PHP_ME(GtkApplication, __construct, arginfo_gtkapplication___construct, ZEND_ACC_PUBLIC)
-	// PHP_ME(GtkApplication, run, arginfo_gtkapplication_run, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, add_window, arginfo_gtkapplication_add_window, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, window_new, arginfo_gtkapplication_window_new, ZEND_ACC_PUBLIC)
+	/*PHP_ME(GtkApplication, run, arginfo_gtkapplication_run, ZEND_ACC_PUBLIC)*/
 	// PHP_ME(GtkWindow, __construct, arginfo_gtkwindow_construct, ZEND_ACC_PUBLIC)
 	// PHP_ME(GtkWindow, __construct, arginfo_gtkwindow_construct, ZEND_ACC_PUBLIC)
 	// PHP_ME(GtkWindow, __construct, arginfo_gtkwindow_construct, ZEND_ACC_PUBLIC)

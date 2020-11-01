@@ -11,9 +11,9 @@
 	// ----------------
 	// gtk object structure
 	typedef struct {
-		gpointer gtk4_gpointer;
+		gpointer *gtk4_gpointer;
 		long test;
-		zend_object zo;
+		zend_object std;
 	} gtk4_gobject_object;
 
 	// ----------------
@@ -44,6 +44,9 @@
 		const GType *param_types;
 	} st_callback;
 
+
+	// ----------------
+	static zend_object_handlers g_object_object_handlers;
 
 	// ----------------
 	zend_object *g_object_create_object(zend_class_entry *class_type);

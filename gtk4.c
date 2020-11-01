@@ -31,29 +31,29 @@ static PHP_MINIT_FUNCTION(gtk4)
 {
 	// Create class
 	zend_class_entry tmp_g_object_ce;
-    INIT_CLASS_ENTRY(tmp_g_object_ce, "G\\Object", g_gobject_functions);
-    gtk4_g_gobject_ce = zend_register_internal_class(&tmp_g_object_ce);
-    gtk4_g_gobject_ce->create_object = g_object_create_object;
+	INIT_CLASS_ENTRY(tmp_g_object_ce, "G\\Object", g_gobject_functions);
+	gtk4_g_gobject_ce = zend_register_internal_class(&tmp_g_object_ce);
+	gtk4_g_gobject_ce->create_object = g_object_create_object;
 
-    zend_class_entry tmp_gapplication_ce;
-    INIT_CLASS_ENTRY(tmp_gapplication_ce, "G\\Application", gapplication_functions);
-    gtk4_gapplication_ce = zend_register_internal_class_ex(&tmp_gapplication_ce, gtk4_g_gobject_ce);	// extends GObject
+	zend_class_entry tmp_gapplication_ce;
+	INIT_CLASS_ENTRY(tmp_gapplication_ce, "G\\Application", gapplication_functions);
+	gtk4_gapplication_ce = zend_register_internal_class_ex(&tmp_gapplication_ce, gtk4_g_gobject_ce);	// extends GObject
 
-    zend_class_entry tmp_gtk_ce;
-    INIT_CLASS_ENTRY(tmp_gtk_ce, "Gtk", gtk_functions);
-    gtk4_gtk_ce = zend_register_internal_class(&tmp_gtk_ce);
+	zend_class_entry tmp_gtk_ce;
+	INIT_CLASS_ENTRY(tmp_gtk_ce, "Gtk", gtk_functions);
+	gtk4_gtk_ce = zend_register_internal_class(&tmp_gtk_ce);
 
-    zend_class_entry tmp_gtkapplication_ce;
-    INIT_CLASS_ENTRY(tmp_gtkapplication_ce, "Gtk\\Application", gtkapplication_functions);
-    gtk4_gtkapplication_ce = zend_register_internal_class_ex(&tmp_gtkapplication_ce, gtk4_gapplication_ce);	// extends GApplication
+	zend_class_entry tmp_gtkapplication_ce;
+	INIT_CLASS_ENTRY(tmp_gtkapplication_ce, "Gtk\\Application", gtkapplication_functions);
+	gtk4_gtkapplication_ce = zend_register_internal_class_ex(&tmp_gtkapplication_ce, gtk4_gapplication_ce);	// extends GApplication
 
-    zend_class_entry tmp_gtk_widget_ce;
-    INIT_CLASS_ENTRY(tmp_gtk_widget_ce, "Gtk\\Widget", gtk_widget_functions);
-    gtk4_gtk_widget_ce = zend_register_internal_class_ex(&tmp_gtk_widget_ce, gtk4_g_gobject_ce);	// extends GObject
+	zend_class_entry tmp_gtk_widget_ce;
+	INIT_CLASS_ENTRY(tmp_gtk_widget_ce, "Gtk\\Widget", gtk_widget_functions);
+	gtk4_gtk_widget_ce = zend_register_internal_class_ex(&tmp_gtk_widget_ce, gtk4_g_gobject_ce);	// extends GObject
 
-    zend_class_entry tmp_gtk_window_ce;
-    INIT_CLASS_ENTRY(tmp_gtk_window_ce, "Gtk\\Window", gtk_window_functions);
-    gtk4_gtk_window_ce = zend_register_internal_class_ex(&tmp_gtk_window_ce, gtk4_gtk_widget_ce);	// extends Widget
+	zend_class_entry tmp_gtk_window_ce;
+	INIT_CLASS_ENTRY(tmp_gtk_window_ce, "Gtk\\Window", gtk_window_functions);
+	gtk4_gtk_window_ce = zend_register_internal_class_ex(&tmp_gtk_window_ce, gtk4_gtk_widget_ce);	// extends Widget
 	
 	return SUCCESS;
 }
