@@ -1,6 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__) . "/scheme.php");
+require_once(dirname(__FILE__) . "/Type.php");
 require_once(dirname(__FILE__) . "/Templates/TClass.php");
 require_once(dirname(__FILE__) . "/Templates/TMethod.php");
 
@@ -8,6 +9,7 @@ class Run
 {
 
 	private $classes;
+	private $types;
 
 	public function Run($defs_file)
 	{
@@ -71,7 +73,7 @@ class Run
 
 		// Loop all parsed def methods
 		foreach($this->parser->methods as $method) {
-			
+
 			$object_name = $method->of_object;
 
 			// If class not exists yet, create new template
@@ -105,6 +107,9 @@ class Run
 			$header_file = $dir . $class->getName() . ".h";
 			$code_file = $dir . $class->getName() . ".c";
 
+
+die($class->getCodeContent());
+
 			file_put_contents($header_file, $class->getHeaderContent());
 			file_put_contents($code_file, $class->getCodeContent());
 		}
@@ -114,6 +119,8 @@ class Run
 
 
 	}
+
+
 
 }
 

@@ -4102,6 +4102,7 @@ $as_echo "@%:@define HAVE_GTK4 1" >>confdefs.h
 
   old_IFS=$IFS
   for ac_src in gtk4.c \
+      helper.c \
       src/G/GObject.c \
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \
@@ -4158,6 +4159,7 @@ EOF
 
   old_IFS=$IFS
   for ac_src in gtk4.c \
+      helper.c \
       src/G/GObject.c \
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \
@@ -4246,6 +4248,7 @@ _ACEOF
 
   old_IFS=$IFS
   for ac_src in gtk4.c \
+      helper.c \
       src/G/GObject.c \
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \
@@ -4299,6 +4302,7 @@ EOF
 
   old_IFS=$IFS
   for ac_src in gtk4.c \
+      helper.c \
       src/G/GObject.c \
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \

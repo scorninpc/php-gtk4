@@ -4,6 +4,8 @@
 #include <php.h>
 #include <gtk/gtk.h>
 
+#include "../../helper.h"
+
 #include "../G/GObject.h"
 #include "./GtkWindow.h"
 

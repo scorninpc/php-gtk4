@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Templates;
 
 class TMethod
@@ -41,6 +42,7 @@ class TMethod
 	 */
 	public function parse()
 	{
+
 		// if (
 		// 	(strtolower($this->_method->c_name) != "atk_action_get_n_actions") 
 		// 	// &&
@@ -96,9 +98,7 @@ class TMethod
 		}
 
 		// Get gpointer
-		$this->_output_c .= "\tzval *object = getThis();\n";
-		$this->_output_c .= "\tgtk4_gobject_object *obj;\n";
-		$this->_output_c .= "\tobj = (gtk4_gobject_object*)Z_OBJ_P(object);\n\n";
+		$this->_output_c .= "\tgtk4_gobject_object *obj = gtk4_get_current_object(getThis());\n\n";
 
 		// Parse method
 		$this->_output_c .= "\t" . $this->parseMethod($this->_method, $parsed_params) . "\n";
@@ -114,6 +114,11 @@ class TMethod
 
 		// Add FE
 		$this->_output_fe = "\tPHP_ME(" . $this->object_of . ", " . $this->method_name . ", arginfo_" . strtolower($this->object_of) . "_" . strtolower($this->method_name) . ", ZEND_ACC_PUBLIC)";
+
+		
+
+		if($this->_construct) 
+			die($this->_output_c . "\n");
 
 	}
 
@@ -177,9 +182,10 @@ class TMethod
 
 		// If construct
 		if($this->_construct) {
-			$output .= "obj->gtk4_gpointer = (gpointer)";
+			$output .= "obj->gtk4_gpointer = (gpointer *)";
 			$this->_parsed_return = "";
 		}
+
 		// Return string
 		else if(($object->return_type == "const-char*") || ($object->return_type == "const-gchar*")) {
 			$output .= "const gchar *ret = ";
@@ -198,18 +204,19 @@ class TMethod
 		$output .= $object->c_name . "(";
 
 		if(!$this->_construct) {
-			$output .= $macro . "(obj->gtk4_gpointer)";
+			$type = new \Type($object->of_object);
+			$output .= $type->macro . "(obj->gtk4_gpointer), ";
 		}
 
 		// White params
+		$output_params = "";
 		foreach($parsed_params as $param) {
-			$output .= ", " . $param['c_params'];
+			$output_params .= ", " . $param['c_params'];
 		}
+		$output .= substr($output_params, 2);
 
 		$output .= ");";
 
 		return $output;
 	}
-
-
 }

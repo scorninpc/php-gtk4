@@ -19,6 +19,43 @@ $app->connect("activate", "activated");
 
 $app->run($argc, $argv);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*class Test
 {
 	protected $app;

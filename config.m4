@@ -21,6 +21,7 @@ if test "$PHP_GTK4" != "no"; then
   AC_DEFINE(HAVE_GTK4, 1, [ Have gtk4 support ])
 
   PHP_NEW_EXTENSION(gtk4, gtk4.c \
+      helper.c \
       src/G/GObject.c \
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \

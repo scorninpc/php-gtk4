@@ -12,7 +12,7 @@ PHP_METHOD(GtkApplication, __construct)
 		Z_PARAM_STRING(application_id, application_id_len)
 	ZEND_PARSE_PARAMETERS_END();
 
-	gtk4_gobject_object *obj = ((gtk4_gobject_object*)(Z_OBJ_P(getThis()) + 1)) - 1;
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
 	obj->gtk4_gpointer = (gpointer *)gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE);
 }
@@ -20,127 +20,15 @@ PHP_METHOD(GtkApplication, __construct)
 // -------------------
 PHP_METHOD(GtkApplication, window_new)
 {
-	gtk4_gobject_object *obj = ((gtk4_gobject_object*)(Z_OBJ_P(getThis()) + 1)) - 1;
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
 	GtkWidget *ret = gtk_application_window_new(GTK_APPLICATION(obj->gtk4_gpointer));
 
-
-
-
-
-
-
-	// zval *php_obj;
-	// object_init_ex(php_obj, gtk4_gtk_window_ce);
-
-	// gtk4_gobject_object *intern = (gtk4_gobject_object *) emalloc(sizeof(gtk4_gobject_object));
-	// memset(intern, 0, sizeof(gtk4_gobject_object));
-	
-	// intern->std = *Z_OBJ_P(php_obj);
-	// intern->gtk4_gpointer = (gpointer *)ret;
-
-
-
-
-
-	// php_printf("\n\tCriando\n");
-
-	// zend_object zov;
-
-	// gtk4_gobject_object *intern;
-	// intern = emalloc(sizeof *intern);
-
-	// php_printf("\n\tCriado handle\n");
-
-	// zov.handle = zend_objects_store_put(intern, NULL, NULL, NULL);
-	
-	// intern->std.handlers = &g_object_object_handlers;
-
-	// php_printf("\n\tObjeto criado\n");
-
-	// zend_object_std_init((zend_object *) intern, gtk4_gtk_window_ce);
-
-	// php_printf("\n\tInterno criado\n");
-
-	// intern->gtk4_gpointer = (gpointer *)ret;
-
-
-	// php_printf("\n\tTudo criado\n");
-	
-
-
-
-
-	php_printf("\n\tRecuperando CE\n");
-
-	zend_class_entry *ce = NULL; 
-	zend_string *class_name = zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false);
-	ce = zend_lookup_class(class_name);
-
-
-
-
-	/*php_printf("\n\tCriando\n");
-	
-	zend_object *object;
-
-
-	php_printf("\n\tObjeto\n");
-
-
-	object = zend_objects_new(ce);
-	
-	php_printf("\n\tObjeto init\n");
-
-	object_properties_init(object, ce);
-	
-	php_printf("\n\tObjeto handlers\n");
-
-	object->handlers = &g_object_object_handlers;
-
-	
-
-
-	php_printf("\n\tCriando internal\n");*/
-
-
-
-
-
-	gtk4_gobject_object *intern = ecalloc(1, sizeof(gtk4_gobject_object));
-	memset(intern, 0, sizeof(gtk4_gobject_object));
-
+	zend_class_entry *ce = zend_lookup_class(zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false));
+	gtk4_gobject_object *intern = gtk4_create_new_object(ce);
 	intern->gtk4_gpointer = (gpointer *)ret;
-	zend_object_std_init(&intern->std, ce);
-	object_properties_init(&intern->std, ce);
-
-	memcpy(&g_object_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
-	g_object_object_handlers.offset = XtOffsetOf(gtk4_gobject_object, std);
-	g_object_object_handlers.clone_obj = NULL;
-
-	intern->std.handlers = &g_object_object_handlers;
-
-
-
-
-
-
-
-	php_printf("\n\tCriado\n");
-
-
-
-	if (intern == NULL) {
-		php_printf("\n\tNULL\n");
-
-		RETURN_NULL();
-	}
-
-	
-	php_printf("\n\tOK\n");
 
 	RETURN_OBJ(&intern->std);
-
 }
 /*
 // -------------------
