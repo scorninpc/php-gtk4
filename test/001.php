@@ -1,44 +1,30 @@
 <?php
 
-$app = new \Gtk\Application(1,1);
+$app = new \Gtk\Application("testbruno.com.br",1);
 
 function activated($app=NULL, $b=NULL, $c=NULL)
 {
 	$window = $app->window_new();
-	$window->show_all();
 	$window->set_title("Janela 1");
-
-
-	$window = $app->window_new();
-	$window->set_title("Janela 2");
-	$window->connect("destroy", ["Gtk", "main_quit"]);
 	$window->show_all();
+
+
+	// $window = $app->window_new();
+	// $window->set_title("Janela 2");
+	// $window->connect("destroy", ["Gtk", "main_quit"]);
+	// $window->show_all();
+
+	// $obj = new \Gtk\Window();
+	// $obj->set_title("TEST GTK4");
+
+	// $app->add_window($obj);
+
+	// $obj->show_all();
 }
 
 $app->connect("activate", "activated");
 
 $app->run($argc, $argv);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

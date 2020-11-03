@@ -4,10 +4,8 @@
 #include <php.h>
 #include <gtk/gtk.h>
 
-#include "../../helper.h"
-
 #include "../G/GObject.h"
-#include "./GtkWindow.h"
+#include "../../helper.h"
 
 // -------------------
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication___construct, 0, 0, 2)
@@ -16,13 +14,6 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication___construct, 0, 0, 2)
 ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkApplication, __construct);
-
-
-// -------------------
-/*ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication_run, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkApplication, run);*/
 
 // -------------------
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication_add_window, 0, 0, 1)
@@ -69,23 +60,6 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication_set_menubar, 0, 0, 1)
 ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkApplication, set_menubar);
-
-// -------------------
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication_add_accelerator, 0, 0, 3)
-	ZEND_ARG_INFO(0, accelerator)
-	ZEND_ARG_INFO(0, action_name)
-	ZEND_ARG_INFO(0, parameter)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkApplication, add_accelerator);
-
-// -------------------
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication_remove_accelerator, 0, 0, 2)
-	ZEND_ARG_INFO(0, action_name)
-	ZEND_ARG_INFO(0, parameter)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkApplication, remove_accelerator);
 
 // -------------------
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkapplication_inhibit, 0, 0, 3)
@@ -175,12 +149,24 @@ static zend_class_entry *gtk4_gtkapplication_ce = NULL;
 static const zend_function_entry gtkapplication_functions[] = {
 	PHP_ME(GtkApplication, __construct, arginfo_gtkapplication___construct, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkApplication, add_window, arginfo_gtkapplication_add_window, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, remove_window, arginfo_gtkapplication_remove_window, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, get_windows, arginfo_gtkapplication_get_windows, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, get_app_menu, arginfo_gtkapplication_get_app_menu, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, set_app_menu, arginfo_gtkapplication_set_app_menu, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, get_menubar, arginfo_gtkapplication_get_menubar, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, set_menubar, arginfo_gtkapplication_set_menubar, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, inhibit, arginfo_gtkapplication_inhibit, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, uninhibit, arginfo_gtkapplication_uninhibit, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, is_inhibited, arginfo_gtkapplication_is_inhibited, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, get_window_by_id, arginfo_gtkapplication_get_window_by_id, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, get_active_window, arginfo_gtkapplication_get_active_window, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, list_action_descriptions, arginfo_gtkapplication_list_action_descriptions, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, get_accels_for_action, arginfo_gtkapplication_get_accels_for_action, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, get_actions_for_accel, arginfo_gtkapplication_get_actions_for_accel, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, set_accels_for_action, arginfo_gtkapplication_set_accels_for_action, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, prefers_app_menu, arginfo_gtkapplication_prefers_app_menu, ZEND_ACC_PUBLIC)
+	PHP_ME(GtkApplication, get_menu_by_id, arginfo_gtkapplication_get_menu_by_id, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkApplication, window_new, arginfo_gtkapplication_window_new, ZEND_ACC_PUBLIC)
-	/*PHP_ME(GtkApplication, run, arginfo_gtkapplication_run, ZEND_ACC_PUBLIC)*/
-	// PHP_ME(GtkWindow, __construct, arginfo_gtkwindow_construct, ZEND_ACC_PUBLIC)
-	// PHP_ME(GtkWindow, __construct, arginfo_gtkwindow_construct, ZEND_ACC_PUBLIC)
-	// PHP_ME(GtkWindow, __construct, arginfo_gtkwindow_construct, ZEND_ACC_PUBLIC)
-
 	PHP_FE_END
 };
 

@@ -50,9 +50,8 @@ class Run
 		// var_dump($this->parser->enums);
 		// die();
 
-
-
-
+		$types = \Type::getInstance()->parseEnums($this->parser);
+		
 
 		// Loop all constructors
 		foreach($this->parser->constructors as $method) {
@@ -88,13 +87,13 @@ class Run
 
 
 
-		$module = "G";
+		$module = "Gtk";
 
 		// Loop classes for parse
 		foreach($this->classes as $class) {
 
 
-			if($class->getName() != "GApplication") {
+			if($class->getName() != "GtkApplication") {
 				continue;
 			}
 
@@ -107,8 +106,6 @@ class Run
 			$header_file = $dir . $class->getName() . ".h";
 			$code_file = $dir . $class->getName() . ".c";
 
-
-die($class->getCodeContent());
 
 			file_put_contents($header_file, $class->getHeaderContent());
 			file_put_contents($code_file, $class->getCodeContent());
@@ -125,6 +122,7 @@ die($class->getCodeContent());
 }
 
 // new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/atk_methods.defs");
-new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gio_methods.defs");
+// new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gio_methods.defs");
 // new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gdk.defs");
-// new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gtk_methods.defs");
+
+new Run("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gtk_methods.defs");

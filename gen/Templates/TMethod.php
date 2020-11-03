@@ -117,8 +117,8 @@ class TMethod
 
 		
 
-		if($this->_construct) 
-			die($this->_output_c . "\n");
+		// if($this->_construct) 
+		// 	die($this->_output_c . "\n");
 
 	}
 
@@ -132,9 +132,20 @@ class TMethod
 		$z_params = "";
 		$c_params = "";
 
+		$type = \Type::getInstance()->getType($param[0]);
+		
 		// -------------------
+		
+		// Enum
+		if($type->is_enum) {
+			$vars .= "\tint " . $param[1] . ";\n";
+
+			$z_params = "\t\tZ_PARAM_LONG(" . $param[1] . ")\n";
+
+		}
+
 		// String
-		if(($param[0] == "const-char*") || ($param[0] == "const-gchar*")) {
+		else if(($param[0] == "const-char*") || ($param[0] == "const-gchar*")) {
 			$vars .= "\tchar * " . $param[1] . ";\n";
 			$vars .= "\tsize_t " . $param[1] . "_len;\n";
 
@@ -204,7 +215,9 @@ class TMethod
 		$output .= $object->c_name . "(";
 
 		if(!$this->_construct) {
-			$type = new \Type($object->of_object);
+
+			$type = \Type::getInstance()->getType($object->of_object);
+
 			$output .= $type->macro . "(obj->gtk4_gpointer), ";
 		}
 

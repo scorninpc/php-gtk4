@@ -10,230 +10,261 @@ class Type
 	
 	public $is_object;
 
-	public function __construct($type)
+	static private $instance;
+	static private $types;
+	static private $enums;
+
+
+	public function getInstance()
 	{
-		$this->type = $type;
-
-		list($this->type, $this->pointers, $this->const) = $this->_normalize($type);
-
-		if($type == "none") {
-			return NULL;
+		if(!self::$instance) {
+			self::$instance = new self;
 		}
+
+		return self::$instance;
+	}
+
+	public function parseEnums($parser)
+	{
+
+		foreach($parser->enums as $enum) {
+			$name = $enum->c_name;
+
+			self::$enums[$name]	 = [
+				'module' => $enum->in_module
+			];
+		}
+	}
+
+	public function getTypes()
+	{
+		return self::$types;
+	}
+
+	public function getEnums()
+	{
+		return self::$enums;
+	}
+
+	public function getType($type)
+	{
+
+		$this->type = NULL;
+		$this->pointers = NULL;
+		$this->const = NULL;
+		$this->macro = NULL;
+		$this->is_enum = NULL;
+		$this->php_type = NULL;
+		$this->c_type = NULL;
+
+
+		if($type == NULL) {
+			return $this;
+		}
+
+		// Verify if type are parsed yet
+		if(isset(self::$types[$type])) {
+
+			return [
+				'type' => $type,
+				'pointers' => self::$types[$type]['pointers'],
+				'const' => self::$types[$type]['const'],
+				'macro' => self::$types[$type]['macro'],
+				'is_enum' => self::$types[$type]['is_enum'],
+				'php_type' => self::$types[$type]['php_type'],
+				'c_type' => self::$types[$type]['c_type'],
+			];
+
+			$this->type = $type;
+			$this->pointers = self::$types[$type]['pointers'];
+			$this->const = self::$types[$type]['const'];
+			$this->macro = self::$types[$type]['macro'];
+			$this->is_enum = self::$types[$type]['is_enum'];
+			$this->php_type = self::$types[$type]['php_type'];
+			$this->c_type = self::$types[$type]['c_type'];
+
+			return $this;
+		}
+
+
+		// Normalize the string to get pointers, if constant and clean type
+		$a = $type;
+		list($type, $this->pointers, $this->const) = $this->_normalize($type);
+
+		// default values
+		self::$types[$type]['name'] = $type;
+		self::$types[$type]['pointers'] = $this->pointers;
+		self::$types[$type]['const'] = $this->const;
+		self::$types[$type]['is_enum'] = FALSE;
+
+		// None
+		if($type == "none") {
+			self::$types[$type]['name'] = NULL;
+			self::$types[$type]['pointers'] = NULL;
+			self::$types[$type]['const'] = NULL;
+			self::$types[$type]['php_type'] = "NULL";
+			
+		}
+
+		// Verify if is enum
+		else if(isset(self::$enums[$type])) {
+			self::$types[$type]['is_enum'] = TRUE;
+			self::$types[$type]['macro'] = NULL;
+			self::$types[$type]['php_type'] = "LONG";
+			self::$types[$type]['c_type'] = "zend_long";
+			
+		}
+
+		// Gtk objects
 		else if(substr($type, 0, 3) == "Gtk") {
 
-			$this->is_object = TRUE;
-			$this->macro = "GTK_" . strtoupper(substr($type, 3));
-			
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'namespace' => "Gtk",
-				'class' => substr($type, 3),
-				
-			];
+			self::$types[$type]['is_object'] = TRUE;
+			self::$types[$type]['macro'] = $this->_createMacro($type);
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['namespace'] = "Gtk";
+			self::$types[$type]['class'] = substr($type, 3);
+			self::$types[$type]['c_type'] = NULL;
+			self::$types[$type]['php_type'] = "OBJ";
 
 		}
+
+		// Gdk objects
 		else if(substr($type, 0, 3) == "Gdk") {
 
-			$this->is_object = TRUE;
-			$this->macro = "GDK_" . strtoupper(substr($type, 3));
+			self::$types[$type]['is_object'] = TRUE;
+			self::$types[$type]['macro'] = $this->_createMacro($type);
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['namespace'] = "Gdk";
+			self::$types[$type]['class'] = substr($type, 3);
+			self::$types[$type]['c_type'] = NULL;
+			self::$types[$type]['php_type'] = "OBJ";
 			
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'namespace' => "Gdk",
-				'class' => substr($type, 3),
-				
-			];
-
 		}
+
+		// Atk objects
 		else if(substr($type, 0, 3) == "Atk") {
 
-			$this->is_object = TRUE;
-			$this->macro = "ATK_" . strtoupper(substr($type, 3));
-			
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'namespace' => "Atk",
-				'class' => substr($type, 3),
-				
-			];
+			self::$types[$type]['is_object'] = TRUE;
+			self::$types[$type]['macro'] = $this->_createMacro($type);
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['namespace'] = "Gtk";
+			self::$types[$type]['class'] = substr($type, 3);
+			self::$types[$type]['c_type'] = NULL;
+			self::$types[$type]['php_type'] = "OBJ";
 
 		}
 
+		// G objects
 		else if(substr($type, 0, 1) == "G") {
 
-
-
-			$this->is_object = TRUE;
-			$this->macro = "G_" . strtoupper(substr($type, 1));
-			
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'namespace' => "G",
-				'class' => substr($type, 1),
-				
-			];
-
-			
+			self::$types[$type]['is_object'] = TRUE;
+			self::$types[$type]['macro'] = $this->_createMacro($type);
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['namespace'] = "G";
+			self::$types[$type]['class'] = substr($type, 1);
+			self::$types[$type]['c_type'] = NULL;
+			self::$types[$type]['php_type'] = "OBJ";
 
 		}
-		else if($type == "void") {
 
-			$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'c_type' => "void"
-			];
-			
-		}
-		else if($type == "gpointer") {
-
-			$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'c_type' => "gpointer"
-			];
-			
-		}
-		else if($type == "guchar") {
-
-			$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'c_type' => "unsigned char"
-			];
-			
-		}
-		else if(($type == "guint") || ($type == "gsize") || ($type == "gulong") || ($type == "guint8") || ($type == "guint16") || ($type == "guint32") || ($type == "guint64")) {
-
-			$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'c_type' => "unsigned int"
-			];
-			
-		}
-		else if(($type == "gint") || ($type == "int") || ($type == "gssize") || ($type == "gint8") || ($type == "gint16") || ($type == "gint32") || ($type == "gint64") || ($type == "goffset")) {
-
-			$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'c_type' => "int"
-			];
-			
-		}
-		else if(($type == "double") || ($type == "gdouble") || ($type == "float") || ($type == "gfloat")) {
-
-			$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'c_type' => "float"
-			];
-			
-		}
-		else if(($type == "gchar") || ($type == "char")) {
-
-			$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'c_type' => "char"
-			];
-			
-		}
-		else if($type == "gboolean") {
-
-			$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'c_type' => "bool"
-			];
-			
-		}
-		else if(($type == "gchar-const") || ($type == "gchar-const-const")) {
-
-			$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'c_type' => "char"
-			];
-		}
-		else if($type == "va_list") {
-
-			$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => TRUE,
-				'name' => $type,
-				'c_type' => "va_list"
-			];
-		}
-
-		else if($type == "volatile-guint32") return NULL;
-		else if($type == "pid_t") return NULL;
-		else if($type == "uid_t") return NULL;
-
+		// C types
 		else {
-			var_dump($type);
-			die();
 
+			self::$types[$type]['is_object'] = FALSE;
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['macro'] = NULL;
+			self::$types[$type]['namespace'] = NULL;
+			self::$types[$type]['class'] = NULL;
+			
+			// 
+			if($type == "void") {
+				self::$types[$type]['c_type'] = "void";
+				self::$types[$type]['php_type'] = "NULL";
+			}
+			else if($type == "gpointer") {
+				self::$types[$type]['c_type'] = "gpointer";
+				self::$types[$type]['php_type'] = "OBJ";
+			}
+			else if($type == "guchar") {
+				self::$types[$type]['c_type'] = "unsigned char";
+				self::$types[$type]['php_type'] = "STRING";
+			}
+			else if(($type == "guint") || ($type == "gsize") || ($type == "gulong") || ($type == "guint8") || ($type == "guint16") || ($type == "guint32") || ($type == "guint64")) {
+				self::$types[$type]['c_type'] = "zend_long";
+				self::$types[$type]['php_type'] = "LONG";
+			}
+			else if(($type == "gint") || ($type == "int") || ($type == "gssize") || ($type == "gint8") || ($type == "gint16") || ($type == "gint32") || ($type == "gint64") || ($type == "goffset")) {
+				self::$types[$type]['c_type'] = "zend_long";
+				self::$types[$type]['php_type'] = "LONG";				
+			}
+			else if(($type == "double") || ($type == "gdouble") || ($type == "float") || ($type == "gfloat")) {
+				self::$types[$type]['c_type'] = "float";
+				self::$types[$type]['php_type'] = "DOUBLE";
+			}
+			else if(($type == "gchar") || ($type == "char")) {
+				self::$types[$type]['c_type'] = "char";
+				self::$types[$type]['php_type'] = "STRING";			
+			}
+			else if($type == "gboolean") {
+				self::$types[$type]['c_type'] = "bool";
+				self::$types[$type]['php_type'] = "BOOLEAN";			
+			}
+			else if(($type == "gchar-const") || ($type == "gchar-const-const") || ($type == "gchar*-const")) {
+				self::$types[$type]['c_type'] = "char";
+				self::$types[$type]['php_type'] = "STRING";
+			}
+			else if($type == "va_list") {
+				self::$types[$type]['is_va_list'] = TRUE;
+				self::$types[$type]['c_type'] = "va_list";
+				self::$types[$type]['php_type'] = "ARR";
+			}
 
-$this->is_object = FALSE;
-			return [
-				
-				'is_va_list' => FALSE,
-				'name' => $type,
-				'c_type' => $type
-			];
+			else if($type == "volatile-guint32") return NULL;
+			else if($type == "pid_t") return NULL;
+			else if($type == "uid_t") return NULL;
+
+			// Die for debug
+			else { die("Type $type not found [Types.php line " . __line__ . "]"); }
 		}
 
-		die("OK\n");
+		// Call the same
+		return $this->getType($type);
 	}
 
 	/**
 	 *
 	 */
-	private function _normalize($type, $pointers=0) {
+	private function _normalize($type, $pointers=0, $const=FALSE) 
+	{
+		// Remove const
+		if(strpos("const", $type) !== 0) {
+
+			$const = TRUE;
+
+			$type = str_replace("const", "", str_replace("const-", "", str_replace("-const", "", $type)));
+		}
+
 		if(substr($type, -1) == "*") {
 			$pointers++;
 
 			$type = substr($type, 0, strlen($type)-1);
 			
-			$type = $this->_normalize($type, $pointers);
-		}
-
-		if(substr($type, 0, 6) == "const-") {
-			$type = substr($type, 6);
-			$const = TRUE;
-		}
-		else {
-			$const = FALSE;
+			list($type, $pointers, $const) = $this->_normalize($type, $pointers, $const);
 		}
 
 		return [$type, $pointers, $const];
+	}
+
+	/**
+	 *
+	 */
+	private function _createMacro($class_name)
+	{
+		$pieces = preg_split('/(?=[A-Z])/', trim($class_name));
+		unset($pieces[0]);
+
+		$macro = strtoupper(implode("_", $pieces));
+
+		return $macro;
 	}
 }

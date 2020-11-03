@@ -40,3 +40,9 @@ https://github.com/p1ncet/obcast/blob/c0763015e1e85d150516de1cae2205bf17d513a9/o
 	zend_objects_new
 	object_properties_init
 	create_object
+
+
+https://www.zend.com/basic-php-structures
+	Z_PARAM_OBJECT_OF_CLASS
+	Z_PARAM_OBJECT
+	Z_PARAM_*

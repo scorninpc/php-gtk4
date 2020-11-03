@@ -7,8 +7,6 @@
 	========================================================================== */
 zend_object *g_object_create_object(zend_class_entry *class_type) 
 {
-	php_printf("\n\t++ Creating\n");
-
 	gtk4_gobject_object *intern = ecalloc(1, sizeof(gtk4_gobject_object));
 	memset(intern, 0, sizeof(gtk4_gobject_object));
 
