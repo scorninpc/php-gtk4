@@ -234,9 +234,15 @@ class gtkClass
 					$output_c .= "obj->gtk4_gpointer = (gpointer *)";
 				}
 				else if($method->return_type != "none") {
+					
 					// If return is an object
 					if($return_type['php_type'] == "OBJ") {
 						$output_c .= sprintf("gpointer *ret = (gpointer *)");
+					}
+
+					// List
+					else if($return_type['php_type'] == "GList") {
+						$output_c .= sprintf("GList *ret = ");
 					}
 					// else {
 					// 	$output_c .= sprintf("gpointer *ret = (gpointer *)");
@@ -274,6 +280,30 @@ class gtkClass
 				// Parse the return
 				if(isset($method->is_constructor_of)) {
 				}
+
+				// Return a array
+				else if($return_type['php_type'] == "GList") {
+					$output_c .= sprintf("	zval ret_arr;\n");
+					$output_c .= sprintf("	array_init(&ret_arr);\n\n");
+
+					$output_c .= sprintf("	int ret_arr_len = g_list_length(ret);\n");
+					$output_c .= sprintf("	for (int i = 0; i < ret_arr_len; i++) {\n");
+					$output_c .= sprintf("		gpointer element_data = g_list_nth_data(ret, i);\n\n");
+
+					$output_c .= sprintf("		char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(element_data));\n");
+					$output_c .= sprintf("		zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);\n");
+					$output_c .= sprintf("		gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);\n");
+					$output_c .= sprintf("		intern->gtk4_gpointer = (gpointer *)element_data;\n\n");
+
+					$output_c .= sprintf("		zval obj1;\n");
+					$output_c .= sprintf("		ZVAL_OBJ(&obj1, &intern->std);\n");
+					$output_c .= sprintf("		add_next_index_zval(&ret_arr, &obj1);\n");
+					$output_c .= sprintf("	}\n\n");
+					$output_c .= sprintf("	RETURN_ARR(Z_ARRVAL(ret_arr));\n");
+
+				}
+
+				// Return an object
 				else if($return_type['php_type'] == "OBJ") {
 					$output_c .= sprintf("	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));\n");
 					$output_c .= sprintf("	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);\n");
@@ -282,6 +312,11 @@ class gtkClass
 
 					$output_c .= sprintf("	RETURN_OBJ(&intern->std);\n");
 				}
+
+
+// if($method->c_name == "gtk_application_get_windows") {
+// 	die($output_c);
+// }
 
 
 			}

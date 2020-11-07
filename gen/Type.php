@@ -155,6 +155,19 @@ class Type
 		}
 
 		// G objects
+		else if($type == "GList") {
+
+			self::$types[$type]['is_object'] = FALSE;
+			self::$types[$type]['macro'] = NULL;
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['namespace'] = NULL;
+			self::$types[$type]['class'] = NULL;
+			self::$types[$type]['c_type'] = NULL;
+			self::$types[$type]['php_type'] = "GList";
+
+		}
+
+		// G objects
 		else if(substr($type, 0, 1) == "G") {
 
 			self::$types[$type]['is_object'] = TRUE;
