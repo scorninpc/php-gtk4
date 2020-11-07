@@ -31,7 +31,8 @@ class Type
 			$name = $enum->c_name;
 
 			self::$enums[$name]	 = [
-				'module' => $enum->in_module
+				'module' => $enum->in_module,
+				'namespace' => $this->_createNamespace($name),
 			];
 		}
 	}
@@ -279,5 +280,18 @@ class Type
 		$macro = strtoupper(implode("_", $pieces));
 
 		return $macro;
+	}
+
+	/**
+	 *
+	 */
+	public function _createNamespace($class_name)
+	{
+		$pieces = preg_split('/(?=[A-Z])/', trim($class_name));
+		unset($pieces[0]);
+
+		$namespace = implode("\\", $pieces);
+
+		return $namespace;
 	}
 }

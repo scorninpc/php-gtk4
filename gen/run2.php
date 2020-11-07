@@ -7,6 +7,25 @@ $ignore_list = include(dirname(__FILE__) . "/ignore.php");
 $override_list = include(dirname(__FILE__) . "/override.php");
 
 
+
+class Merge_Parser extends Defs_Parser {
+	function handle_include()
+	{
+		/* pass */
+	}
+}
+
+
+
+
+// ------------------
+// Merge GTK defs
+
+
+
+
+
+
 $classes = [];
 
 // ------------------
@@ -21,7 +40,16 @@ $atk_parser->start_parsing();
 
 // ------------------
 // G
-$g_parser = new Defs_Parser("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gio_methods.defs");
+$new_defs = new Merge_Parser("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gio_methods.defs");
+$old_defs = new Merge_Parser("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gio_enums.defs");
+$new_defs->start_parsing();
+$old_defs->start_parsing(TRUE);
+$new_defs->merge($old_defs, TRUE);
+$fp = fopen("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gio.defs", 'wa');
+$new_defs->write_defs($fp);
+
+
+$g_parser = new Defs_Parser("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gio.defs");
 $g_parser->start_parsing();
 
 \Type::getInstance()->parseEnums($g_parser);
@@ -29,9 +57,75 @@ $g_parser->start_parsing();
 
 
 
+
+
+
+
+// ------------------
+// Run constants
+$output_c = "";
+$enums = \Type::getInstance()->getEnums();
+foreach($g_parser->enums as $enum) {
+	// echo $enum->c_name . "\n";
+	if($enum->c_name != "GApplicationFlags") {
+		continue;
+	}
+
+
+	$output_c .= sprintf("	zend_class_entry tmp_test_ce;\n");
+	$output_c .= sprintf("	INIT_CLASS_ENTRY(tmp_test_ce, \"%s\", NULL);\n", \Type::getInstance()->_createNamespace(\Type::getInstance()->_createNamespace($enum->c_name)));
+	$output_c .= sprintf("	zend_class_entry *c2 = zend_register_internal_class(&tmp_test_ce);\n");
+	$output_c .= sprintf("	c2->ce_flags |= ZEND_ACC_FINAL;\n");
+
+
+
+	
+	
+	
+
+	foreach($enum->values as $value) {
+		$output_c .= sprintf("	zend_declare_class_constant_long(c2, \"%s\", sizeof(\"%s\") - 1, %s);\n", str_replace("-", "_", strtoupper($value[0])), str_replace("-", "_", strtoupper($value[0])), $value[1]);
+	}
+
+	var_dump($enum);
+	
+}
+
+die("\n\n" . $output_c . "\n");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ------------------
 // Gtk
-$gtk_parser = new Defs_Parser("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gtk_methods.defs");
+// $gtk_parser = new Defs_Parser("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gtk_methods.defs");
+// $gtk_parser->start_parsing();
+
+$new_defs = new Merge_Parser("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gtk_methods.defs");
+$old_defs = new Merge_Parser("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gtk_enums.defs");
+$new_defs->start_parsing();
+$old_defs->start_parsing(TRUE);
+$new_defs->merge($old_defs, TRUE);
+$fp = fopen("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gtk.defs", 'wa');
+$new_defs->write_defs($fp);
+
+
+$gtk_parser = new Defs_Parser("/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gen/def/gtk.defs");
 $gtk_parser->start_parsing();
 
 \Type::getInstance()->parseEnums($gtk_parser);
@@ -66,6 +160,7 @@ foreach(array_merge($gtk_parser->methods, $gtk_parser->constructors) as $method)
 
 
 
+
 // ------------------
 // Run all classes for parse
 foreach($classes as $class) {
@@ -76,6 +171,20 @@ foreach($classes as $class) {
 
 	$class->parse($override_list);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -331,10 +440,10 @@ class gtkClass
 			$output_c .= "}\n\n";
 		}
 
-		echo "\n\n\n";
-		echo $output_c;
+		// echo "\n\n\n";
+		// echo $output_c;
 
-		die("\n\t-- \n");
+		// die("\n\t-- \n");
 	}
 }
 

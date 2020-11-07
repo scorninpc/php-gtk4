@@ -1,3 +1,4 @@
+
 #include "GtkApplication.h"
 
 PHP_METHOD(GtkApplication, add_window) {
@@ -16,20 +17,122 @@ PHP_METHOD(GtkApplication, add_window) {
 
 }
 
-PHP_METHOD(GtkApplication, remove_window) {
-	zend_object * window;
+PHP_METHOD(GtkApplication, get_accels_for_action) {
+	char * detailed_action_name;
+	size_t detailed_action_name_len;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJ(window)
+		Z_PARAM_STRING(detailed_action_name, detailed_action_name_len)
 	ZEND_PARSE_PARAMETERS_END();
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gtk4_gobject_object *gtk4_window = (gtk4_gobject_object*)((char*)(window) - XtOffsetOf(gtk4_gobject_object, std));
+	gtk_application_get_accels_for_action(GTK_APPLICATION(obj->gtk4_gpointer), detailed_action_name);
 
+}
 
-	gtk_application_remove_window(GTK_APPLICATION(obj->gtk4_gpointer), GTK_WINDOW(gtk4_window->gtk4_gpointer));
+PHP_METHOD(GtkApplication, get_actions_for_accel) {
+	char * accel;
+	size_t accel_len;
 
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STRING(accel, accel_len)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk_application_get_actions_for_accel(GTK_APPLICATION(obj->gtk4_gpointer), accel);
+
+}
+
+PHP_METHOD(GtkApplication, get_active_window) {
+
+	ZEND_PARSE_PARAMETERS_START(0, 0)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gpointer *ret = (gpointer *)gtk_application_get_active_window(GTK_APPLICATION(obj->gtk4_gpointer));
+
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
+	intern->gtk4_gpointer = ret;
+
+	RETURN_OBJ(&intern->std);
+}
+
+PHP_METHOD(GtkApplication, get_app_menu) {
+
+	ZEND_PARSE_PARAMETERS_START(0, 0)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gpointer *ret = (gpointer *)gtk_application_get_app_menu(GTK_APPLICATION(obj->gtk4_gpointer));
+
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
+	intern->gtk4_gpointer = ret;
+
+	RETURN_OBJ(&intern->std);
+}
+
+PHP_METHOD(GtkApplication, get_menu_by_id) {
+	char * id;
+	size_t id_len;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STRING(id, id_len)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gpointer *ret = (gpointer *)gtk_application_get_menu_by_id(GTK_APPLICATION(obj->gtk4_gpointer), id);
+
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
+	intern->gtk4_gpointer = ret;
+
+	RETURN_OBJ(&intern->std);
+}
+
+PHP_METHOD(GtkApplication, get_menubar) {
+
+	ZEND_PARSE_PARAMETERS_START(0, 0)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gpointer *ret = (gpointer *)gtk_application_get_menubar(GTK_APPLICATION(obj->gtk4_gpointer));
+
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
+	intern->gtk4_gpointer = ret;
+
+	RETURN_OBJ(&intern->std);
+}
+
+PHP_METHOD(GtkApplication, get_window_by_id) {
+	zend_long id;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(id)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gpointer *ret = (gpointer *)gtk_application_get_window_by_id(GTK_APPLICATION(obj->gtk4_gpointer), id);
+
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
+	intern->gtk4_gpointer = ret;
+
+	RETURN_OBJ(&intern->std);
 }
 
 PHP_METHOD(GtkApplication, get_windows) {
@@ -61,72 +164,6 @@ PHP_METHOD(GtkApplication, get_windows) {
 	RETURN_ARR(Z_ARRVAL(ret_arr));
 }
 
-PHP_METHOD(GtkApplication, get_app_menu) {
-
-	ZEND_PARSE_PARAMETERS_START(0, 0)
-	ZEND_PARSE_PARAMETERS_END();
-
-	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
-
-	gpointer *ret = (gpointer *)gtk_application_get_app_menu(GTK_APPLICATION(obj->gtk4_gpointer));
-
-	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
-	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
-	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
-	intern->gtk4_gpointer = ret;
-
-	RETURN_OBJ(&intern->std);
-}
-
-PHP_METHOD(GtkApplication, set_app_menu) {
-	zend_object * app_menu;
-
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJ(app_menu)
-	ZEND_PARSE_PARAMETERS_END();
-
-	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
-
-	gtk4_gobject_object *gtk4_app_menu = (gtk4_gobject_object*)((char*)(app_menu) - XtOffsetOf(gtk4_gobject_object, std));
-
-
-	gtk_application_set_app_menu(GTK_APPLICATION(obj->gtk4_gpointer), G_MENU_MODEL(gtk4_app_menu->gtk4_gpointer));
-
-}
-
-PHP_METHOD(GtkApplication, get_menubar) {
-
-	ZEND_PARSE_PARAMETERS_START(0, 0)
-	ZEND_PARSE_PARAMETERS_END();
-
-	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
-
-	gpointer *ret = (gpointer *)gtk_application_get_menubar(GTK_APPLICATION(obj->gtk4_gpointer));
-
-	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
-	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
-	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
-	intern->gtk4_gpointer = ret;
-
-	RETURN_OBJ(&intern->std);
-}
-
-PHP_METHOD(GtkApplication, set_menubar) {
-	zend_object * menubar;
-
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJ(menubar)
-	ZEND_PARSE_PARAMETERS_END();
-
-	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
-
-	gtk4_gobject_object *gtk4_menubar = (gtk4_gobject_object*)((char*)(menubar) - XtOffsetOf(gtk4_gobject_object, std));
-
-
-	gtk_application_set_menubar(GTK_APPLICATION(obj->gtk4_gpointer), G_MENU_MODEL(gtk4_menubar->gtk4_gpointer));
-
-}
-
 PHP_METHOD(GtkApplication, inhibit) {
 	zend_object * window;
 	zend_long flags;
@@ -148,19 +185,6 @@ PHP_METHOD(GtkApplication, inhibit) {
 
 }
 
-PHP_METHOD(GtkApplication, uninhibit) {
-	zend_long cookie;
-
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_LONG(cookie)
-	ZEND_PARSE_PARAMETERS_END();
-
-	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
-
-	gtk_application_uninhibit(GTK_APPLICATION(obj->gtk4_gpointer), cookie);
-
-}
-
 PHP_METHOD(GtkApplication, is_inhibited) {
 	zend_long flags;
 
@@ -174,42 +198,6 @@ PHP_METHOD(GtkApplication, is_inhibited) {
 
 }
 
-PHP_METHOD(GtkApplication, get_window_by_id) {
-	zend_long id;
-
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_LONG(id)
-	ZEND_PARSE_PARAMETERS_END();
-
-	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
-
-	gpointer *ret = (gpointer *)gtk_application_get_window_by_id(GTK_APPLICATION(obj->gtk4_gpointer), id);
-
-	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
-	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
-	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
-	intern->gtk4_gpointer = ret;
-
-	RETURN_OBJ(&intern->std);
-}
-
-PHP_METHOD(GtkApplication, get_active_window) {
-
-	ZEND_PARSE_PARAMETERS_START(0, 0)
-	ZEND_PARSE_PARAMETERS_END();
-
-	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
-
-	gpointer *ret = (gpointer *)gtk_application_get_active_window(GTK_APPLICATION(obj->gtk4_gpointer));
-
-	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
-	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
-	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
-	intern->gtk4_gpointer = ret;
-
-	RETURN_OBJ(&intern->std);
-}
-
 PHP_METHOD(GtkApplication, list_action_descriptions) {
 
 	ZEND_PARSE_PARAMETERS_START(0, 0)
@@ -221,31 +209,30 @@ PHP_METHOD(GtkApplication, list_action_descriptions) {
 
 }
 
-PHP_METHOD(GtkApplication, get_accels_for_action) {
-	char * detailed_action_name;
-	size_t detailed_action_name_len;
+PHP_METHOD(GtkApplication, prefers_app_menu) {
 
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STRING(detailed_action_name, detailed_action_name_len)
+	ZEND_PARSE_PARAMETERS_START(0, 0)
 	ZEND_PARSE_PARAMETERS_END();
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gtk_application_get_accels_for_action(GTK_APPLICATION(obj->gtk4_gpointer), detailed_action_name);
+	gtk_application_prefers_app_menu(GTK_APPLICATION(obj->gtk4_gpointer));
 
 }
 
-PHP_METHOD(GtkApplication, get_actions_for_accel) {
-	char * accel;
-	size_t accel_len;
+PHP_METHOD(GtkApplication, remove_window) {
+	zend_object * window;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STRING(accel, accel_len)
+		Z_PARAM_OBJ(window)
 	ZEND_PARSE_PARAMETERS_END();
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gtk_application_get_actions_for_accel(GTK_APPLICATION(obj->gtk4_gpointer), accel);
+	gtk4_gobject_object *gtk4_window = (gtk4_gobject_object*)((char*)(window) - XtOffsetOf(gtk4_gobject_object, std));
+
+
+	gtk_application_remove_window(GTK_APPLICATION(obj->gtk4_gpointer), GTK_WINDOW(gtk4_window->gtk4_gpointer));
 
 }
 
@@ -283,35 +270,49 @@ PHP_METHOD(GtkApplication, set_accels_for_action) {
 	gtk_application_set_accels_for_action(GTK_APPLICATION(obj->gtk4_gpointer), detailed_action_name, c_accels);
 }
 
-PHP_METHOD(GtkApplication, prefers_app_menu) {
+PHP_METHOD(GtkApplication, set_app_menu) {
+	zend_object * app_menu;
 
-	ZEND_PARSE_PARAMETERS_START(0, 0)
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ(app_menu)
 	ZEND_PARSE_PARAMETERS_END();
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gtk_application_prefers_app_menu(GTK_APPLICATION(obj->gtk4_gpointer));
+	gtk4_gobject_object *gtk4_app_menu = (gtk4_gobject_object*)((char*)(app_menu) - XtOffsetOf(gtk4_gobject_object, std));
+
+
+	gtk_application_set_app_menu(GTK_APPLICATION(obj->gtk4_gpointer), G_MENU_MODEL(gtk4_app_menu->gtk4_gpointer));
 
 }
 
-PHP_METHOD(GtkApplication, get_menu_by_id) {
-	char * id;
-	size_t id_len;
+PHP_METHOD(GtkApplication, set_menubar) {
+	zend_object * menubar;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STRING(id, id_len)
+		Z_PARAM_OBJ(menubar)
 	ZEND_PARSE_PARAMETERS_END();
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gpointer *ret = (gpointer *)gtk_application_get_menu_by_id(GTK_APPLICATION(obj->gtk4_gpointer), id);
+	gtk4_gobject_object *gtk4_menubar = (gtk4_gobject_object*)((char*)(menubar) - XtOffsetOf(gtk4_gobject_object, std));
 
-	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
-	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
-	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
-	intern->gtk4_gpointer = ret;
 
-	RETURN_OBJ(&intern->std);
+	gtk_application_set_menubar(GTK_APPLICATION(obj->gtk4_gpointer), G_MENU_MODEL(gtk4_menubar->gtk4_gpointer));
+
+}
+
+PHP_METHOD(GtkApplication, uninhibit) {
+	zend_long cookie;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(cookie)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk_application_uninhibit(GTK_APPLICATION(obj->gtk4_gpointer), cookie);
+
 }
 
 PHP_METHOD(GtkApplication, window_new) {
@@ -343,7 +344,7 @@ PHP_METHOD(GtkApplication, __construct) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	obj->gtk4_gpointer = (gpointer *)gtk_application_new(application_id, G_APPLICATION_FLAGS_NONE);
+	obj->gtk4_gpointer = (gpointer *)gtk_application_new(application_id, flags);
 
 	if(obj->gtk4_gpointer == NULL) php_printf("\n\nERROR ON OBJECT CREATION [GtkApplication] (@todo: add exception)\n\n");
 }

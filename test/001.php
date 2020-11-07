@@ -3,41 +3,21 @@
 namespace Test;
 
 use Gtk;
+use G;
 
-$app = new Gtk\Application("testbruno.com.br",1);
+$app = new Gtk\Application("testbruno.com.br", G\Application\Flags::NONE);
 
 function activated($app=NULL, $b=NULL, $c=NULL)
 {
 	$window = $app->window_new();
 	$window->set_title("Janela 1");
-	// $window->show_all();
-
-	// $window = $app->window_new();
-	// $window->set_title("Janela 2");
-
-	// $window = $app->window_new();
-	// $window->set_title("Janela 3");
-
-	// $window = $app->window_new();
-	// $window->set_title("Janela 4");
 
 	$windows = $app->get_windows();
 
-
-	// $window = $app->window_new();
-	// $window->set_title("Janela 2");
 	$windows[0]->connect("destroy", function($window) {
 		var_dump($window);
 	});
 	$windows[0]->show_all();
-	// $window->show_all();
-
-	// $obj = new Gtk\Window();
-	// $obj->set_title("TEST GTK4");
-
-	// $app->add_window($obj);
-
-	// $obj->show_all();
 }
 
 $app->connect("activate", "Test\activated");

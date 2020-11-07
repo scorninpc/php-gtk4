@@ -16,10 +16,10 @@
 #include "gtk4.h"
 
 // ----------------
-static zend_class_entry *gtk4_exception_ce = NULL;
-static const zend_function_entry gtk4_exception_functions[] = {
-	PHP_FE_END
-};	
+// static zend_class_entry *gtk4_exception_ce = NULL;
+// static const zend_function_entry gtk4_exception_functions[] = {
+// 	PHP_FE_END
+// };	
 
 /**
  * Old php versions
@@ -37,8 +37,9 @@ static PHP_MINIT_FUNCTION(gtk4)
 {
 	// Exception class
 	zend_class_entry tmp_gtk4_exception_ce;
-	INIT_CLASS_ENTRY(tmp_gtk4_exception_ce, "Gtk\\Exception", gtk4_exception_functions);
-	gtk4_exception_ce = zend_register_internal_class_ex(&tmp_gtk4_exception_ce, zend_ce_exception);
+	INIT_CLASS_ENTRY(tmp_gtk4_exception_ce, "Gtk\\Exception", NULL);
+	// gtk4_exception_ce = zend_register_internal_class_ex(&tmp_gtk4_exception_ce, zend_ce_exception);
+	zend_register_internal_class_ex(&tmp_gtk4_exception_ce, zend_ce_exception);
 
 	// Create class
 	zend_class_entry tmp_g_object_ce;
@@ -69,6 +70,19 @@ static PHP_MINIT_FUNCTION(gtk4)
 	zend_class_entry tmp_gtkapplicationwindow_ce;
 	INIT_CLASS_ENTRY(tmp_gtkapplicationwindow_ce, "Gtk\\Application\\Window", gtkapplicationwindow_functions);
 	gtk4_gtkapplicationwindow_ce = zend_register_internal_class_ex(&tmp_gtkapplicationwindow_ce, gtk4_gtk_window_ce);	// extends Widget
+
+
+
+	zend_class_entry tmp_test_ce;
+	INIT_CLASS_ENTRY(tmp_test_ce, "G\\Application\\Flags", NULL);
+	zend_class_entry *c2 = zend_register_internal_class(&tmp_test_ce);
+	c2->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(c2, "NONE", sizeof("NONE") - 1, G_APPLICATION_FLAGS_NONE);
+	zend_declare_class_constant_long(c2, "IS_LAUNCHER", sizeof("IS_LAUNCHER") - 1, G_APPLICATION_IS_LAUNCHER);
+	zend_declare_class_constant_long(c2, "NON_UNIQUE", sizeof("NON_UNIQUE") - 1, G_APPLICATION_NON_UNIQUE);
+	zend_declare_class_constant_long(c2, "CAN_OVERRIDE_APP_ID", sizeof("CAN_OVERRIDE_APP_ID") - 1, G_APPLICATION_CAN_OVERRIDE_APP_ID);
+	// REGISTER_LONG_CONSTANT("G\\APPLICATION\\FLAGS\\NONE", G_APPLICATION_FLAGS_NONE, CONST_CS|CONST_PERSISTENT);
+
 	
 	return SUCCESS;
 }
