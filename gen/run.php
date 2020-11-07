@@ -93,7 +93,7 @@ class Run
 		foreach($this->classes as $class) {
 
 
-			if($class->getName() != "GtkApplication") {
+			if($class->getName() != "GtkApplicationWindow") {
 				continue;
 			}
 

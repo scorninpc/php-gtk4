@@ -8,11 +8,17 @@ $app = new Gtk\Application("testbruno.com.br",1);
 
 function activated($app=NULL, $b=NULL, $c=NULL)
 {
+	echo "ok4";
 	$window = $app->window_new();
+
+echo "ok5";
+	var_dump($window);
+
 	$window->set_title("Janela 1");
 	$window->show_all();
 
-	var_dump($app->get_active_window());
+echo "ok6";
+	// var_dump($app->get_active_window());
 
 
 	// $window = $app->window_new();
@@ -28,10 +34,15 @@ function activated($app=NULL, $b=NULL, $c=NULL)
 	// $obj->show_all();
 }
 
+echo "ok1";
+
 $app->connect("activate", "Test\activated");
+
+echo "ok2";
 
 $app->run($argc, $argv);
 
+echo "ok3";
 
 
 

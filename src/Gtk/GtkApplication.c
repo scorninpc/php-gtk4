@@ -39,15 +39,14 @@ PHP_METHOD(GtkApplication, get_windows) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	// gpointer *ret = (gpointer *)gtk_application_get_windows(GTK_APPLICATION(obj->gtk4_gpointer));
+	gpointer *ret = (gpointer *)gtk_application_get_windows(GTK_APPLICATION(obj->gtk4_gpointer));
 
-	php_printf("\n\n-> %s\n\n", G_OBJECT_TYPE_NAME(obj->gtk4_gpointer));
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
+	intern->gtk4_gpointer = ret;
 
-	// zend_class_entry *ce = zend_lookup_class(zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false));
-	// gtk4_gobject_object *intern = gtk4_create_new_object(ce);
-	// intern->gtk4_gpointer = ret;
-
-	// RETURN_OBJ(&intern->std);
+	RETURN_OBJ(&intern->std);
 }
 
 PHP_METHOD(GtkApplication, get_app_menu) {
@@ -59,8 +58,9 @@ PHP_METHOD(GtkApplication, get_app_menu) {
 
 	gpointer *ret = (gpointer *)gtk_application_get_app_menu(GTK_APPLICATION(obj->gtk4_gpointer));
 
-	zend_class_entry *ce = zend_lookup_class(zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false));
-	gtk4_gobject_object *intern = gtk4_create_new_object(ce);
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
 	intern->gtk4_gpointer = ret;
 
 	RETURN_OBJ(&intern->std);
@@ -91,8 +91,9 @@ PHP_METHOD(GtkApplication, get_menubar) {
 
 	gpointer *ret = (gpointer *)gtk_application_get_menubar(GTK_APPLICATION(obj->gtk4_gpointer));
 
-	zend_class_entry *ce = zend_lookup_class(zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false));
-	gtk4_gobject_object *intern = gtk4_create_new_object(ce);
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
 	intern->gtk4_gpointer = ret;
 
 	RETURN_OBJ(&intern->std);
@@ -172,8 +173,9 @@ PHP_METHOD(GtkApplication, get_window_by_id) {
 
 	gpointer *ret = (gpointer *)gtk_application_get_window_by_id(GTK_APPLICATION(obj->gtk4_gpointer), id);
 
-	zend_class_entry *ce = zend_lookup_class(zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false));
-	gtk4_gobject_object *intern = gtk4_create_new_object(ce);
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
 	intern->gtk4_gpointer = ret;
 
 	RETURN_OBJ(&intern->std);
@@ -188,10 +190,9 @@ PHP_METHOD(GtkApplication, get_active_window) {
 
 	gpointer *ret = (gpointer *)gtk_application_get_active_window(GTK_APPLICATION(obj->gtk4_gpointer));
 
-	char *class_name = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
-	zend_class_entry *ce = gtk4_get_ce_by_name(class_name);
-	
-	gtk4_gobject_object *intern = gtk4_create_new_object(ce);
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
 	intern->gtk4_gpointer = ret;
 
 	RETURN_OBJ(&intern->std);
@@ -293,8 +294,9 @@ PHP_METHOD(GtkApplication, get_menu_by_id) {
 
 	gpointer *ret = (gpointer *)gtk_application_get_menu_by_id(GTK_APPLICATION(obj->gtk4_gpointer), id);
 
-	zend_class_entry *ce = zend_lookup_class(zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false));
-	gtk4_gobject_object *intern = gtk4_create_new_object(ce);
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
 	intern->gtk4_gpointer = ret;
 
 	RETURN_OBJ(&intern->std);
@@ -309,8 +311,9 @@ PHP_METHOD(GtkApplication, window_new) {
 
 	gpointer *ret = (gpointer *)gtk_application_window_new(GTK_APPLICATION(obj->gtk4_gpointer));
 
-	zend_class_entry *ce = zend_lookup_class(zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false));
-	gtk4_gobject_object *intern = gtk4_create_new_object(ce);
+	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
+	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
 	intern->gtk4_gpointer = ret;
 
 	RETURN_OBJ(&intern->std);

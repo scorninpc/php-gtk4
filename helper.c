@@ -34,7 +34,8 @@ zend_class_entry *gtk4_get_ce_by_name(char *class_name)
 	zend_class_entry *ce = zend_lookup_class(lcname);
 
 	if(!ce) {
-		gtk4_exception(-5, "Class %s not found", class_name);
+		// gtk4_exception(-5, "Class %s not found", class_name);
+		php_error_docref(NULL, E_ERROR, "Class %s not found", class_name);
 	}
 
 	return ce;
