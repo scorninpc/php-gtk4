@@ -24,3 +24,79 @@ gtk4_gobject_object *gtk4_create_new_object(zend_class_entry *ce)
 
 	return intern;
 }
+
+zend_class_entry *gtk4_get_ce_by_name(char *class_name)
+{
+	zend_string *lcname = zend_string_init(class_name, strlen(class_name), 0);
+	zend_string *tmp = zend_string_tolower(lcname);
+	zend_string_release(lcname);
+	lcname = tmp;
+	zend_class_entry *ce = zend_lookup_class(lcname);
+
+	if(!ce) {
+		gtk4_exception(-5, "Class %s not found", class_name);
+	}
+
+	return ce;
+}
+
+char *gtk4_get_namespace(const char *class)
+{
+	char *new = (char *)emalloc(1);
+	int new_length = 0;
+	
+	strcpy(new, "");
+
+	for(int i=0; i<strlen(class); i++) {
+
+
+		// Verify if is a upper char
+		int ch = (int)class[i];
+
+		if(  ( (ch >= 65) && (ch <= 90) ) && (i > 0)  )  {
+			new_length += 1;
+			
+			char *tmp = (char *)erealloc(new, sizeof(char *) * new_length);
+			if(!tmp) {
+				php_printf("ERROR on realoc\n");
+				return "";
+			}
+			new = tmp;
+			
+			strcat(new, "\\");
+		}
+
+
+		new_length++;
+
+		char *tmp = (char *)erealloc(new, sizeof(char *) * new_length);
+		if(!tmp) {
+			php_printf("ERROR on realoc\n");
+			return "";
+		}
+		new = tmp;
+
+		new[new_length-1] = class[i];
+		new[new_length] = '\0';
+	}
+
+	return new;
+}
+
+/**
+ * Throw a GTK Exception	
+ */
+char *gtk4_exception(int code, char *format, ...)
+{
+	va_list arg;
+	char *message;
+
+	va_start(arg, format);
+	vspprintf(&message, 0, format, arg);
+	va_end(arg);
+
+	// zend_class_entry *ce = zend_exception_get_default();
+
+	// zend_throw_exception(zend_ce_exception, message, code);
+	zend_exception_error(zend_throw_exception(gtk4_get_ce_by_name("Gtk\\Exception"), message, code), E_ERROR);
+}

@@ -5,6 +5,7 @@
 #endif
 
 #include <php.h>
+#include <zend_exceptions.h>
 #include "ext/standard/info.h"
 #include "php_gtk4.h"
 #include "gtk4_arginfo.h"
@@ -14,6 +15,11 @@
  */
 #include "gtk4.h"
 
+// ----------------
+static zend_class_entry *gtk4_exception_ce = NULL;
+static const zend_function_entry gtk4_exception_functions[] = {
+	PHP_FE_END
+};	
 
 /**
  * Old php versions
@@ -29,6 +35,11 @@
  */
 static PHP_MINIT_FUNCTION(gtk4)
 {
+	// Exception class
+	zend_class_entry tmp_gtk4_exception_ce;
+	INIT_CLASS_ENTRY(tmp_gtk4_exception_ce, "Gtk\\Exception", gtk4_exception_functions);
+	gtk4_exception_ce = zend_register_internal_class_ex(&tmp_gtk4_exception_ce, zend_ce_exception);
+
 	// Create class
 	zend_class_entry tmp_g_object_ce;
 	INIT_CLASS_ENTRY(tmp_g_object_ce, "G\\Object", g_gobject_functions);

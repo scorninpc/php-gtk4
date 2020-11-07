@@ -2,6 +2,7 @@
 #define _PHPGTK_gtkapplication_H_
 
 #include <php.h>
+#include "ext/standard/php_string.h"
 #include <gtk/gtk.h>
 
 #include "../G/GObject.h"

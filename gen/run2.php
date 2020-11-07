@@ -275,7 +275,8 @@ class gtkClass
 				if(isset($method->is_constructor_of)) {
 				}
 				else if($return_type['php_type'] == "OBJ") {
-					$output_c .= sprintf("	zend_class_entry *ce = zend_lookup_class(zend_string_init(\"Gtk\\\\Window\", sizeof(\"Gtk\\\\Window\") - 1, false));\n");
+					$output_c .= sprintf("	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));\n");
+					$output_c .= sprintf("	zend_class_entry *ce = zend_lookup_class(zend_string_init(ret_cn, sizeof(ret_cn) - 1, false));\n");
 					$output_c .= sprintf("	gtk4_gobject_object *intern = gtk4_create_new_object(ce);\n");
 					$output_c .= sprintf("	intern->gtk4_gpointer = ret;\n\n");
 

@@ -39,13 +39,15 @@ PHP_METHOD(GtkApplication, get_windows) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gpointer *ret = (gpointer *)gtk_application_get_windows(GTK_APPLICATION(obj->gtk4_gpointer));
+	// gpointer *ret = (gpointer *)gtk_application_get_windows(GTK_APPLICATION(obj->gtk4_gpointer));
 
-	zend_class_entry *ce = zend_lookup_class(zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false));
-	gtk4_gobject_object *intern = gtk4_create_new_object(ce);
-	intern->gtk4_gpointer = ret;
+	php_printf("\n\n-> %s\n\n", G_OBJECT_TYPE_NAME(obj->gtk4_gpointer));
 
-	RETURN_OBJ(&intern->std);
+	// zend_class_entry *ce = zend_lookup_class(zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false));
+	// gtk4_gobject_object *intern = gtk4_create_new_object(ce);
+	// intern->gtk4_gpointer = ret;
+
+	// RETURN_OBJ(&intern->std);
 }
 
 PHP_METHOD(GtkApplication, get_app_menu) {
@@ -186,7 +188,9 @@ PHP_METHOD(GtkApplication, get_active_window) {
 
 	gpointer *ret = (gpointer *)gtk_application_get_active_window(GTK_APPLICATION(obj->gtk4_gpointer));
 
-	zend_class_entry *ce = zend_lookup_class(zend_string_init("Gtk\\Window", sizeof("Gtk\\Window") - 1, false));
+	char *class_name = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
+	zend_class_entry *ce = gtk4_get_ce_by_name(class_name);
+	
 	gtk4_gobject_object *intern = gtk4_create_new_object(ce);
 	intern->gtk4_gpointer = ret;
 
