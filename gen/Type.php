@@ -32,7 +32,7 @@ class Type
 
 			self::$enums[$name]	 = [
 				'module' => $enum->in_module,
-				'namespace' => $this->_createNamespace($name),
+				'namespace' => $this->createNamespace($name),
 			];
 		}
 	}
@@ -76,13 +76,13 @@ class Type
 				'c_type' => self::$types[$type]['c_type'],
 			];
 
-			$this->type = $type;
-			$this->pointers = self::$types[$type]['pointers'];
-			$this->const = self::$types[$type]['const'];
-			$this->macro = self::$types[$type]['macro'];
-			$this->is_enum = self::$types[$type]['is_enum'];
-			$this->php_type = self::$types[$type]['php_type'];
-			$this->c_type = self::$types[$type]['c_type'];
+			// $this->type = $type;
+			// $this->pointers = self::$types[$type]['pointers'];
+			// $this->const = self::$types[$type]['const'];
+			// $this->macro = self::$types[$type]['macro'];
+			// $this->is_enum = self::$types[$type]['is_enum'];
+			// $this->php_type = self::$types[$type]['php_type'];
+			// $this->c_type = self::$types[$type]['c_type'];
 
 			return $this;
 		}
@@ -97,6 +97,8 @@ class Type
 		self::$types[$type]['pointers'] = $this->pointers;
 		self::$types[$type]['const'] = $this->const;
 		self::$types[$type]['is_enum'] = FALSE;
+		self::$types[$type]['macro'] = NULL;
+		self::$types[$type]['c_type'] = NULL;
 
 		// None
 		if($type == "none") {
@@ -204,11 +206,11 @@ class Type
 				self::$types[$type]['php_type'] = "STRING";
 			}
 			else if(($type == "guint") || ($type == "gsize") || ($type == "gulong") || ($type == "guint8") || ($type == "guint16") || ($type == "guint32") || ($type == "guint64")) {
-				self::$types[$type]['c_type'] = "zend_long";
+				self::$types[$type]['c_type'] = "long";
 				self::$types[$type]['php_type'] = "LONG";
 			}
 			else if(($type == "gint") || ($type == "int") || ($type == "gssize") || ($type == "gint8") || ($type == "gint16") || ($type == "gint32") || ($type == "gint64") || ($type == "goffset")) {
-				self::$types[$type]['c_type'] = "zend_long";
+				self::$types[$type]['c_type'] = "long";
 				self::$types[$type]['php_type'] = "LONG";				
 			}
 			else if(($type == "double") || ($type == "gdouble") || ($type == "float") || ($type == "gfloat")) {
@@ -285,7 +287,7 @@ class Type
 	/**
 	 *
 	 */
-	public function _createNamespace($class_name)
+	public function createNamespace($class_name)
 	{
 		$pieces = preg_split('/(?=[A-Z])/', trim($class_name));
 		unset($pieces[0]);

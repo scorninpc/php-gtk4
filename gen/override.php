@@ -38,4 +38,9 @@ $override['gtk_application_set_accels_for_action'] = <<<EOT
 	gtk_application_set_accels_for_action(GTK_APPLICATION(obj->gtk4_gpointer), detailed_action_name, c_accels);
 EOT;
 
+// Enums
+$override['G_APPLICATION_FLAGS_NONE'] = <<<EOT
+	zend_declare_class_constant_long(c2, "NONE", sizeof("NONE") - 1, G_APPLICATION_FLAGS_NONE);
+EOT;
+
 return $override;

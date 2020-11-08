@@ -117,7 +117,7 @@ PHP_METHOD(GtkApplication, get_menubar) {
 }
 
 PHP_METHOD(GtkApplication, get_window_by_id) {
-	zend_long id;
+	long id;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_LONG(id)
@@ -303,7 +303,7 @@ PHP_METHOD(GtkApplication, set_menubar) {
 }
 
 PHP_METHOD(GtkApplication, uninhibit) {
-	zend_long cookie;
+	long cookie;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_LONG(cookie)
@@ -348,3 +348,4 @@ PHP_METHOD(GtkApplication, __construct) {
 
 	if(obj->gtk4_gpointer == NULL) php_printf("\n\nERROR ON OBJECT CREATION [GtkApplication] (@todo: add exception)\n\n");
 }
+

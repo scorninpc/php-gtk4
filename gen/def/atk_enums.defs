@@ -1,0 +1,713 @@
+;; From atkcomponent.h
+
+;; Original typedef:
+;; typedef enum {
+;;   ATK_SCROLL_TOP_LEFT,
+;;   ATK_SCROLL_BOTTOM_RIGHT,
+;;   ATK_SCROLL_TOP_EDGE,
+;;   ATK_SCROLL_BOTTOM_EDGE,
+;;   ATK_SCROLL_LEFT_EDGE,
+;;   ATK_SCROLL_RIGHT_EDGE,
+;;   ATK_SCROLL_ANYWHERE
+;; } AtkScrollType;
+
+(define-enum-extended ScrollType
+  (in-module "Atk")
+  (c-name "AtkScrollType")
+  (values
+    '("top-left" "ATK_SCROLL_TOP_LEFT" "0")
+    '("bottom-right" "ATK_SCROLL_BOTTOM_RIGHT" "1")
+    '("top-edge" "ATK_SCROLL_TOP_EDGE" "2")
+    '("bottom-edge" "ATK_SCROLL_BOTTOM_EDGE" "3")
+    '("left-edge" "ATK_SCROLL_LEFT_EDGE" "4")
+    '("right-edge" "ATK_SCROLL_RIGHT_EDGE" "5")
+    '("anywhere" "ATK_SCROLL_ANYWHERE" "6")
+  )
+)
+
+;; From atkhyperlink.h
+
+;; Original typedef:
+;; typedef enum 
+;; {
+;;   ATK_HYPERLINK_IS_INLINE = 1 << 0
+;; } AtkHyperlinkStateFlags;
+
+(define-flags-extended HyperlinkStateFlags
+  (in-module "Atk")
+  (c-name "AtkHyperlinkStateFlags")
+  (values
+    '("is-inline" "ATK_HYPERLINK_IS_INLINE" "1 << 0")
+  )
+)
+
+;; From atkobject.h
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   ATK_ROLE_INVALID = 0,
+;;   ATK_ROLE_ACCEL_LABEL,      /*<nick=accelerator-label>*/
+;;   ATK_ROLE_ALERT,
+;;   ATK_ROLE_ANIMATION,
+;;   ATK_ROLE_ARROW,
+;;   ATK_ROLE_CALENDAR,
+;;   ATK_ROLE_CANVAS,
+;;   ATK_ROLE_CHECK_BOX,
+;;   ATK_ROLE_CHECK_MENU_ITEM,
+;;   ATK_ROLE_COLOR_CHOOSER,
+;;   ATK_ROLE_COLUMN_HEADER,
+;;   ATK_ROLE_COMBO_BOX,
+;;   ATK_ROLE_DATE_EDITOR,
+;;   ATK_ROLE_DESKTOP_ICON,
+;;   ATK_ROLE_DESKTOP_FRAME,
+;;   ATK_ROLE_DIAL,
+;;   ATK_ROLE_DIALOG,
+;;   ATK_ROLE_DIRECTORY_PANE,
+;;   ATK_ROLE_DRAWING_AREA,
+;;   ATK_ROLE_FILE_CHOOSER,
+;;   ATK_ROLE_FILLER,
+;;   ATK_ROLE_FONT_CHOOSER,
+;;   ATK_ROLE_FRAME,
+;;   ATK_ROLE_GLASS_PANE,
+;;   ATK_ROLE_HTML_CONTAINER,
+;;   ATK_ROLE_ICON,
+;;   ATK_ROLE_IMAGE,
+;;   ATK_ROLE_INTERNAL_FRAME,
+;;   ATK_ROLE_LABEL,
+;;   ATK_ROLE_LAYERED_PANE,
+;;   ATK_ROLE_LIST,
+;;   ATK_ROLE_LIST_ITEM,
+;;   ATK_ROLE_MENU,
+;;   ATK_ROLE_MENU_BAR,
+;;   ATK_ROLE_MENU_ITEM,
+;;   ATK_ROLE_OPTION_PANE,
+;;   ATK_ROLE_PAGE_TAB,
+;;   ATK_ROLE_PAGE_TAB_LIST,
+;;   ATK_ROLE_PANEL,
+;;   ATK_ROLE_PASSWORD_TEXT,
+;;   ATK_ROLE_POPUP_MENU,
+;;   ATK_ROLE_PROGRESS_BAR,
+;;   ATK_ROLE_PUSH_BUTTON,
+;;   ATK_ROLE_RADIO_BUTTON,
+;;   ATK_ROLE_RADIO_MENU_ITEM,
+;;   ATK_ROLE_ROOT_PANE,
+;;   ATK_ROLE_ROW_HEADER,
+;;   ATK_ROLE_SCROLL_BAR,
+;;   ATK_ROLE_SCROLL_PANE,
+;;   ATK_ROLE_SEPARATOR,
+;;   ATK_ROLE_SLIDER,
+;;   ATK_ROLE_SPLIT_PANE,
+;;   ATK_ROLE_SPIN_BUTTON,
+;;   ATK_ROLE_STATUSBAR,
+;;   ATK_ROLE_TABLE,
+;;   ATK_ROLE_TABLE_CELL,
+;;   ATK_ROLE_TABLE_COLUMN_HEADER,
+;;   ATK_ROLE_TABLE_ROW_HEADER,
+;;   ATK_ROLE_TEAR_OFF_MENU_ITEM,
+;;   ATK_ROLE_TERMINAL,
+;;   ATK_ROLE_TEXT,
+;;   ATK_ROLE_TOGGLE_BUTTON,
+;;   ATK_ROLE_TOOL_BAR,
+;;   ATK_ROLE_TOOL_TIP,
+;;   ATK_ROLE_TREE,
+;;   ATK_ROLE_TREE_TABLE,
+;;   ATK_ROLE_UNKNOWN,
+;;   ATK_ROLE_VIEWPORT,
+;;   ATK_ROLE_WINDOW,
+;;   ATK_ROLE_HEADER,
+;;   ATK_ROLE_FOOTER,
+;;   ATK_ROLE_PARAGRAPH,
+;;   ATK_ROLE_RULER,
+;;   ATK_ROLE_APPLICATION,
+;;   ATK_ROLE_AUTOCOMPLETE,
+;;   ATK_ROLE_EDITBAR,          /*<nick=edit-bar>*/
+;;   ATK_ROLE_EMBEDDED,
+;;   ATK_ROLE_ENTRY,
+;;   ATK_ROLE_CHART,
+;;   ATK_ROLE_CAPTION,
+;;   ATK_ROLE_DOCUMENT_FRAME,
+;;   ATK_ROLE_HEADING,
+;;   ATK_ROLE_PAGE,
+;;   ATK_ROLE_SECTION,
+;;   ATK_ROLE_REDUNDANT_OBJECT,
+;;   ATK_ROLE_FORM,
+;;   ATK_ROLE_LINK,
+;;   ATK_ROLE_INPUT_METHOD_WINDOW,
+;;   ATK_ROLE_TABLE_ROW,
+;;   ATK_ROLE_TREE_ITEM,
+;;   ATK_ROLE_DOCUMENT_SPREADSHEET,
+;;   ATK_ROLE_DOCUMENT_PRESENTATION,
+;;   ATK_ROLE_DOCUMENT_TEXT,
+;;   ATK_ROLE_DOCUMENT_WEB,
+;;   ATK_ROLE_DOCUMENT_EMAIL,
+;;   ATK_ROLE_COMMENT,
+;;   ATK_ROLE_LIST_BOX,
+;;   ATK_ROLE_GROUPING,
+;;   ATK_ROLE_IMAGE_MAP,
+;;   ATK_ROLE_NOTIFICATION,
+;;   ATK_ROLE_INFO_BAR,
+;;   ATK_ROLE_LEVEL_BAR,
+;;   ATK_ROLE_TITLE_BAR,
+;;   ATK_ROLE_BLOCK_QUOTE,
+;;   ATK_ROLE_AUDIO,
+;;   ATK_ROLE_VIDEO,
+;;   ATK_ROLE_DEFINITION,
+;;   ATK_ROLE_ARTICLE,
+;;   ATK_ROLE_LANDMARK,
+;;   ATK_ROLE_LOG,
+;;   ATK_ROLE_MARQUEE,
+;;   ATK_ROLE_MATH,
+;;   ATK_ROLE_RATING,
+;;   ATK_ROLE_TIMER,
+;;   ATK_ROLE_DESCRIPTION_LIST,
+;;   ATK_ROLE_DESCRIPTION_TERM,
+;;   ATK_ROLE_DESCRIPTION_VALUE,
+;;   ATK_ROLE_STATIC,
+;;   ATK_ROLE_MATH_FRACTION,
+;;   ATK_ROLE_MATH_ROOT,
+;;   ATK_ROLE_SUBSCRIPT,
+;;   ATK_ROLE_SUPERSCRIPT,
+;;   ATK_ROLE_FOOTNOTE,
+;;   ATK_ROLE_LAST_DEFINED
+;; } AtkRole;
+
+(define-enum-extended Role
+  (in-module "Atk")
+  (c-name "AtkRole")
+  (values
+    '("invalid" "ATK_ROLE_INVALID" "0")
+    '("accel-label" "ATK_ROLE_ACCEL_LABEL" "1")
+    '("alert" "ATK_ROLE_ALERT" "2")
+    '("animation" "ATK_ROLE_ANIMATION" "3")
+    '("arrow" "ATK_ROLE_ARROW" "4")
+    '("calendar" "ATK_ROLE_CALENDAR" "5")
+    '("canvas" "ATK_ROLE_CANVAS" "6")
+    '("check-box" "ATK_ROLE_CHECK_BOX" "7")
+    '("check-menu-item" "ATK_ROLE_CHECK_MENU_ITEM" "8")
+    '("color-chooser" "ATK_ROLE_COLOR_CHOOSER" "9")
+    '("column-header" "ATK_ROLE_COLUMN_HEADER" "10")
+    '("combo-box" "ATK_ROLE_COMBO_BOX" "11")
+    '("date-editor" "ATK_ROLE_DATE_EDITOR" "12")
+    '("desktop-icon" "ATK_ROLE_DESKTOP_ICON" "13")
+    '("desktop-frame" "ATK_ROLE_DESKTOP_FRAME" "14")
+    '("dial" "ATK_ROLE_DIAL" "15")
+    '("dialog" "ATK_ROLE_DIALOG" "16")
+    '("directory-pane" "ATK_ROLE_DIRECTORY_PANE" "17")
+    '("drawing-area" "ATK_ROLE_DRAWING_AREA" "18")
+    '("file-chooser" "ATK_ROLE_FILE_CHOOSER" "19")
+    '("filler" "ATK_ROLE_FILLER" "20")
+    '("font-chooser" "ATK_ROLE_FONT_CHOOSER" "21")
+    '("frame" "ATK_ROLE_FRAME" "22")
+    '("glass-pane" "ATK_ROLE_GLASS_PANE" "23")
+    '("html-container" "ATK_ROLE_HTML_CONTAINER" "24")
+    '("icon" "ATK_ROLE_ICON" "25")
+    '("image" "ATK_ROLE_IMAGE" "26")
+    '("internal-frame" "ATK_ROLE_INTERNAL_FRAME" "27")
+    '("label" "ATK_ROLE_LABEL" "28")
+    '("layered-pane" "ATK_ROLE_LAYERED_PANE" "29")
+    '("list" "ATK_ROLE_LIST" "30")
+    '("list-item" "ATK_ROLE_LIST_ITEM" "31")
+    '("menu" "ATK_ROLE_MENU" "32")
+    '("menu-bar" "ATK_ROLE_MENU_BAR" "33")
+    '("menu-item" "ATK_ROLE_MENU_ITEM" "34")
+    '("option-pane" "ATK_ROLE_OPTION_PANE" "35")
+    '("page-tab" "ATK_ROLE_PAGE_TAB" "36")
+    '("page-tab-list" "ATK_ROLE_PAGE_TAB_LIST" "37")
+    '("panel" "ATK_ROLE_PANEL" "38")
+    '("password-text" "ATK_ROLE_PASSWORD_TEXT" "39")
+    '("popup-menu" "ATK_ROLE_POPUP_MENU" "40")
+    '("progress-bar" "ATK_ROLE_PROGRESS_BAR" "41")
+    '("push-button" "ATK_ROLE_PUSH_BUTTON" "42")
+    '("radio-button" "ATK_ROLE_RADIO_BUTTON" "43")
+    '("radio-menu-item" "ATK_ROLE_RADIO_MENU_ITEM" "44")
+    '("root-pane" "ATK_ROLE_ROOT_PANE" "45")
+    '("row-header" "ATK_ROLE_ROW_HEADER" "46")
+    '("scroll-bar" "ATK_ROLE_SCROLL_BAR" "47")
+    '("scroll-pane" "ATK_ROLE_SCROLL_PANE" "48")
+    '("separator" "ATK_ROLE_SEPARATOR" "49")
+    '("slider" "ATK_ROLE_SLIDER" "50")
+    '("split-pane" "ATK_ROLE_SPLIT_PANE" "51")
+    '("spin-button" "ATK_ROLE_SPIN_BUTTON" "52")
+    '("statusbar" "ATK_ROLE_STATUSBAR" "53")
+    '("table" "ATK_ROLE_TABLE" "54")
+    '("table-cell" "ATK_ROLE_TABLE_CELL" "55")
+    '("table-column-header" "ATK_ROLE_TABLE_COLUMN_HEADER" "56")
+    '("table-row-header" "ATK_ROLE_TABLE_ROW_HEADER" "57")
+    '("tear-off-menu-item" "ATK_ROLE_TEAR_OFF_MENU_ITEM" "58")
+    '("terminal" "ATK_ROLE_TERMINAL" "59")
+    '("text" "ATK_ROLE_TEXT" "60")
+    '("toggle-button" "ATK_ROLE_TOGGLE_BUTTON" "61")
+    '("tool-bar" "ATK_ROLE_TOOL_BAR" "62")
+    '("tool-tip" "ATK_ROLE_TOOL_TIP" "63")
+    '("tree" "ATK_ROLE_TREE" "64")
+    '("tree-table" "ATK_ROLE_TREE_TABLE" "65")
+    '("unknown" "ATK_ROLE_UNKNOWN" "66")
+    '("viewport" "ATK_ROLE_VIEWPORT" "67")
+    '("window" "ATK_ROLE_WINDOW" "68")
+    '("header" "ATK_ROLE_HEADER" "69")
+    '("footer" "ATK_ROLE_FOOTER" "70")
+    '("paragraph" "ATK_ROLE_PARAGRAPH" "71")
+    '("ruler" "ATK_ROLE_RULER" "72")
+    '("application" "ATK_ROLE_APPLICATION" "73")
+    '("autocomplete" "ATK_ROLE_AUTOCOMPLETE" "74")
+    '("editbar" "ATK_ROLE_EDITBAR" "75")
+    '("embedded" "ATK_ROLE_EMBEDDED" "76")
+    '("entry" "ATK_ROLE_ENTRY" "77")
+    '("chart" "ATK_ROLE_CHART" "78")
+    '("caption" "ATK_ROLE_CAPTION" "79")
+    '("document-frame" "ATK_ROLE_DOCUMENT_FRAME" "80")
+    '("heading" "ATK_ROLE_HEADING" "81")
+    '("page" "ATK_ROLE_PAGE" "82")
+    '("section" "ATK_ROLE_SECTION" "83")
+    '("redundant-object" "ATK_ROLE_REDUNDANT_OBJECT" "84")
+    '("form" "ATK_ROLE_FORM" "85")
+    '("link" "ATK_ROLE_LINK" "86")
+    '("input-method-window" "ATK_ROLE_INPUT_METHOD_WINDOW" "87")
+    '("table-row" "ATK_ROLE_TABLE_ROW" "88")
+    '("tree-item" "ATK_ROLE_TREE_ITEM" "89")
+    '("document-spreadsheet" "ATK_ROLE_DOCUMENT_SPREADSHEET" "90")
+    '("document-presentation" "ATK_ROLE_DOCUMENT_PRESENTATION" "91")
+    '("document-text" "ATK_ROLE_DOCUMENT_TEXT" "92")
+    '("document-web" "ATK_ROLE_DOCUMENT_WEB" "93")
+    '("document-email" "ATK_ROLE_DOCUMENT_EMAIL" "94")
+    '("comment" "ATK_ROLE_COMMENT" "95")
+    '("list-box" "ATK_ROLE_LIST_BOX" "96")
+    '("grouping" "ATK_ROLE_GROUPING" "97")
+    '("image-map" "ATK_ROLE_IMAGE_MAP" "98")
+    '("notification" "ATK_ROLE_NOTIFICATION" "99")
+    '("info-bar" "ATK_ROLE_INFO_BAR" "100")
+    '("level-bar" "ATK_ROLE_LEVEL_BAR" "101")
+    '("title-bar" "ATK_ROLE_TITLE_BAR" "102")
+    '("block-quote" "ATK_ROLE_BLOCK_QUOTE" "103")
+    '("audio" "ATK_ROLE_AUDIO" "104")
+    '("video" "ATK_ROLE_VIDEO" "105")
+    '("definition" "ATK_ROLE_DEFINITION" "106")
+    '("article" "ATK_ROLE_ARTICLE" "107")
+    '("landmark" "ATK_ROLE_LANDMARK" "108")
+    '("log" "ATK_ROLE_LOG" "109")
+    '("marquee" "ATK_ROLE_MARQUEE" "110")
+    '("math" "ATK_ROLE_MATH" "111")
+    '("rating" "ATK_ROLE_RATING" "112")
+    '("timer" "ATK_ROLE_TIMER" "113")
+    '("description-list" "ATK_ROLE_DESCRIPTION_LIST" "114")
+    '("description-term" "ATK_ROLE_DESCRIPTION_TERM" "115")
+    '("description-value" "ATK_ROLE_DESCRIPTION_VALUE" "116")
+    '("static" "ATK_ROLE_STATIC" "117")
+    '("math-fraction" "ATK_ROLE_MATH_FRACTION" "118")
+    '("math-root" "ATK_ROLE_MATH_ROOT" "119")
+    '("subscript" "ATK_ROLE_SUBSCRIPT" "120")
+    '("superscript" "ATK_ROLE_SUPERSCRIPT" "121")
+    '("footnote" "ATK_ROLE_FOOTNOTE" "122")
+    '("last-defined" "ATK_ROLE_LAST_DEFINED" "123")
+  )
+)
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   ATK_LAYER_INVALID,
+;;   ATK_LAYER_BACKGROUND,
+;;   ATK_LAYER_CANVAS,
+;;   ATK_LAYER_WIDGET,
+;;   ATK_LAYER_MDI,
+;;   ATK_LAYER_POPUP,
+;;   ATK_LAYER_OVERLAY,
+;;   ATK_LAYER_WINDOW
+;; } AtkLayer;
+
+(define-enum-extended Layer
+  (in-module "Atk")
+  (c-name "AtkLayer")
+  (values
+    '("invalid" "ATK_LAYER_INVALID" "0")
+    '("background" "ATK_LAYER_BACKGROUND" "1")
+    '("canvas" "ATK_LAYER_CANVAS" "2")
+    '("widget" "ATK_LAYER_WIDGET" "3")
+    '("mdi" "ATK_LAYER_MDI" "4")
+    '("popup" "ATK_LAYER_POPUP" "5")
+    '("overlay" "ATK_LAYER_OVERLAY" "6")
+    '("window" "ATK_LAYER_WINDOW" "7")
+  )
+)
+
+;; From atkrelationtype.h
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   ATK_RELATION_NULL = 0,
+;;   ATK_RELATION_CONTROLLED_BY,
+;;   ATK_RELATION_CONTROLLER_FOR,
+;;   ATK_RELATION_LABEL_FOR,
+;;   ATK_RELATION_LABELLED_BY,
+;;   ATK_RELATION_MEMBER_OF,
+;;   ATK_RELATION_NODE_CHILD_OF,
+;;   ATK_RELATION_FLOWS_TO,
+;;   ATK_RELATION_FLOWS_FROM,
+;;   ATK_RELATION_SUBWINDOW_OF, 
+;;   ATK_RELATION_EMBEDS, 
+;;   ATK_RELATION_EMBEDDED_BY, 
+;;   ATK_RELATION_POPUP_FOR, 
+;;   ATK_RELATION_PARENT_WINDOW_OF, 
+;;   ATK_RELATION_DESCRIBED_BY,
+;;   ATK_RELATION_DESCRIPTION_FOR,
+;;   ATK_RELATION_NODE_PARENT_OF,
+;;   ATK_RELATION_DETAILS,
+;;   ATK_RELATION_DETAILS_FOR,
+;;   ATK_RELATION_ERROR_MESSAGE,
+;;   ATK_RELATION_ERROR_FOR,
+;;   ATK_RELATION_LAST_DEFINED
+;; } AtkRelationType;
+
+(define-enum-extended RelationType
+  (in-module "Atk")
+  (c-name "AtkRelationType")
+  (values
+    '("null" "ATK_RELATION_NULL" "0")
+    '("controlled-by" "ATK_RELATION_CONTROLLED_BY" "1")
+    '("controller-for" "ATK_RELATION_CONTROLLER_FOR" "2")
+    '("label-for" "ATK_RELATION_LABEL_FOR" "3")
+    '("labelled-by" "ATK_RELATION_LABELLED_BY" "4")
+    '("member-of" "ATK_RELATION_MEMBER_OF" "5")
+    '("node-child-of" "ATK_RELATION_NODE_CHILD_OF" "6")
+    '("flows-to" "ATK_RELATION_FLOWS_TO" "7")
+    '("flows-from" "ATK_RELATION_FLOWS_FROM" "8")
+    '("subwindow-of" "ATK_RELATION_SUBWINDOW_OF" "9")
+    '("embeds" "ATK_RELATION_EMBEDS" "10")
+    '("embedded-by" "ATK_RELATION_EMBEDDED_BY" "11")
+    '("popup-for" "ATK_RELATION_POPUP_FOR" "12")
+    '("parent-window-of" "ATK_RELATION_PARENT_WINDOW_OF" "13")
+    '("described-by" "ATK_RELATION_DESCRIBED_BY" "14")
+    '("description-for" "ATK_RELATION_DESCRIPTION_FOR" "15")
+    '("node-parent-of" "ATK_RELATION_NODE_PARENT_OF" "16")
+    '("details" "ATK_RELATION_DETAILS" "17")
+    '("details-for" "ATK_RELATION_DETAILS_FOR" "18")
+    '("error-message" "ATK_RELATION_ERROR_MESSAGE" "19")
+    '("error-for" "ATK_RELATION_ERROR_FOR" "20")
+    '("last-defined" "ATK_RELATION_LAST_DEFINED" "21")
+  )
+)
+
+;; From atkstate.h
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   ATK_STATE_INVALID,
+;;   ATK_STATE_ACTIVE,
+;;   ATK_STATE_ARMED,
+;;   ATK_STATE_BUSY,
+;;   ATK_STATE_CHECKED,
+;;   ATK_STATE_DEFUNCT,
+;;   ATK_STATE_EDITABLE,
+;;   ATK_STATE_ENABLED,
+;;   ATK_STATE_EXPANDABLE,
+;;   ATK_STATE_EXPANDED,
+;;   ATK_STATE_FOCUSABLE,
+;;   ATK_STATE_FOCUSED,
+;;   ATK_STATE_HORIZONTAL,
+;;   ATK_STATE_ICONIFIED,
+;;   ATK_STATE_MODAL,
+;;   ATK_STATE_MULTI_LINE,
+;;   ATK_STATE_MULTISELECTABLE,
+;;   ATK_STATE_OPAQUE,
+;;   ATK_STATE_PRESSED,
+;;   ATK_STATE_RESIZABLE,
+;;   ATK_STATE_SELECTABLE,
+;;   ATK_STATE_SELECTED,
+;;   ATK_STATE_SENSITIVE,
+;;   ATK_STATE_SHOWING,
+;;   ATK_STATE_SINGLE_LINE,
+;;   ATK_STATE_STALE,
+;;   ATK_STATE_TRANSIENT,
+;;   ATK_STATE_VERTICAL,
+;;   ATK_STATE_VISIBLE,
+;;   ATK_STATE_MANAGES_DESCENDANTS,
+;;   ATK_STATE_INDETERMINATE,
+;;   ATK_STATE_TRUNCATED,
+;;   ATK_STATE_REQUIRED,
+;;   ATK_STATE_INVALID_ENTRY,
+;;   ATK_STATE_SUPPORTS_AUTOCOMPLETION,
+;;   ATK_STATE_SELECTABLE_TEXT,
+;;   ATK_STATE_DEFAULT,
+;;   ATK_STATE_ANIMATED,
+;;   ATK_STATE_VISITED,
+;;   ATK_STATE_CHECKABLE,
+;;   ATK_STATE_HAS_POPUP,
+;;   ATK_STATE_HAS_TOOLTIP,
+;;   ATK_STATE_READ_ONLY,
+;;   ATK_STATE_LAST_DEFINED
+;; } AtkStateType;
+
+(define-enum-extended StateType
+  (in-module "Atk")
+  (c-name "AtkStateType")
+  (values
+    '("invalid" "ATK_STATE_INVALID" "0")
+    '("active" "ATK_STATE_ACTIVE" "1")
+    '("armed" "ATK_STATE_ARMED" "2")
+    '("busy" "ATK_STATE_BUSY" "3")
+    '("checked" "ATK_STATE_CHECKED" "4")
+    '("defunct" "ATK_STATE_DEFUNCT" "5")
+    '("editable" "ATK_STATE_EDITABLE" "6")
+    '("enabled" "ATK_STATE_ENABLED" "7")
+    '("expandable" "ATK_STATE_EXPANDABLE" "8")
+    '("expanded" "ATK_STATE_EXPANDED" "9")
+    '("focusable" "ATK_STATE_FOCUSABLE" "10")
+    '("focused" "ATK_STATE_FOCUSED" "11")
+    '("horizontal" "ATK_STATE_HORIZONTAL" "12")
+    '("iconified" "ATK_STATE_ICONIFIED" "13")
+    '("modal" "ATK_STATE_MODAL" "14")
+    '("multi-line" "ATK_STATE_MULTI_LINE" "15")
+    '("multiselectable" "ATK_STATE_MULTISELECTABLE" "16")
+    '("opaque" "ATK_STATE_OPAQUE" "17")
+    '("pressed" "ATK_STATE_PRESSED" "18")
+    '("resizable" "ATK_STATE_RESIZABLE" "19")
+    '("selectable" "ATK_STATE_SELECTABLE" "20")
+    '("selected" "ATK_STATE_SELECTED" "21")
+    '("sensitive" "ATK_STATE_SENSITIVE" "22")
+    '("showing" "ATK_STATE_SHOWING" "23")
+    '("single-line" "ATK_STATE_SINGLE_LINE" "24")
+    '("stale" "ATK_STATE_STALE" "25")
+    '("transient" "ATK_STATE_TRANSIENT" "26")
+    '("vertical" "ATK_STATE_VERTICAL" "27")
+    '("visible" "ATK_STATE_VISIBLE" "28")
+    '("manages-descendants" "ATK_STATE_MANAGES_DESCENDANTS" "29")
+    '("indeterminate" "ATK_STATE_INDETERMINATE" "30")
+    '("truncated" "ATK_STATE_TRUNCATED" "31")
+    '("required" "ATK_STATE_REQUIRED" "32")
+    '("invalid-entry" "ATK_STATE_INVALID_ENTRY" "33")
+    '("supports-autocompletion" "ATK_STATE_SUPPORTS_AUTOCOMPLETION" "34")
+    '("selectable-text" "ATK_STATE_SELECTABLE_TEXT" "35")
+    '("default" "ATK_STATE_DEFAULT" "36")
+    '("animated" "ATK_STATE_ANIMATED" "37")
+    '("visited" "ATK_STATE_VISITED" "38")
+    '("checkable" "ATK_STATE_CHECKABLE" "39")
+    '("has-popup" "ATK_STATE_HAS_POPUP" "40")
+    '("has-tooltip" "ATK_STATE_HAS_TOOLTIP" "41")
+    '("read-only" "ATK_STATE_READ_ONLY" "42")
+    '("last-defined" "ATK_STATE_LAST_DEFINED" "43")
+  )
+)
+
+;; From atktext.h
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   ATK_TEXT_ATTR_INVALID = 0,
+;;   ATK_TEXT_ATTR_LEFT_MARGIN,
+;;   ATK_TEXT_ATTR_RIGHT_MARGIN,
+;;   ATK_TEXT_ATTR_INDENT,
+;;   ATK_TEXT_ATTR_INVISIBLE,
+;;   ATK_TEXT_ATTR_EDITABLE,
+;;   ATK_TEXT_ATTR_PIXELS_ABOVE_LINES,
+;;   ATK_TEXT_ATTR_PIXELS_BELOW_LINES,
+;;   ATK_TEXT_ATTR_PIXELS_INSIDE_WRAP,
+;;   ATK_TEXT_ATTR_BG_FULL_HEIGHT,
+;;   ATK_TEXT_ATTR_RISE,
+;;   ATK_TEXT_ATTR_UNDERLINE,
+;;   ATK_TEXT_ATTR_STRIKETHROUGH,
+;;   ATK_TEXT_ATTR_SIZE,
+;;   ATK_TEXT_ATTR_SCALE,
+;;   ATK_TEXT_ATTR_WEIGHT,
+;;   ATK_TEXT_ATTR_LANGUAGE,
+;;   ATK_TEXT_ATTR_FAMILY_NAME,
+;;   ATK_TEXT_ATTR_BG_COLOR,
+;;   ATK_TEXT_ATTR_FG_COLOR,
+;;   ATK_TEXT_ATTR_BG_STIPPLE,
+;;   ATK_TEXT_ATTR_FG_STIPPLE,
+;;   ATK_TEXT_ATTR_WRAP_MODE,
+;;   ATK_TEXT_ATTR_DIRECTION,
+;;   ATK_TEXT_ATTR_JUSTIFICATION,
+;;   ATK_TEXT_ATTR_STRETCH,
+;;   ATK_TEXT_ATTR_VARIANT,
+;;   ATK_TEXT_ATTR_STYLE,
+;;   ATK_TEXT_ATTR_LAST_DEFINED
+;; } AtkTextAttribute;
+
+(define-enum-extended TextAttribute
+  (in-module "Atk")
+  (c-name "AtkTextAttribute")
+  (values
+    '("invalid" "ATK_TEXT_ATTR_INVALID" "0")
+    '("left-margin" "ATK_TEXT_ATTR_LEFT_MARGIN" "1")
+    '("right-margin" "ATK_TEXT_ATTR_RIGHT_MARGIN" "2")
+    '("indent" "ATK_TEXT_ATTR_INDENT" "3")
+    '("invisible" "ATK_TEXT_ATTR_INVISIBLE" "4")
+    '("editable" "ATK_TEXT_ATTR_EDITABLE" "5")
+    '("pixels-above-lines" "ATK_TEXT_ATTR_PIXELS_ABOVE_LINES" "6")
+    '("pixels-below-lines" "ATK_TEXT_ATTR_PIXELS_BELOW_LINES" "7")
+    '("pixels-inside-wrap" "ATK_TEXT_ATTR_PIXELS_INSIDE_WRAP" "8")
+    '("bg-full-height" "ATK_TEXT_ATTR_BG_FULL_HEIGHT" "9")
+    '("rise" "ATK_TEXT_ATTR_RISE" "10")
+    '("underline" "ATK_TEXT_ATTR_UNDERLINE" "11")
+    '("strikethrough" "ATK_TEXT_ATTR_STRIKETHROUGH" "12")
+    '("size" "ATK_TEXT_ATTR_SIZE" "13")
+    '("scale" "ATK_TEXT_ATTR_SCALE" "14")
+    '("weight" "ATK_TEXT_ATTR_WEIGHT" "15")
+    '("language" "ATK_TEXT_ATTR_LANGUAGE" "16")
+    '("family-name" "ATK_TEXT_ATTR_FAMILY_NAME" "17")
+    '("bg-color" "ATK_TEXT_ATTR_BG_COLOR" "18")
+    '("fg-color" "ATK_TEXT_ATTR_FG_COLOR" "19")
+    '("bg-stipple" "ATK_TEXT_ATTR_BG_STIPPLE" "20")
+    '("fg-stipple" "ATK_TEXT_ATTR_FG_STIPPLE" "21")
+    '("wrap-mode" "ATK_TEXT_ATTR_WRAP_MODE" "22")
+    '("direction" "ATK_TEXT_ATTR_DIRECTION" "23")
+    '("justification" "ATK_TEXT_ATTR_JUSTIFICATION" "24")
+    '("stretch" "ATK_TEXT_ATTR_STRETCH" "25")
+    '("variant" "ATK_TEXT_ATTR_VARIANT" "26")
+    '("style" "ATK_TEXT_ATTR_STYLE" "27")
+    '("last-defined" "ATK_TEXT_ATTR_LAST_DEFINED" "28")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;   ATK_TEXT_BOUNDARY_CHAR,
+;;   ATK_TEXT_BOUNDARY_WORD_START,
+;;   ATK_TEXT_BOUNDARY_WORD_END,
+;;   ATK_TEXT_BOUNDARY_SENTENCE_START,
+;;   ATK_TEXT_BOUNDARY_SENTENCE_END,
+;;   ATK_TEXT_BOUNDARY_LINE_START,
+;;   ATK_TEXT_BOUNDARY_LINE_END
+;; } AtkTextBoundary;
+
+(define-enum-extended TextBoundary
+  (in-module "Atk")
+  (c-name "AtkTextBoundary")
+  (values
+    '("char" "ATK_TEXT_BOUNDARY_CHAR" "0")
+    '("word-start" "ATK_TEXT_BOUNDARY_WORD_START" "1")
+    '("word-end" "ATK_TEXT_BOUNDARY_WORD_END" "2")
+    '("sentence-start" "ATK_TEXT_BOUNDARY_SENTENCE_START" "3")
+    '("sentence-end" "ATK_TEXT_BOUNDARY_SENTENCE_END" "4")
+    '("line-start" "ATK_TEXT_BOUNDARY_LINE_START" "5")
+    '("line-end" "ATK_TEXT_BOUNDARY_LINE_END" "6")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;   ATK_TEXT_GRANULARITY_CHAR,
+;;   ATK_TEXT_GRANULARITY_WORD,
+;;   ATK_TEXT_GRANULARITY_SENTENCE,
+;;   ATK_TEXT_GRANULARITY_LINE,
+;;   ATK_TEXT_GRANULARITY_PARAGRAPH
+;; } AtkTextGranularity;
+
+(define-enum-extended TextGranularity
+  (in-module "Atk")
+  (c-name "AtkTextGranularity")
+  (values
+    '("char" "ATK_TEXT_GRANULARITY_CHAR" "0")
+    '("word" "ATK_TEXT_GRANULARITY_WORD" "1")
+    '("sentence" "ATK_TEXT_GRANULARITY_SENTENCE" "2")
+    '("line" "ATK_TEXT_GRANULARITY_LINE" "3")
+    '("paragraph" "ATK_TEXT_GRANULARITY_PARAGRAPH" "4")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;     ATK_TEXT_CLIP_NONE,
+;;     ATK_TEXT_CLIP_MIN,
+;;     ATK_TEXT_CLIP_MAX,
+;;     ATK_TEXT_CLIP_BOTH
+;; } AtkTextClipType;
+
+(define-enum-extended TextClipType
+  (in-module "Atk")
+  (c-name "AtkTextClipType")
+  (values
+    '("none" "ATK_TEXT_CLIP_NONE" "0")
+    '("min" "ATK_TEXT_CLIP_MIN" "1")
+    '("max" "ATK_TEXT_CLIP_MAX" "2")
+    '("both" "ATK_TEXT_CLIP_BOTH" "3")
+  )
+)
+
+;; From atkutil.h
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   ATK_KEY_EVENT_PRESS,
+;;   ATK_KEY_EVENT_RELEASE,
+;;   ATK_KEY_EVENT_LAST_DEFINED
+;; } AtkKeyEventType;
+
+(define-enum-extended KeyEventType
+  (in-module "Atk")
+  (c-name "AtkKeyEventType")
+  (values
+    '("press" "ATK_KEY_EVENT_PRESS" "0")
+    '("release" "ATK_KEY_EVENT_RELEASE" "1")
+    '("last-defined" "ATK_KEY_EVENT_LAST_DEFINED" "2")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;   ATK_XY_SCREEN,
+;;   ATK_XY_WINDOW,
+;;   ATK_XY_PARENT
+;; }AtkCoordType;
+
+(define-enum-extended CoordType
+  (in-module "Atk")
+  (c-name "AtkCoordType")
+  (values
+    '("screen" "ATK_XY_SCREEN" "0")
+    '("window" "ATK_XY_WINDOW" "1")
+    '("parent" "ATK_XY_PARENT" "2")
+  )
+)
+
+;; From atkvalue.h
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   ATK_VALUE_VERY_WEAK,
+;;   ATK_VALUE_WEAK,
+;;   ATK_VALUE_ACCEPTABLE,
+;;   ATK_VALUE_STRONG,
+;;   ATK_VALUE_VERY_STRONG,
+;;   ATK_VALUE_VERY_LOW,
+;;   ATK_VALUE_LOW,
+;;   ATK_VALUE_MEDIUM,
+;;   ATK_VALUE_HIGH,
+;;   ATK_VALUE_VERY_HIGH,
+;;   ATK_VALUE_VERY_BAD,
+;;   ATK_VALUE_BAD,
+;;   ATK_VALUE_GOOD,
+;;   ATK_VALUE_VERY_GOOD,
+;;   ATK_VALUE_BEST,
+;;   ATK_VALUE_LAST_DEFINED
+;; }AtkValueType;
+
+(define-enum-extended ValueType
+  (in-module "Atk")
+  (c-name "AtkValueType")
+  (values
+    '("very-weak" "ATK_VALUE_VERY_WEAK" "0")
+    '("weak" "ATK_VALUE_WEAK" "1")
+    '("acceptable" "ATK_VALUE_ACCEPTABLE" "2")
+    '("strong" "ATK_VALUE_STRONG" "3")
+    '("very-strong" "ATK_VALUE_VERY_STRONG" "4")
+    '("very-low" "ATK_VALUE_VERY_LOW" "5")
+    '("low" "ATK_VALUE_LOW" "6")
+    '("medium" "ATK_VALUE_MEDIUM" "7")
+    '("high" "ATK_VALUE_HIGH" "8")
+    '("very-high" "ATK_VALUE_VERY_HIGH" "9")
+    '("very-bad" "ATK_VALUE_VERY_BAD" "10")
+    '("bad" "ATK_VALUE_BAD" "11")
+    '("good" "ATK_VALUE_GOOD" "12")
+    '("very-good" "ATK_VALUE_VERY_GOOD" "13")
+    '("best" "ATK_VALUE_BEST" "14")
+    '("last-defined" "ATK_VALUE_LAST_DEFINED" "15")
+  )
+)
+
