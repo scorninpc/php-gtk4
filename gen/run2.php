@@ -67,7 +67,9 @@ $genConstants->addParser($gtk_parser);
 
 // ------------------
 // Create constants
-$genConstants->parse();
+$constants = $genConstants->parse();
+echo "\n\n" . $constants . "\n\n";
+die();
 
 // ------------------
 // Load methods

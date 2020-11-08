@@ -83,6 +83,15 @@ static PHP_MINIT_FUNCTION(gtk4)
 	zend_declare_class_constant_long(c2, "CAN_OVERRIDE_APP_ID", sizeof("CAN_OVERRIDE_APP_ID") - 1, G_APPLICATION_CAN_OVERRIDE_APP_ID);
 	// REGISTER_LONG_CONSTANT("G\\APPLICATION\\FLAGS\\NONE", G_APPLICATION_FLAGS_NONE, CONST_CS|CONST_PERSISTENT);
 
+	zend_class_entry tmp_gtkppplicationinhibitflags_ce;
+	INIT_CLASS_ENTRY(tmp_gtkppplicationinhibitflags_ce, "Gtk\\Application\\Inhibit\\Flags", NULL);
+	zend_class_entry *gtkapplicationinhibitflags_ce = zend_register_internal_class(&tmp_gtkppplicationinhibitflags_ce);
+	gtkapplicationinhibitflags_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gtkapplicationinhibitflags_ce, "LOGOUT", sizeof("LOGOUT") - 1, GTK_APPLICATION_INHIBIT_LOGOUT);
+	zend_declare_class_constant_long(gtkapplicationinhibitflags_ce, "SWITCH", sizeof("SWITCH") - 1, GTK_APPLICATION_INHIBIT_SWITCH);
+	zend_declare_class_constant_long(gtkapplicationinhibitflags_ce, "SUSPEND", sizeof("SUSPEND") - 1, GTK_APPLICATION_INHIBIT_SUSPEND);
+	zend_declare_class_constant_long(gtkapplicationinhibitflags_ce, "IDLE", sizeof("IDLE") - 1, GTK_APPLICATION_INHIBIT_IDLE);
+
 	
 	return SUCCESS;
 }

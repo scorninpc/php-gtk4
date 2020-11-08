@@ -23,9 +23,9 @@ class genConstants
 
 			foreach($parser->enums as $enum) {
 
-				// if($enum->c_name != "GApplicationFlags") {
-				// 	continue;
-				// }
+				if($enum->c_name != "GtkApplicationInhibitFlags") {
+					continue;
+				}
 
 				$this->constants_c .= sprintf("	zend_class_entry tmp_test_ce;\n");
 				$this->constants_c .= sprintf("	INIT_CLASS_ENTRY(tmp_test_ce, \"%s\", NULL);\n", \Type::getInstance()->createNamespace(\Type::getInstance()->createNamespace($enum->c_name)));

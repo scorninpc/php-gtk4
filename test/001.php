@@ -12,12 +12,29 @@ function activated($app=NULL, $b=NULL, $c=NULL)
 	$window = $app->window_new();
 	$window->set_title("Janela 1");
 
+	
 	$windows = $app->get_windows();
-
-	$windows[0]->connect("destroy", function($window) {
-		var_dump($window);
-	});
+	
 	$windows[0]->show_all();
+	
+	echo "\n -----------\n";
+	echo "inhibit\n";
+	$id = $app->inhibit($windows[0], Gtk\Application\Inhibit\Flags::SWITCH, "pq eu quero");
+	var_dump($id);
+
+	echo "\n -----------\n";
+	echo "is_inhibited\n";
+	var_dump($app->is_inhibited(Gtk\Application\Inhibit\Flags::SWITCH));
+
+
+	echo "\n -----------\n";
+	echo "uninhibit\n";
+	$app->uninhibit($id);
+
+	echo "\n -----------\n";
+	echo "is_inhibited\n";
+	var_dump($app->is_inhibited(Gtk\Application\Inhibit\Flags::SWITCH));
+
 }
 
 $app->connect("activate", "Test\activated");

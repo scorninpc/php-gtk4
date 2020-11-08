@@ -223,7 +223,7 @@ class Type
 			}
 			else if($type == "gboolean") {
 				self::$types[$type]['c_type'] = "bool";
-				self::$types[$type]['php_type'] = "BOOLEAN";			
+				self::$types[$type]['php_type'] = "BOOL";			
 			}
 			else if(($type == "gchar-const") || ($type == "gchar-const-const") || ($type == "gchar*-const")) {
 				self::$types[$type]['c_type'] = "char";

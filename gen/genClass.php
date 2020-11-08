@@ -106,42 +106,9 @@ class genClass
 		$output_h .= sprintf("};\n\n");
 		$output_h .= sprintf("#endif\n");
 
-
-
-
-
-
-				
-				// // Enum
-				// if($param['is_enum']) {
-				// 	$output_h .= sprintf("	Z_PARAM_LONG(%s)\n", $this->names_params[$index]['name']);
-				// }
-				
-				// // String
-				// else if($param['c_type'] == "char") {
-				// 	$output_h .= sprintf("	Z_PARAM_STRING(%s, %s_len)\n", $this->names_params[$index]['name'], $this->names_params[$index]['name']);
-				// }
-
-				// // Boolean
-				// else if($param['c_type'] == "bool") {
-				// 	$output_h .= sprintf("	Z_PARAM_BOOL(%s)\n", $this->names_params[$index]['name']);
-				// }
-
-				// // Integer
-				// else if($param['c_type'] == "long") {
-				// 	$output_h .= sprintf("	Z_PARAM_LONG(%s)\n", $this->names_params[$index]['name']);
-				// }
-
-
-
-
-
-		// var_dump($this->parsed_params);
-
 		return $output_h;
-
-
 	}
+
 
 	public function parse_c()
 	{
@@ -264,9 +231,15 @@ class genClass
 					else if($return_type['php_type'] == "GList") {
 						$output_c .= sprintf("GList *ret = ");
 					}
-					// else {
-					// 	$output_c .= sprintf("gpointer *ret = (gpointer *)");
-					// }
+
+					// String
+					else if($return_type['php_type'] == "STRING") {
+						
+					}
+
+					else {
+						$output_c .= sprintf("%s ret = ", $return_type['c_type']);
+					}
 				}
 				$output_c .= sprintf("%s(", $method->c_name);
 
@@ -331,6 +304,21 @@ class genClass
 					$output_c .= sprintf("	intern->gtk4_gpointer = ret;\n\n");
 
 					$output_c .= sprintf("	RETURN_OBJ(&intern->std);\n");
+				}
+
+				// Ignore return NULL
+				else if($return_type['php_type'] == "NULL") {
+
+				}
+
+				// Return an string
+				else if($return_type['php_type'] == "STRING") {
+
+				}
+
+				// Return others
+				else {
+					$output_c .= sprintf("	RETURN_%s(ret);\n", $return_type['php_type']);
 				}
 
 

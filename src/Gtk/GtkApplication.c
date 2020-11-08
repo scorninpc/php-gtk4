@@ -181,8 +181,9 @@ PHP_METHOD(GtkApplication, inhibit) {
 	gtk4_gobject_object *gtk4_window = (gtk4_gobject_object*)((char*)(window) - XtOffsetOf(gtk4_gobject_object, std));
 
 
-	gtk_application_inhibit(GTK_APPLICATION(obj->gtk4_gpointer), GTK_WINDOW(gtk4_window->gtk4_gpointer), flags, reason);
+	long ret = gtk_application_inhibit(GTK_APPLICATION(obj->gtk4_gpointer), GTK_WINDOW(gtk4_window->gtk4_gpointer), flags, reason);
 
+	RETURN_LONG(ret);
 }
 
 PHP_METHOD(GtkApplication, is_inhibited) {
@@ -194,8 +195,9 @@ PHP_METHOD(GtkApplication, is_inhibited) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gtk_application_is_inhibited(GTK_APPLICATION(obj->gtk4_gpointer), flags);
+	bool ret = gtk_application_is_inhibited(GTK_APPLICATION(obj->gtk4_gpointer), flags);
 
+	RETURN_BOOL(ret);
 }
 
 PHP_METHOD(GtkApplication, list_action_descriptions) {
@@ -216,8 +218,9 @@ PHP_METHOD(GtkApplication, prefers_app_menu) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gtk_application_prefers_app_menu(GTK_APPLICATION(obj->gtk4_gpointer));
+	bool ret = gtk_application_prefers_app_menu(GTK_APPLICATION(obj->gtk4_gpointer));
 
+	RETURN_BOOL(ret);
 }
 
 PHP_METHOD(GtkApplication, remove_window) {
