@@ -38,9 +38,35 @@ $override['gtk_application_set_accels_for_action'] = <<<EOT
 	gtk_application_set_accels_for_action(GTK_APPLICATION(obj->gtk4_gpointer), detailed_action_name, c_accels);
 EOT;
 
+// gtk_window_set_icon_list
+$override['gtk_window_set_icon_list'] = "";
+$override['gtk_window_activate_key'] = "";
+$override['gtk_window_get_default_size'] = "";
+$override['gtk_window_get_opacity'] = "";
+$override['gtk_window_get_resize_grip_area'] = "";
+$override['gtk_window_get_size'] = "";
+$override['gtk_window_get_position'] = "";
+$override['gtk_window_set_opacity'] = "";
+$override['gtk_window_resize_to_geometry'] = "";
+$override['gtk_window_parse_geometry'] = "";
+$override['gtk_window_propagate_key_event'] = "";
+$override['gtk_window_reshow_with_initial_size'] = "";
+$override['gtk_window_set_default_geometry'] = "";
+$override['gtk_window_set_geometry_hints'] = "";
+$override['gtk_window_set_has_resize_grip'] = "";
+$override['gtk_window_set_icon_from_file'] = "";
+$override['gtk_window_set_wmclass'] = "";
+$override['gtk_window_set_type_hint'] = "";
+$override['gtk_window_resize_grip_is_visible'] = "";
+$override['gtk_window_get_has_resize_grip'] = "";
+$override['gtk_window_begin_resize_drag'] = "";
+$override['gtk_window_mnemonic_activate'] = "";
+$override['gtk_window_set_gravity'] = "";
+$override['gtk_window_set_mnemonic_modifier'] = "";
+
 // Enums
 $override['G_APPLICATION_FLAGS_NONE'] = <<<EOT
-	zend_declare_class_constant_long(c2, "NONE", sizeof("NONE") - 1, G_APPLICATION_FLAGS_NONE);
+	zend_declare_class_constant_long(gapplicationflags_ce, "NONE", sizeof("NONE") - 1, G_APPLICATION_FLAGS_NONE);
 EOT;
 
 return $override;

@@ -110,8 +110,8 @@ function callback_test($a=NULL, $b=NULL, $c=NULL, $d=NULL, $e=NULL)
 	Gtk::main_quit();
 }
 
-$obj = new Gtk\Window();
-$obj->connect("destroy", "callback_test", "1", "2", 3, [1,2,3]);
+$obj = new Gtk\Window(Gtk\Window\Type::TOPLEVEL);
+$obj->connect("destroy", "Test\callback_test", "1", "2", 3, [1,2,3]);
 
 $obj->set_title("TEST GTK4");
 

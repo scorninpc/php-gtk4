@@ -71,8 +71,8 @@
 	ZEND_END_ARG_INFO()
 
 	// ----------------
-	static zend_class_entry *gtk4_g_gobject_ce = NULL;
-	static const zend_function_entry g_gobject_functions[] = {
+	static zend_class_entry *gtk4_gobject_ce = NULL;
+	static const zend_function_entry gobject_functions[] = {
 		PHP_ME(GObject, __construct, arginfo_gobject_construct, ZEND_ACC_PUBLIC)
 		PHP_ME(GObject, connect, arginfo_gobject_connect, ZEND_ACC_PUBLIC)
 		PHP_ME(GObject, test, arginfo_gobject_test, ZEND_ACC_PUBLIC)

@@ -22,8 +22,8 @@
 
 
 	// ----------------
-	static zend_class_entry *gtk4_gtk_widget_ce = NULL;
-	static const zend_function_entry gtk_widget_functions[] = {
+	static zend_class_entry *gtk4_gtkwidget_ce = NULL;
+	static const zend_function_entry gtkwidget_functions[] = {
 		// PHP_ME(GtkWidget, __construct, arginfo_gtkwidget_construct, ZEND_ACC_PUBLIC)
 		PHP_ME(GtkWidget, show_all, arginfo_gtkwidget_show_all, ZEND_ACC_PUBLIC)
 		PHP_FE_END
