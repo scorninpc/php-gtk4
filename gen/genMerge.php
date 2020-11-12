@@ -18,7 +18,7 @@ class genMerge
 		$this->new_defs = new Merge_Parser($file1);
 		$old_defs = new Merge_Parser($file2);
 
-		$this->new_defs->start_parsing(TRUE);
+		$this->new_defs->start_parsing();
 		$old_defs->start_parsing(TRUE);
 
 		$this->new_defs->merge($old_defs, TRUE);
@@ -26,7 +26,7 @@ class genMerge
 
 	public function save($file)
 	{
-		$fp = fopen($file, "wa");
+		$fp = fopen($file, "w");
 		$this->new_defs->write_defs($fp);
 		fclose($fp);
 	}

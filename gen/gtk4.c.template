@@ -43,13 +43,13 @@ static PHP_MINIT_FUNCTION(gtk4)
 
 	// Create class
 	zend_class_entry tmp_g_object_ce;
-	INIT_CLASS_ENTRY(tmp_g_object_ce, "G\\Object", g_gobject_functions);
-	gtk4_g_gobject_ce = zend_register_internal_class(&tmp_g_object_ce);
-	gtk4_g_gobject_ce->create_object = g_object_create_object;
+	INIT_CLASS_ENTRY(tmp_g_object_ce, "G\\Object", gobject_functions);
+	gtk4_gobject_ce = zend_register_internal_class(&tmp_g_object_ce);
+	gtk4_gobject_ce->create_object = g_object_create_object;
 
 	zend_class_entry tmp_gapplication_ce;
 	INIT_CLASS_ENTRY(tmp_gapplication_ce, "G\\Application", gapplication_functions);
-	gtk4_gapplication_ce = zend_register_internal_class_ex(&tmp_gapplication_ce, gtk4_g_gobject_ce);	// extends GObject
+	gtk4_gapplication_ce = zend_register_internal_class_ex(&tmp_gapplication_ce, gtk4_gobject_ce);	// extends GObject
 
 	zend_class_entry tmp_gtk_ce;
 	INIT_CLASS_ENTRY(tmp_gtk_ce, "Gtk", gtk_functions);
@@ -60,12 +60,12 @@ static PHP_MINIT_FUNCTION(gtk4)
 	gtk4_gtkapplication_ce = zend_register_internal_class_ex(&tmp_gtkapplication_ce, gtk4_gapplication_ce);	// extends GApplication
 
 	zend_class_entry tmp_gtk_widget_ce;
-	INIT_CLASS_ENTRY(tmp_gtk_widget_ce, "Gtk\\Widget", gtk_widget_functions);
-	gtk4_gtk_widget_ce = zend_register_internal_class_ex(&tmp_gtk_widget_ce, gtk4_g_gobject_ce);	// extends GObject
+	INIT_CLASS_ENTRY(tmp_gtk_widget_ce, "Gtk\\Widget", gtkwidget_functions);
+	gtk4_gtkwidget_ce = zend_register_internal_class_ex(&tmp_gtk_widget_ce, gtk4_gobject_ce);	// extends GObject
 
 	zend_class_entry tmp_gtk_window_ce;
 	INIT_CLASS_ENTRY(tmp_gtk_window_ce, "Gtk\\Window", gtkwindow_functions);
-	gtk4_gtkwindow_ce = zend_register_internal_class_ex(&tmp_gtk_window_ce, gtk4_gtk_widget_ce);	// extends Widget
+	gtk4_gtkwindow_ce = zend_register_internal_class_ex(&tmp_gtk_window_ce, gtk4_gtkwidget_ce);	// extends Widget
 
 	zend_class_entry tmp_gtkapplicationwindow_ce;
 	INIT_CLASS_ENTRY(tmp_gtkapplicationwindow_ce, "Gtk\\Application\\Window", gtkapplicationwindow_functions);

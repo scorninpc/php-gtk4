@@ -42,38 +42,37 @@ static PHP_MINIT_FUNCTION(gtk4)
 	zend_register_internal_class_ex(&tmp_gtk4_exception_ce, zend_ce_exception);
 
 	// Create class
-	zend_class_entry tmp_gobject_ce;
-	INIT_CLASS_ENTRY(tmp_gobject_ce, "G\\Object", gobject_functions);
-	gtk4_gobject_ce = zend_register_internal_class(&tmp_gobject_ce);
+	zend_class_entry tmp_g_object_ce;
+	INIT_CLASS_ENTRY(tmp_g_object_ce, "G\\Object", gobject_functions);
+	gtk4_gobject_ce = zend_register_internal_class(&tmp_g_object_ce);
 	gtk4_gobject_ce->create_object = g_object_create_object;
+
+	zend_class_entry tmp_gapplication_ce;
+	INIT_CLASS_ENTRY(tmp_gapplication_ce, "G\\Application", gapplication_functions);
+	gtk4_gapplication_ce = zend_register_internal_class_ex(&tmp_gapplication_ce, gtk4_gobject_ce);	// extends GObject
 
 	zend_class_entry tmp_gtk_ce;
 	INIT_CLASS_ENTRY(tmp_gtk_ce, "Gtk", gtk_functions);
 	gtk4_gtk_ce = zend_register_internal_class(&tmp_gtk_ce);
 
-	zend_class_entry tmp_gapplication_ce;
-	INIT_CLASS_ENTRY(tmp_gapplication_ce, "G\\Application", gapplication_functions);
-	gtk4_gapplication_ce = zend_register_internal_class_ex(&tmp_gapplication_ce, gtk4_gobject_ce);
-
 	zend_class_entry tmp_gtkapplication_ce;
 	INIT_CLASS_ENTRY(tmp_gtkapplication_ce, "Gtk\\Application", gtkapplication_functions);
-	gtk4_gtkapplication_ce = zend_register_internal_class_ex(&tmp_gtkapplication_ce, gtk4_gapplication_ce);
+	gtk4_gtkapplication_ce = zend_register_internal_class_ex(&tmp_gtkapplication_ce, gtk4_gapplication_ce);	// extends GApplication
 
-	zend_class_entry tmp_gtkwidget_ce;
-	INIT_CLASS_ENTRY(tmp_gtkwidget_ce, "Gtk\\Widget", gtkwidget_functions);
-	gtk4_gtkwidget_ce = zend_register_internal_class_ex(&tmp_gtkwidget_ce, gtk4_gobject_ce);
+	zend_class_entry tmp_gtk_widget_ce;
+	INIT_CLASS_ENTRY(tmp_gtk_widget_ce, "Gtk\\Widget", gtkwidget_functions);
+	gtk4_gtkwidget_ce = zend_register_internal_class_ex(&tmp_gtk_widget_ce, gtk4_gobject_ce);	// extends GObject
 
-	zend_class_entry tmp_gtkwindow_ce;
-	INIT_CLASS_ENTRY(tmp_gtkwindow_ce, "Gtk\\Window", gtkwindow_functions);
-	gtk4_gtkwindow_ce = zend_register_internal_class_ex(&tmp_gtkwindow_ce, gtk4_gtkwidget_ce);
+	zend_class_entry tmp_gtk_window_ce;
+	INIT_CLASS_ENTRY(tmp_gtk_window_ce, "Gtk\\Window", gtkwindow_functions);
+	gtk4_gtkwindow_ce = zend_register_internal_class_ex(&tmp_gtk_window_ce, gtk4_gtkwidget_ce);	// extends Widget
 
 	zend_class_entry tmp_gtkapplicationwindow_ce;
 	INIT_CLASS_ENTRY(tmp_gtkapplicationwindow_ce, "Gtk\\Application\\Window", gtkapplicationwindow_functions);
-	gtk4_gtkapplicationwindow_ce = zend_register_internal_class_ex(&tmp_gtkapplicationwindow_ce, gtk4_gtkwindow_ce);
+	gtk4_gtkapplicationwindow_ce = zend_register_internal_class_ex(&tmp_gtkapplicationwindow_ce, gtk4_gtkwindow_ce);	// extends Widget
 
 
-
-		zend_class_entry tmp_atkcoordtype_ce;
+	zend_class_entry tmp_atkcoordtype_ce;
 	INIT_CLASS_ENTRY(tmp_atkcoordtype_ce, "Atk\\Coord\\Type", NULL);
 	zend_class_entry *atkcoordtype_ce = zend_register_internal_class(&tmp_atkcoordtype_ce);
 	atkcoordtype_ce->ce_flags |= ZEND_ACC_FINAL;
@@ -1171,6 +1170,596 @@ static PHP_MINIT_FUNCTION(gtk4)
 	zend_declare_class_constant_long(gtlscertificateflags_ce, "INSECURE", sizeof("INSECURE") - 1, G_TLS_CERTIFICATE_INSECURE);
 	zend_declare_class_constant_long(gtlscertificateflags_ce, "GENERIC_ERROR", sizeof("GENERIC_ERROR") - 1, G_TLS_CERTIFICATE_GENERIC_ERROR);
 	zend_declare_class_constant_long(gtlscertificateflags_ce, "VALIDATE_ALL", sizeof("VALIDATE_ALL") - 1, G_TLS_CERTIFICATE_VALIDATE_ALL);
+
+	zend_class_entry tmp_gdkaxisuse_ce;
+	INIT_CLASS_ENTRY(tmp_gdkaxisuse_ce, "Gdk\\Axis\\Use", NULL);
+	zend_class_entry *gdkaxisuse_ce = zend_register_internal_class(&tmp_gdkaxisuse_ce);
+	gdkaxisuse_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkaxisuse_ce, "IGNORE", sizeof("IGNORE") - 1, GDK_AXIS_IGNORE);
+	zend_declare_class_constant_long(gdkaxisuse_ce, "X", sizeof("X") - 1, GDK_AXIS_X);
+	zend_declare_class_constant_long(gdkaxisuse_ce, "Y", sizeof("Y") - 1, GDK_AXIS_Y);
+	zend_declare_class_constant_long(gdkaxisuse_ce, "PRESSURE", sizeof("PRESSURE") - 1, GDK_AXIS_PRESSURE);
+	zend_declare_class_constant_long(gdkaxisuse_ce, "XTILT", sizeof("XTILT") - 1, GDK_AXIS_XTILT);
+	zend_declare_class_constant_long(gdkaxisuse_ce, "YTILT", sizeof("YTILT") - 1, GDK_AXIS_YTILT);
+	zend_declare_class_constant_long(gdkaxisuse_ce, "WHEEL", sizeof("WHEEL") - 1, GDK_AXIS_WHEEL);
+	zend_declare_class_constant_long(gdkaxisuse_ce, "DISTANCE", sizeof("DISTANCE") - 1, GDK_AXIS_DISTANCE);
+	zend_declare_class_constant_long(gdkaxisuse_ce, "ROTATION", sizeof("ROTATION") - 1, GDK_AXIS_ROTATION);
+	zend_declare_class_constant_long(gdkaxisuse_ce, "SLIDER", sizeof("SLIDER") - 1, GDK_AXIS_SLIDER);
+	zend_declare_class_constant_long(gdkaxisuse_ce, "LAST", sizeof("LAST") - 1, GDK_AXIS_LAST);
+
+	zend_class_entry tmp_gdkbyteorder_ce;
+	INIT_CLASS_ENTRY(tmp_gdkbyteorder_ce, "Gdk\\Byte\\Order", NULL);
+	zend_class_entry *gdkbyteorder_ce = zend_register_internal_class(&tmp_gdkbyteorder_ce);
+	gdkbyteorder_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkbyteorder_ce, "LSB_FIRST", sizeof("LSB_FIRST") - 1, GDK_LSB_FIRST);
+	zend_declare_class_constant_long(gdkbyteorder_ce, "MSB_FIRST", sizeof("MSB_FIRST") - 1, GDK_MSB_FIRST);
+
+	zend_class_entry tmp_gdkcrossingmode_ce;
+	INIT_CLASS_ENTRY(tmp_gdkcrossingmode_ce, "Gdk\\Crossing\\Mode", NULL);
+	zend_class_entry *gdkcrossingmode_ce = zend_register_internal_class(&tmp_gdkcrossingmode_ce);
+	gdkcrossingmode_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkcrossingmode_ce, "NORMAL", sizeof("NORMAL") - 1, GDK_CROSSING_NORMAL);
+	zend_declare_class_constant_long(gdkcrossingmode_ce, "GRAB", sizeof("GRAB") - 1, GDK_CROSSING_GRAB);
+	zend_declare_class_constant_long(gdkcrossingmode_ce, "UNGRAB", sizeof("UNGRAB") - 1, GDK_CROSSING_UNGRAB);
+	zend_declare_class_constant_long(gdkcrossingmode_ce, "GTK_GRAB", sizeof("GTK_GRAB") - 1, GDK_CROSSING_GTK_GRAB);
+	zend_declare_class_constant_long(gdkcrossingmode_ce, "GTK_UNGRAB", sizeof("GTK_UNGRAB") - 1, GDK_CROSSING_GTK_UNGRAB);
+	zend_declare_class_constant_long(gdkcrossingmode_ce, "STATE_CHANGED", sizeof("STATE_CHANGED") - 1, GDK_CROSSING_STATE_CHANGED);
+	zend_declare_class_constant_long(gdkcrossingmode_ce, "TOUCH_BEGIN", sizeof("TOUCH_BEGIN") - 1, GDK_CROSSING_TOUCH_BEGIN);
+	zend_declare_class_constant_long(gdkcrossingmode_ce, "TOUCH_END", sizeof("TOUCH_END") - 1, GDK_CROSSING_TOUCH_END);
+	zend_declare_class_constant_long(gdkcrossingmode_ce, "DEVICE_SWITCH", sizeof("DEVICE_SWITCH") - 1, GDK_CROSSING_DEVICE_SWITCH);
+
+	zend_class_entry tmp_gdkdevicepadfeature_ce;
+	INIT_CLASS_ENTRY(tmp_gdkdevicepadfeature_ce, "Gdk\\Device\\Pad\\Feature", NULL);
+	zend_class_entry *gdkdevicepadfeature_ce = zend_register_internal_class(&tmp_gdkdevicepadfeature_ce);
+	gdkdevicepadfeature_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkdevicepadfeature_ce, "BUTTON", sizeof("BUTTON") - 1, GDK_DEVICE_PAD_FEATURE_BUTTON);
+	zend_declare_class_constant_long(gdkdevicepadfeature_ce, "RING", sizeof("RING") - 1, GDK_DEVICE_PAD_FEATURE_RING);
+	zend_declare_class_constant_long(gdkdevicepadfeature_ce, "STRIP", sizeof("STRIP") - 1, GDK_DEVICE_PAD_FEATURE_STRIP);
+
+	zend_class_entry tmp_gdkdevicetooltype_ce;
+	INIT_CLASS_ENTRY(tmp_gdkdevicetooltype_ce, "Gdk\\Device\\Tool\\Type", NULL);
+	zend_class_entry *gdkdevicetooltype_ce = zend_register_internal_class(&tmp_gdkdevicetooltype_ce);
+	gdkdevicetooltype_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkdevicetooltype_ce, "UNKNOWN", sizeof("UNKNOWN") - 1, GDK_DEVICE_TOOL_TYPE_UNKNOWN);
+	zend_declare_class_constant_long(gdkdevicetooltype_ce, "PEN", sizeof("PEN") - 1, GDK_DEVICE_TOOL_TYPE_PEN);
+	zend_declare_class_constant_long(gdkdevicetooltype_ce, "ERASER", sizeof("ERASER") - 1, GDK_DEVICE_TOOL_TYPE_ERASER);
+	zend_declare_class_constant_long(gdkdevicetooltype_ce, "BRUSH", sizeof("BRUSH") - 1, GDK_DEVICE_TOOL_TYPE_BRUSH);
+	zend_declare_class_constant_long(gdkdevicetooltype_ce, "PENCIL", sizeof("PENCIL") - 1, GDK_DEVICE_TOOL_TYPE_PENCIL);
+	zend_declare_class_constant_long(gdkdevicetooltype_ce, "AIRBRUSH", sizeof("AIRBRUSH") - 1, GDK_DEVICE_TOOL_TYPE_AIRBRUSH);
+	zend_declare_class_constant_long(gdkdevicetooltype_ce, "MOUSE", sizeof("MOUSE") - 1, GDK_DEVICE_TOOL_TYPE_MOUSE);
+	zend_declare_class_constant_long(gdkdevicetooltype_ce, "LENS", sizeof("LENS") - 1, GDK_DEVICE_TOOL_TYPE_LENS);
+
+	zend_class_entry tmp_gdkdevicetype_ce;
+	INIT_CLASS_ENTRY(tmp_gdkdevicetype_ce, "Gdk\\Device\\Type", NULL);
+	zend_class_entry *gdkdevicetype_ce = zend_register_internal_class(&tmp_gdkdevicetype_ce);
+	gdkdevicetype_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkdevicetype_ce, "MASTER", sizeof("MASTER") - 1, GDK_DEVICE_TYPE_MASTER);
+	zend_declare_class_constant_long(gdkdevicetype_ce, "SLAVE", sizeof("SLAVE") - 1, GDK_DEVICE_TYPE_SLAVE);
+	zend_declare_class_constant_long(gdkdevicetype_ce, "FLOATING", sizeof("FLOATING") - 1, GDK_DEVICE_TYPE_FLOATING);
+
+	zend_class_entry tmp_gdkdragcancelreason_ce;
+	INIT_CLASS_ENTRY(tmp_gdkdragcancelreason_ce, "Gdk\\Drag\\Cancel\\Reason", NULL);
+	zend_class_entry *gdkdragcancelreason_ce = zend_register_internal_class(&tmp_gdkdragcancelreason_ce);
+	gdkdragcancelreason_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkdragcancelreason_ce, "NO_TARGET", sizeof("NO_TARGET") - 1, GDK_DRAG_CANCEL_NO_TARGET);
+	zend_declare_class_constant_long(gdkdragcancelreason_ce, "USER_CANCELLED", sizeof("USER_CANCELLED") - 1, GDK_DRAG_CANCEL_USER_CANCELLED);
+	zend_declare_class_constant_long(gdkdragcancelreason_ce, "ERROR", sizeof("ERROR") - 1, GDK_DRAG_CANCEL_ERROR);
+
+	zend_class_entry tmp_gdkdragprotocol_ce;
+	INIT_CLASS_ENTRY(tmp_gdkdragprotocol_ce, "Gdk\\Drag\\Protocol", NULL);
+	zend_class_entry *gdkdragprotocol_ce = zend_register_internal_class(&tmp_gdkdragprotocol_ce);
+	gdkdragprotocol_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkdragprotocol_ce, "NONE", sizeof("NONE") - 1, GDK_DRAG_PROTO_NONE);
+	zend_declare_class_constant_long(gdkdragprotocol_ce, "MOTIF", sizeof("MOTIF") - 1, GDK_DRAG_PROTO_MOTIF);
+	zend_declare_class_constant_long(gdkdragprotocol_ce, "XDND", sizeof("XDND") - 1, GDK_DRAG_PROTO_XDND);
+	zend_declare_class_constant_long(gdkdragprotocol_ce, "ROOTWIN", sizeof("ROOTWIN") - 1, GDK_DRAG_PROTO_ROOTWIN);
+	zend_declare_class_constant_long(gdkdragprotocol_ce, "WIN32_DROPFILES", sizeof("WIN32_DROPFILES") - 1, GDK_DRAG_PROTO_WIN32_DROPFILES);
+	zend_declare_class_constant_long(gdkdragprotocol_ce, "OLE2", sizeof("OLE2") - 1, GDK_DRAG_PROTO_OLE2);
+	zend_declare_class_constant_long(gdkdragprotocol_ce, "LOCAL", sizeof("LOCAL") - 1, GDK_DRAG_PROTO_LOCAL);
+	zend_declare_class_constant_long(gdkdragprotocol_ce, "WAYLAND", sizeof("WAYLAND") - 1, GDK_DRAG_PROTO_WAYLAND);
+
+	zend_class_entry tmp_gdkeventtype_ce;
+	INIT_CLASS_ENTRY(tmp_gdkeventtype_ce, "Gdk\\Event\\Type", NULL);
+	zend_class_entry *gdkeventtype_ce = zend_register_internal_class(&tmp_gdkeventtype_ce);
+	gdkeventtype_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkeventtype_ce, "NOTHING", sizeof("NOTHING") - 1, GDK_NOTHING);
+	zend_declare_class_constant_long(gdkeventtype_ce, "DELETE", sizeof("DELETE") - 1, GDK_DELETE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "DESTROY", sizeof("DESTROY") - 1, GDK_DESTROY);
+	zend_declare_class_constant_long(gdkeventtype_ce, "EXPOSE", sizeof("EXPOSE") - 1, GDK_EXPOSE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "MOTION_NOTIFY", sizeof("MOTION_NOTIFY") - 1, GDK_MOTION_NOTIFY);
+	zend_declare_class_constant_long(gdkeventtype_ce, "BUTTON_PRESS", sizeof("BUTTON_PRESS") - 1, GDK_BUTTON_PRESS);
+	zend_declare_class_constant_long(gdkeventtype_ce, "2BUTTON_PRESS", sizeof("2BUTTON_PRESS") - 1, GDK_2BUTTON_PRESS);
+	zend_declare_class_constant_long(gdkeventtype_ce, "DOUBLE_BUTTON_PRESS", sizeof("DOUBLE_BUTTON_PRESS") - 1, GDK_DOUBLE_BUTTON_PRESS);
+	zend_declare_class_constant_long(gdkeventtype_ce, "3BUTTON_PRESS", sizeof("3BUTTON_PRESS") - 1, GDK_3BUTTON_PRESS);
+	zend_declare_class_constant_long(gdkeventtype_ce, "TRIPLE_BUTTON_PRESS", sizeof("TRIPLE_BUTTON_PRESS") - 1, GDK_TRIPLE_BUTTON_PRESS);
+	zend_declare_class_constant_long(gdkeventtype_ce, "BUTTON_RELEASE", sizeof("BUTTON_RELEASE") - 1, GDK_BUTTON_RELEASE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "KEY_PRESS", sizeof("KEY_PRESS") - 1, GDK_KEY_PRESS);
+	zend_declare_class_constant_long(gdkeventtype_ce, "KEY_RELEASE", sizeof("KEY_RELEASE") - 1, GDK_KEY_RELEASE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "ENTER_NOTIFY", sizeof("ENTER_NOTIFY") - 1, GDK_ENTER_NOTIFY);
+	zend_declare_class_constant_long(gdkeventtype_ce, "LEAVE_NOTIFY", sizeof("LEAVE_NOTIFY") - 1, GDK_LEAVE_NOTIFY);
+	zend_declare_class_constant_long(gdkeventtype_ce, "FOCUS_CHANGE", sizeof("FOCUS_CHANGE") - 1, GDK_FOCUS_CHANGE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "CONFIGURE", sizeof("CONFIGURE") - 1, GDK_CONFIGURE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "MAP", sizeof("MAP") - 1, GDK_MAP);
+	zend_declare_class_constant_long(gdkeventtype_ce, "UNMAP", sizeof("UNMAP") - 1, GDK_UNMAP);
+	zend_declare_class_constant_long(gdkeventtype_ce, "PROPERTY_NOTIFY", sizeof("PROPERTY_NOTIFY") - 1, GDK_PROPERTY_NOTIFY);
+	zend_declare_class_constant_long(gdkeventtype_ce, "SELECTION_CLEAR", sizeof("SELECTION_CLEAR") - 1, GDK_SELECTION_CLEAR);
+	zend_declare_class_constant_long(gdkeventtype_ce, "SELECTION_REQUEST", sizeof("SELECTION_REQUEST") - 1, GDK_SELECTION_REQUEST);
+	zend_declare_class_constant_long(gdkeventtype_ce, "SELECTION_NOTIFY", sizeof("SELECTION_NOTIFY") - 1, GDK_SELECTION_NOTIFY);
+	zend_declare_class_constant_long(gdkeventtype_ce, "PROXIMITY_IN", sizeof("PROXIMITY_IN") - 1, GDK_PROXIMITY_IN);
+	zend_declare_class_constant_long(gdkeventtype_ce, "PROXIMITY_OUT", sizeof("PROXIMITY_OUT") - 1, GDK_PROXIMITY_OUT);
+	zend_declare_class_constant_long(gdkeventtype_ce, "DRAG_ENTER", sizeof("DRAG_ENTER") - 1, GDK_DRAG_ENTER);
+	zend_declare_class_constant_long(gdkeventtype_ce, "DRAG_LEAVE", sizeof("DRAG_LEAVE") - 1, GDK_DRAG_LEAVE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "DRAG_MOTION", sizeof("DRAG_MOTION") - 1, GDK_DRAG_MOTION);
+	zend_declare_class_constant_long(gdkeventtype_ce, "DRAG_STATUS", sizeof("DRAG_STATUS") - 1, GDK_DRAG_STATUS);
+	zend_declare_class_constant_long(gdkeventtype_ce, "DROP_START", sizeof("DROP_START") - 1, GDK_DROP_START);
+	zend_declare_class_constant_long(gdkeventtype_ce, "DROP_FINISHED", sizeof("DROP_FINISHED") - 1, GDK_DROP_FINISHED);
+	zend_declare_class_constant_long(gdkeventtype_ce, "CLIENT_EVENT", sizeof("CLIENT_EVENT") - 1, GDK_CLIENT_EVENT);
+	zend_declare_class_constant_long(gdkeventtype_ce, "VISIBILITY_NOTIFY", sizeof("VISIBILITY_NOTIFY") - 1, GDK_VISIBILITY_NOTIFY);
+	zend_declare_class_constant_long(gdkeventtype_ce, "SCROLL", sizeof("SCROLL") - 1, GDK_SCROLL);
+	zend_declare_class_constant_long(gdkeventtype_ce, "WINDOW_STATE", sizeof("WINDOW_STATE") - 1, GDK_WINDOW_STATE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "SETTING", sizeof("SETTING") - 1, GDK_SETTING);
+	zend_declare_class_constant_long(gdkeventtype_ce, "OWNER_CHANGE", sizeof("OWNER_CHANGE") - 1, GDK_OWNER_CHANGE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "GRAB_BROKEN", sizeof("GRAB_BROKEN") - 1, GDK_GRAB_BROKEN);
+	zend_declare_class_constant_long(gdkeventtype_ce, "DAMAGE", sizeof("DAMAGE") - 1, GDK_DAMAGE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "TOUCH_BEGIN", sizeof("TOUCH_BEGIN") - 1, GDK_TOUCH_BEGIN);
+	zend_declare_class_constant_long(gdkeventtype_ce, "TOUCH_UPDATE", sizeof("TOUCH_UPDATE") - 1, GDK_TOUCH_UPDATE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "TOUCH_END", sizeof("TOUCH_END") - 1, GDK_TOUCH_END);
+	zend_declare_class_constant_long(gdkeventtype_ce, "TOUCH_CANCEL", sizeof("TOUCH_CANCEL") - 1, GDK_TOUCH_CANCEL);
+	zend_declare_class_constant_long(gdkeventtype_ce, "TOUCHPAD_SWIPE", sizeof("TOUCHPAD_SWIPE") - 1, GDK_TOUCHPAD_SWIPE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "TOUCHPAD_PINCH", sizeof("TOUCHPAD_PINCH") - 1, GDK_TOUCHPAD_PINCH);
+	zend_declare_class_constant_long(gdkeventtype_ce, "PAD_BUTTON_PRESS", sizeof("PAD_BUTTON_PRESS") - 1, GDK_PAD_BUTTON_PRESS);
+	zend_declare_class_constant_long(gdkeventtype_ce, "PAD_BUTTON_RELEASE", sizeof("PAD_BUTTON_RELEASE") - 1, GDK_PAD_BUTTON_RELEASE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "PAD_RING", sizeof("PAD_RING") - 1, GDK_PAD_RING);
+	zend_declare_class_constant_long(gdkeventtype_ce, "PAD_STRIP", sizeof("PAD_STRIP") - 1, GDK_PAD_STRIP);
+	zend_declare_class_constant_long(gdkeventtype_ce, "PAD_GROUP_MODE", sizeof("PAD_GROUP_MODE") - 1, GDK_PAD_GROUP_MODE);
+	zend_declare_class_constant_long(gdkeventtype_ce, "EVENT_LAST", sizeof("EVENT_LAST") - 1, GDK_EVENT_LAST);
+
+	zend_class_entry tmp_gdkfilterreturn_ce;
+	INIT_CLASS_ENTRY(tmp_gdkfilterreturn_ce, "Gdk\\Filter\\Return", NULL);
+	zend_class_entry *gdkfilterreturn_ce = zend_register_internal_class(&tmp_gdkfilterreturn_ce);
+	gdkfilterreturn_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkfilterreturn_ce, "CONTINUE", sizeof("CONTINUE") - 1, GDK_FILTER_CONTINUE);
+	zend_declare_class_constant_long(gdkfilterreturn_ce, "TRANSLATE", sizeof("TRANSLATE") - 1, GDK_FILTER_TRANSLATE);
+	zend_declare_class_constant_long(gdkfilterreturn_ce, "REMOVE", sizeof("REMOVE") - 1, GDK_FILTER_REMOVE);
+
+	zend_class_entry tmp_gdkfullscreenmode_ce;
+	INIT_CLASS_ENTRY(tmp_gdkfullscreenmode_ce, "Gdk\\Fullscreen\\Mode", NULL);
+	zend_class_entry *gdkfullscreenmode_ce = zend_register_internal_class(&tmp_gdkfullscreenmode_ce);
+	gdkfullscreenmode_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkfullscreenmode_ce, "CURRENT_MONITOR", sizeof("CURRENT_MONITOR") - 1, GDK_FULLSCREEN_ON_CURRENT_MONITOR);
+	zend_declare_class_constant_long(gdkfullscreenmode_ce, "ALL_MONITORS", sizeof("ALL_MONITORS") - 1, GDK_FULLSCREEN_ON_ALL_MONITORS);
+
+	zend_class_entry tmp_gdkglerror_ce;
+	INIT_CLASS_ENTRY(tmp_gdkglerror_ce, "Gdk\\G\\L\\Error", NULL);
+	zend_class_entry *gdkglerror_ce = zend_register_internal_class(&tmp_gdkglerror_ce);
+	gdkglerror_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkglerror_ce, "NOT_AVAILABLE", sizeof("NOT_AVAILABLE") - 1, GDK_GL_ERROR_NOT_AVAILABLE);
+	zend_declare_class_constant_long(gdkglerror_ce, "UNSUPPORTED_FORMAT", sizeof("UNSUPPORTED_FORMAT") - 1, GDK_GL_ERROR_UNSUPPORTED_FORMAT);
+	zend_declare_class_constant_long(gdkglerror_ce, "UNSUPPORTED_PROFILE", sizeof("UNSUPPORTED_PROFILE") - 1, GDK_GL_ERROR_UNSUPPORTED_PROFILE);
+
+	zend_class_entry tmp_gdkgrabownership_ce;
+	INIT_CLASS_ENTRY(tmp_gdkgrabownership_ce, "Gdk\\Grab\\Ownership", NULL);
+	zend_class_entry *gdkgrabownership_ce = zend_register_internal_class(&tmp_gdkgrabownership_ce);
+	gdkgrabownership_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkgrabownership_ce, "NONE", sizeof("NONE") - 1, GDK_OWNERSHIP_NONE);
+	zend_declare_class_constant_long(gdkgrabownership_ce, "WINDOW", sizeof("WINDOW") - 1, GDK_OWNERSHIP_WINDOW);
+	zend_declare_class_constant_long(gdkgrabownership_ce, "APPLICATION", sizeof("APPLICATION") - 1, GDK_OWNERSHIP_APPLICATION);
+
+	zend_class_entry tmp_gdkgrabstatus_ce;
+	INIT_CLASS_ENTRY(tmp_gdkgrabstatus_ce, "Gdk\\Grab\\Status", NULL);
+	zend_class_entry *gdkgrabstatus_ce = zend_register_internal_class(&tmp_gdkgrabstatus_ce);
+	gdkgrabstatus_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkgrabstatus_ce, "SUCCESS", sizeof("SUCCESS") - 1, GDK_GRAB_SUCCESS);
+	zend_declare_class_constant_long(gdkgrabstatus_ce, "ALREADY_GRABBED", sizeof("ALREADY_GRABBED") - 1, GDK_GRAB_ALREADY_GRABBED);
+	zend_declare_class_constant_long(gdkgrabstatus_ce, "INVALID_TIME", sizeof("INVALID_TIME") - 1, GDK_GRAB_INVALID_TIME);
+	zend_declare_class_constant_long(gdkgrabstatus_ce, "NOT_VIEWABLE", sizeof("NOT_VIEWABLE") - 1, GDK_GRAB_NOT_VIEWABLE);
+	zend_declare_class_constant_long(gdkgrabstatus_ce, "FROZEN", sizeof("FROZEN") - 1, GDK_GRAB_FROZEN);
+	zend_declare_class_constant_long(gdkgrabstatus_ce, "FAILED", sizeof("FAILED") - 1, GDK_GRAB_FAILED);
+
+	zend_class_entry tmp_gdkgravity_ce;
+	INIT_CLASS_ENTRY(tmp_gdkgravity_ce, "Gdk\\Gravity", NULL);
+	zend_class_entry *gdkgravity_ce = zend_register_internal_class(&tmp_gdkgravity_ce);
+	gdkgravity_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkgravity_ce, "NORTH_WEST", sizeof("NORTH_WEST") - 1, GDK_GRAVITY_NORTH_WEST);
+	zend_declare_class_constant_long(gdkgravity_ce, "NORTH", sizeof("NORTH") - 1, GDK_GRAVITY_NORTH);
+	zend_declare_class_constant_long(gdkgravity_ce, "NORTH_EAST", sizeof("NORTH_EAST") - 1, GDK_GRAVITY_NORTH_EAST);
+	zend_declare_class_constant_long(gdkgravity_ce, "WEST", sizeof("WEST") - 1, GDK_GRAVITY_WEST);
+	zend_declare_class_constant_long(gdkgravity_ce, "CENTER", sizeof("CENTER") - 1, GDK_GRAVITY_CENTER);
+	zend_declare_class_constant_long(gdkgravity_ce, "EAST", sizeof("EAST") - 1, GDK_GRAVITY_EAST);
+	zend_declare_class_constant_long(gdkgravity_ce, "SOUTH_WEST", sizeof("SOUTH_WEST") - 1, GDK_GRAVITY_SOUTH_WEST);
+	zend_declare_class_constant_long(gdkgravity_ce, "SOUTH", sizeof("SOUTH") - 1, GDK_GRAVITY_SOUTH);
+	zend_declare_class_constant_long(gdkgravity_ce, "SOUTH_EAST", sizeof("SOUTH_EAST") - 1, GDK_GRAVITY_SOUTH_EAST);
+	zend_declare_class_constant_long(gdkgravity_ce, "STATIC", sizeof("STATIC") - 1, GDK_GRAVITY_STATIC);
+
+	zend_class_entry tmp_gdkinputmode_ce;
+	INIT_CLASS_ENTRY(tmp_gdkinputmode_ce, "Gdk\\Input\\Mode", NULL);
+	zend_class_entry *gdkinputmode_ce = zend_register_internal_class(&tmp_gdkinputmode_ce);
+	gdkinputmode_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkinputmode_ce, "DISABLED", sizeof("DISABLED") - 1, GDK_MODE_DISABLED);
+	zend_declare_class_constant_long(gdkinputmode_ce, "SCREEN", sizeof("SCREEN") - 1, GDK_MODE_SCREEN);
+	zend_declare_class_constant_long(gdkinputmode_ce, "WINDOW", sizeof("WINDOW") - 1, GDK_MODE_WINDOW);
+
+	zend_class_entry tmp_gdkinputsource_ce;
+	INIT_CLASS_ENTRY(tmp_gdkinputsource_ce, "Gdk\\Input\\Source", NULL);
+	zend_class_entry *gdkinputsource_ce = zend_register_internal_class(&tmp_gdkinputsource_ce);
+	gdkinputsource_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkinputsource_ce, "MOUSE", sizeof("MOUSE") - 1, GDK_SOURCE_MOUSE);
+	zend_declare_class_constant_long(gdkinputsource_ce, "PEN", sizeof("PEN") - 1, GDK_SOURCE_PEN);
+	zend_declare_class_constant_long(gdkinputsource_ce, "ERASER", sizeof("ERASER") - 1, GDK_SOURCE_ERASER);
+	zend_declare_class_constant_long(gdkinputsource_ce, "CURSOR", sizeof("CURSOR") - 1, GDK_SOURCE_CURSOR);
+	zend_declare_class_constant_long(gdkinputsource_ce, "KEYBOARD", sizeof("KEYBOARD") - 1, GDK_SOURCE_KEYBOARD);
+	zend_declare_class_constant_long(gdkinputsource_ce, "TOUCHSCREEN", sizeof("TOUCHSCREEN") - 1, GDK_SOURCE_TOUCHSCREEN);
+	zend_declare_class_constant_long(gdkinputsource_ce, "TOUCHPAD", sizeof("TOUCHPAD") - 1, GDK_SOURCE_TOUCHPAD);
+	zend_declare_class_constant_long(gdkinputsource_ce, "TRACKPOINT", sizeof("TRACKPOINT") - 1, GDK_SOURCE_TRACKPOINT);
+	zend_declare_class_constant_long(gdkinputsource_ce, "TABLET_PAD", sizeof("TABLET_PAD") - 1, GDK_SOURCE_TABLET_PAD);
+
+	zend_class_entry tmp_gdkmodifierintent_ce;
+	INIT_CLASS_ENTRY(tmp_gdkmodifierintent_ce, "Gdk\\Modifier\\Intent", NULL);
+	zend_class_entry *gdkmodifierintent_ce = zend_register_internal_class(&tmp_gdkmodifierintent_ce);
+	gdkmodifierintent_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkmodifierintent_ce, "PRIMARY_ACCELERATOR", sizeof("PRIMARY_ACCELERATOR") - 1, GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR);
+	zend_declare_class_constant_long(gdkmodifierintent_ce, "CONTEXT_MENU", sizeof("CONTEXT_MENU") - 1, GDK_MODIFIER_INTENT_CONTEXT_MENU);
+	zend_declare_class_constant_long(gdkmodifierintent_ce, "EXTEND_SELECTION", sizeof("EXTEND_SELECTION") - 1, GDK_MODIFIER_INTENT_EXTEND_SELECTION);
+	zend_declare_class_constant_long(gdkmodifierintent_ce, "MODIFY_SELECTION", sizeof("MODIFY_SELECTION") - 1, GDK_MODIFIER_INTENT_MODIFY_SELECTION);
+	zend_declare_class_constant_long(gdkmodifierintent_ce, "NO_TEXT_INPUT", sizeof("NO_TEXT_INPUT") - 1, GDK_MODIFIER_INTENT_NO_TEXT_INPUT);
+	zend_declare_class_constant_long(gdkmodifierintent_ce, "SHIFT_GROUP", sizeof("SHIFT_GROUP") - 1, GDK_MODIFIER_INTENT_SHIFT_GROUP);
+	zend_declare_class_constant_long(gdkmodifierintent_ce, "DEFAULT_MOD_MASK", sizeof("DEFAULT_MOD_MASK") - 1, GDK_MODIFIER_INTENT_DEFAULT_MOD_MASK);
+
+	zend_class_entry tmp_gdknotifytype_ce;
+	INIT_CLASS_ENTRY(tmp_gdknotifytype_ce, "Gdk\\Notify\\Type", NULL);
+	zend_class_entry *gdknotifytype_ce = zend_register_internal_class(&tmp_gdknotifytype_ce);
+	gdknotifytype_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdknotifytype_ce, "ANCESTOR", sizeof("ANCESTOR") - 1, GDK_NOTIFY_ANCESTOR);
+	zend_declare_class_constant_long(gdknotifytype_ce, "VIRTUAL", sizeof("VIRTUAL") - 1, GDK_NOTIFY_VIRTUAL);
+	zend_declare_class_constant_long(gdknotifytype_ce, "INFERIOR", sizeof("INFERIOR") - 1, GDK_NOTIFY_INFERIOR);
+	zend_declare_class_constant_long(gdknotifytype_ce, "NONLINEAR", sizeof("NONLINEAR") - 1, GDK_NOTIFY_NONLINEAR);
+	zend_declare_class_constant_long(gdknotifytype_ce, "NONLINEAR_VIRTUAL", sizeof("NONLINEAR_VIRTUAL") - 1, GDK_NOTIFY_NONLINEAR_VIRTUAL);
+	zend_declare_class_constant_long(gdknotifytype_ce, "UNKNOWN", sizeof("UNKNOWN") - 1, GDK_NOTIFY_UNKNOWN);
+
+	zend_class_entry tmp_gdkownerchange_ce;
+	INIT_CLASS_ENTRY(tmp_gdkownerchange_ce, "Gdk\\Owner\\Change", NULL);
+	zend_class_entry *gdkownerchange_ce = zend_register_internal_class(&tmp_gdkownerchange_ce);
+	gdkownerchange_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkownerchange_ce, "NEW_OWNER", sizeof("NEW_OWNER") - 1, GDK_OWNER_CHANGE_NEW_OWNER);
+	zend_declare_class_constant_long(gdkownerchange_ce, "DESTROY", sizeof("DESTROY") - 1, GDK_OWNER_CHANGE_DESTROY);
+	zend_declare_class_constant_long(gdkownerchange_ce, "CLOSE", sizeof("CLOSE") - 1, GDK_OWNER_CHANGE_CLOSE);
+
+	zend_class_entry tmp_gdkpropertystate_ce;
+	INIT_CLASS_ENTRY(tmp_gdkpropertystate_ce, "Gdk\\Property\\State", NULL);
+	zend_class_entry *gdkpropertystate_ce = zend_register_internal_class(&tmp_gdkpropertystate_ce);
+	gdkpropertystate_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkpropertystate_ce, "NEW_VALUE", sizeof("NEW_VALUE") - 1, GDK_PROPERTY_NEW_VALUE);
+	zend_declare_class_constant_long(gdkpropertystate_ce, "DELETE", sizeof("DELETE") - 1, GDK_PROPERTY_DELETE);
+
+	zend_class_entry tmp_gdkpropmode_ce;
+	INIT_CLASS_ENTRY(tmp_gdkpropmode_ce, "Gdk\\Prop\\Mode", NULL);
+	zend_class_entry *gdkpropmode_ce = zend_register_internal_class(&tmp_gdkpropmode_ce);
+	gdkpropmode_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkpropmode_ce, "REPLACE", sizeof("REPLACE") - 1, GDK_PROP_MODE_REPLACE);
+	zend_declare_class_constant_long(gdkpropmode_ce, "PREPEND", sizeof("PREPEND") - 1, GDK_PROP_MODE_PREPEND);
+	zend_declare_class_constant_long(gdkpropmode_ce, "APPEND", sizeof("APPEND") - 1, GDK_PROP_MODE_APPEND);
+
+	zend_class_entry tmp_gdkscrolldirection_ce;
+	INIT_CLASS_ENTRY(tmp_gdkscrolldirection_ce, "Gdk\\Scroll\\Direction", NULL);
+	zend_class_entry *gdkscrolldirection_ce = zend_register_internal_class(&tmp_gdkscrolldirection_ce);
+	gdkscrolldirection_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkscrolldirection_ce, "UP", sizeof("UP") - 1, GDK_SCROLL_UP);
+	zend_declare_class_constant_long(gdkscrolldirection_ce, "DOWN", sizeof("DOWN") - 1, GDK_SCROLL_DOWN);
+	zend_declare_class_constant_long(gdkscrolldirection_ce, "LEFT", sizeof("LEFT") - 1, GDK_SCROLL_LEFT);
+	zend_declare_class_constant_long(gdkscrolldirection_ce, "RIGHT", sizeof("RIGHT") - 1, GDK_SCROLL_RIGHT);
+	zend_declare_class_constant_long(gdkscrolldirection_ce, "SMOOTH", sizeof("SMOOTH") - 1, GDK_SCROLL_SMOOTH);
+
+	zend_class_entry tmp_gdksettingaction_ce;
+	INIT_CLASS_ENTRY(tmp_gdksettingaction_ce, "Gdk\\Setting\\Action", NULL);
+	zend_class_entry *gdksettingaction_ce = zend_register_internal_class(&tmp_gdksettingaction_ce);
+	gdksettingaction_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdksettingaction_ce, "NEW", sizeof("NEW") - 1, GDK_SETTING_ACTION_NEW);
+	zend_declare_class_constant_long(gdksettingaction_ce, "CHANGED", sizeof("CHANGED") - 1, GDK_SETTING_ACTION_CHANGED);
+	zend_declare_class_constant_long(gdksettingaction_ce, "DELETED", sizeof("DELETED") - 1, GDK_SETTING_ACTION_DELETED);
+
+	zend_class_entry tmp_gdkstatus_ce;
+	INIT_CLASS_ENTRY(tmp_gdkstatus_ce, "Gdk\\Status", NULL);
+	zend_class_entry *gdkstatus_ce = zend_register_internal_class(&tmp_gdkstatus_ce);
+	gdkstatus_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkstatus_ce, "OK", sizeof("OK") - 1, GDK_OK);
+	zend_declare_class_constant_long(gdkstatus_ce, "ERROR", sizeof("ERROR") - 1, GDK_ERROR);
+	zend_declare_class_constant_long(gdkstatus_ce, "ERROR_PARAM", sizeof("ERROR_PARAM") - 1, GDK_ERROR_PARAM);
+	zend_declare_class_constant_long(gdkstatus_ce, "ERROR_FILE", sizeof("ERROR_FILE") - 1, GDK_ERROR_FILE);
+	zend_declare_class_constant_long(gdkstatus_ce, "ERROR_MEM", sizeof("ERROR_MEM") - 1, GDK_ERROR_MEM);
+
+	zend_class_entry tmp_gdksubpixellayout_ce;
+	INIT_CLASS_ENTRY(tmp_gdksubpixellayout_ce, "Gdk\\Subpixel\\Layout", NULL);
+	zend_class_entry *gdksubpixellayout_ce = zend_register_internal_class(&tmp_gdksubpixellayout_ce);
+	gdksubpixellayout_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdksubpixellayout_ce, "UNKNOWN", sizeof("UNKNOWN") - 1, GDK_SUBPIXEL_LAYOUT_UNKNOWN);
+	zend_declare_class_constant_long(gdksubpixellayout_ce, "NONE", sizeof("NONE") - 1, GDK_SUBPIXEL_LAYOUT_NONE);
+	zend_declare_class_constant_long(gdksubpixellayout_ce, "HORIZONTAL_RGB", sizeof("HORIZONTAL_RGB") - 1, GDK_SUBPIXEL_LAYOUT_HORIZONTAL_RGB);
+	zend_declare_class_constant_long(gdksubpixellayout_ce, "HORIZONTAL_BGR", sizeof("HORIZONTAL_BGR") - 1, GDK_SUBPIXEL_LAYOUT_HORIZONTAL_BGR);
+	zend_declare_class_constant_long(gdksubpixellayout_ce, "VERTICAL_RGB", sizeof("VERTICAL_RGB") - 1, GDK_SUBPIXEL_LAYOUT_VERTICAL_RGB);
+	zend_declare_class_constant_long(gdksubpixellayout_ce, "VERTICAL_BGR", sizeof("VERTICAL_BGR") - 1, GDK_SUBPIXEL_LAYOUT_VERTICAL_BGR);
+
+	zend_class_entry tmp_gdktouchpadgesturephase_ce;
+	INIT_CLASS_ENTRY(tmp_gdktouchpadgesturephase_ce, "Gdk\\Touchpad\\Gesture\\Phase", NULL);
+	zend_class_entry *gdktouchpadgesturephase_ce = zend_register_internal_class(&tmp_gdktouchpadgesturephase_ce);
+	gdktouchpadgesturephase_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdktouchpadgesturephase_ce, "BEGIN", sizeof("BEGIN") - 1, GDK_TOUCHPAD_GESTURE_PHASE_BEGIN);
+	zend_declare_class_constant_long(gdktouchpadgesturephase_ce, "UPDATE", sizeof("UPDATE") - 1, GDK_TOUCHPAD_GESTURE_PHASE_UPDATE);
+	zend_declare_class_constant_long(gdktouchpadgesturephase_ce, "END", sizeof("END") - 1, GDK_TOUCHPAD_GESTURE_PHASE_END);
+	zend_declare_class_constant_long(gdktouchpadgesturephase_ce, "CANCEL", sizeof("CANCEL") - 1, GDK_TOUCHPAD_GESTURE_PHASE_CANCEL);
+
+	zend_class_entry tmp_gdkvisibilitystate_ce;
+	INIT_CLASS_ENTRY(tmp_gdkvisibilitystate_ce, "Gdk\\Visibility\\State", NULL);
+	zend_class_entry *gdkvisibilitystate_ce = zend_register_internal_class(&tmp_gdkvisibilitystate_ce);
+	gdkvisibilitystate_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkvisibilitystate_ce, "UNOBSCURED", sizeof("UNOBSCURED") - 1, GDK_VISIBILITY_UNOBSCURED);
+	zend_declare_class_constant_long(gdkvisibilitystate_ce, "PARTIAL", sizeof("PARTIAL") - 1, GDK_VISIBILITY_PARTIAL);
+	zend_declare_class_constant_long(gdkvisibilitystate_ce, "FULLY_OBSCURED", sizeof("FULLY_OBSCURED") - 1, GDK_VISIBILITY_FULLY_OBSCURED);
+
+	zend_class_entry tmp_gdkvisualtype_ce;
+	INIT_CLASS_ENTRY(tmp_gdkvisualtype_ce, "Gdk\\Visual\\Type", NULL);
+	zend_class_entry *gdkvisualtype_ce = zend_register_internal_class(&tmp_gdkvisualtype_ce);
+	gdkvisualtype_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkvisualtype_ce, "STATIC_GRAY", sizeof("STATIC_GRAY") - 1, GDK_VISUAL_STATIC_GRAY);
+	zend_declare_class_constant_long(gdkvisualtype_ce, "GRAYSCALE", sizeof("GRAYSCALE") - 1, GDK_VISUAL_GRAYSCALE);
+	zend_declare_class_constant_long(gdkvisualtype_ce, "STATIC_COLOR", sizeof("STATIC_COLOR") - 1, GDK_VISUAL_STATIC_COLOR);
+	zend_declare_class_constant_long(gdkvisualtype_ce, "PSEUDO_COLOR", sizeof("PSEUDO_COLOR") - 1, GDK_VISUAL_PSEUDO_COLOR);
+	zend_declare_class_constant_long(gdkvisualtype_ce, "TRUE_COLOR", sizeof("TRUE_COLOR") - 1, GDK_VISUAL_TRUE_COLOR);
+	zend_declare_class_constant_long(gdkvisualtype_ce, "DIRECT_COLOR", sizeof("DIRECT_COLOR") - 1, GDK_VISUAL_DIRECT_COLOR);
+
+	zend_class_entry tmp_gdkwindowedge_ce;
+	INIT_CLASS_ENTRY(tmp_gdkwindowedge_ce, "Gdk\\Window\\Edge", NULL);
+	zend_class_entry *gdkwindowedge_ce = zend_register_internal_class(&tmp_gdkwindowedge_ce);
+	gdkwindowedge_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkwindowedge_ce, "NORTH_WEST", sizeof("NORTH_WEST") - 1, GDK_WINDOW_EDGE_NORTH_WEST);
+	zend_declare_class_constant_long(gdkwindowedge_ce, "NORTH", sizeof("NORTH") - 1, GDK_WINDOW_EDGE_NORTH);
+	zend_declare_class_constant_long(gdkwindowedge_ce, "NORTH_EAST", sizeof("NORTH_EAST") - 1, GDK_WINDOW_EDGE_NORTH_EAST);
+	zend_declare_class_constant_long(gdkwindowedge_ce, "WEST", sizeof("WEST") - 1, GDK_WINDOW_EDGE_WEST);
+	zend_declare_class_constant_long(gdkwindowedge_ce, "EAST", sizeof("EAST") - 1, GDK_WINDOW_EDGE_EAST);
+	zend_declare_class_constant_long(gdkwindowedge_ce, "SOUTH_WEST", sizeof("SOUTH_WEST") - 1, GDK_WINDOW_EDGE_SOUTH_WEST);
+	zend_declare_class_constant_long(gdkwindowedge_ce, "SOUTH", sizeof("SOUTH") - 1, GDK_WINDOW_EDGE_SOUTH);
+	zend_declare_class_constant_long(gdkwindowedge_ce, "SOUTH_EAST", sizeof("SOUTH_EAST") - 1, GDK_WINDOW_EDGE_SOUTH_EAST);
+
+	zend_class_entry tmp_gdkwindowtype_ce;
+	INIT_CLASS_ENTRY(tmp_gdkwindowtype_ce, "Gdk\\Window\\Type", NULL);
+	zend_class_entry *gdkwindowtype_ce = zend_register_internal_class(&tmp_gdkwindowtype_ce);
+	gdkwindowtype_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkwindowtype_ce, "ROOT", sizeof("ROOT") - 1, GDK_WINDOW_ROOT);
+	zend_declare_class_constant_long(gdkwindowtype_ce, "TOPLEVEL", sizeof("TOPLEVEL") - 1, GDK_WINDOW_TOPLEVEL);
+	zend_declare_class_constant_long(gdkwindowtype_ce, "CHILD", sizeof("CHILD") - 1, GDK_WINDOW_CHILD);
+	zend_declare_class_constant_long(gdkwindowtype_ce, "TEMP", sizeof("TEMP") - 1, GDK_WINDOW_TEMP);
+	zend_declare_class_constant_long(gdkwindowtype_ce, "FOREIGN", sizeof("FOREIGN") - 1, GDK_WINDOW_FOREIGN);
+	zend_declare_class_constant_long(gdkwindowtype_ce, "OFFSCREEN", sizeof("OFFSCREEN") - 1, GDK_WINDOW_OFFSCREEN);
+	zend_declare_class_constant_long(gdkwindowtype_ce, "SUBSURFACE", sizeof("SUBSURFACE") - 1, GDK_WINDOW_SUBSURFACE);
+
+	zend_class_entry tmp_gdkwindowtypehint_ce;
+	INIT_CLASS_ENTRY(tmp_gdkwindowtypehint_ce, "Gdk\\Window\\Type\\Hint", NULL);
+	zend_class_entry *gdkwindowtypehint_ce = zend_register_internal_class(&tmp_gdkwindowtypehint_ce);
+	gdkwindowtypehint_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "NORMAL", sizeof("NORMAL") - 1, GDK_WINDOW_TYPE_HINT_NORMAL);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "DIALOG", sizeof("DIALOG") - 1, GDK_WINDOW_TYPE_HINT_DIALOG);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "MENU", sizeof("MENU") - 1, GDK_WINDOW_TYPE_HINT_MENU);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "TOOLBAR", sizeof("TOOLBAR") - 1, GDK_WINDOW_TYPE_HINT_TOOLBAR);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "SPLASHSCREEN", sizeof("SPLASHSCREEN") - 1, GDK_WINDOW_TYPE_HINT_SPLASHSCREEN);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "UTILITY", sizeof("UTILITY") - 1, GDK_WINDOW_TYPE_HINT_UTILITY);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "DOCK", sizeof("DOCK") - 1, GDK_WINDOW_TYPE_HINT_DOCK);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "DESKTOP", sizeof("DESKTOP") - 1, GDK_WINDOW_TYPE_HINT_DESKTOP);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "DROPDOWN_MENU", sizeof("DROPDOWN_MENU") - 1, GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "POPUP_MENU", sizeof("POPUP_MENU") - 1, GDK_WINDOW_TYPE_HINT_POPUP_MENU);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "TOOLTIP", sizeof("TOOLTIP") - 1, GDK_WINDOW_TYPE_HINT_TOOLTIP);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "NOTIFICATION", sizeof("NOTIFICATION") - 1, GDK_WINDOW_TYPE_HINT_NOTIFICATION);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "COMBO", sizeof("COMBO") - 1, GDK_WINDOW_TYPE_HINT_COMBO);
+	zend_declare_class_constant_long(gdkwindowtypehint_ce, "DND", sizeof("DND") - 1, GDK_WINDOW_TYPE_HINT_DND);
+
+	zend_class_entry tmp_gdkwindowwindowclass_ce;
+	INIT_CLASS_ENTRY(tmp_gdkwindowwindowclass_ce, "Gdk\\Window\\Window\\Class", NULL);
+	zend_class_entry *gdkwindowwindowclass_ce = zend_register_internal_class(&tmp_gdkwindowwindowclass_ce);
+	gdkwindowwindowclass_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkwindowwindowclass_ce, "OUTPUT", sizeof("OUTPUT") - 1, GDK_INPUT_OUTPUT);
+	zend_declare_class_constant_long(gdkwindowwindowclass_ce, "ONLY", sizeof("ONLY") - 1, GDK_INPUT_ONLY);
+
+	zend_class_entry tmp_gdkanchorhints_ce;
+	INIT_CLASS_ENTRY(tmp_gdkanchorhints_ce, "Gdk\\Anchor\\Hints", NULL);
+	zend_class_entry *gdkanchorhints_ce = zend_register_internal_class(&tmp_gdkanchorhints_ce);
+	gdkanchorhints_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkanchorhints_ce, "FLIP_X", sizeof("FLIP_X") - 1, GDK_ANCHOR_FLIP_X);
+	zend_declare_class_constant_long(gdkanchorhints_ce, "FLIP_Y", sizeof("FLIP_Y") - 1, GDK_ANCHOR_FLIP_Y);
+	zend_declare_class_constant_long(gdkanchorhints_ce, "SLIDE_X", sizeof("SLIDE_X") - 1, GDK_ANCHOR_SLIDE_X);
+	zend_declare_class_constant_long(gdkanchorhints_ce, "SLIDE_Y", sizeof("SLIDE_Y") - 1, GDK_ANCHOR_SLIDE_Y);
+	zend_declare_class_constant_long(gdkanchorhints_ce, "RESIZE_X", sizeof("RESIZE_X") - 1, GDK_ANCHOR_RESIZE_X);
+	zend_declare_class_constant_long(gdkanchorhints_ce, "RESIZE_Y", sizeof("RESIZE_Y") - 1, GDK_ANCHOR_RESIZE_Y);
+	zend_declare_class_constant_long(gdkanchorhints_ce, "FLIP", sizeof("FLIP") - 1, GDK_ANCHOR_FLIP);
+	zend_declare_class_constant_long(gdkanchorhints_ce, "SLIDE", sizeof("SLIDE") - 1, GDK_ANCHOR_SLIDE);
+	zend_declare_class_constant_long(gdkanchorhints_ce, "RESIZE", sizeof("RESIZE") - 1, GDK_ANCHOR_RESIZE);
+
+	zend_class_entry tmp_gdkaxisflags_ce;
+	INIT_CLASS_ENTRY(tmp_gdkaxisflags_ce, "Gdk\\Axis\\Flags", NULL);
+	zend_class_entry *gdkaxisflags_ce = zend_register_internal_class(&tmp_gdkaxisflags_ce);
+	gdkaxisflags_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkaxisflags_ce, "X", sizeof("X") - 1, GDK_AXIS_FLAG_X);
+	zend_declare_class_constant_long(gdkaxisflags_ce, "Y", sizeof("Y") - 1, GDK_AXIS_FLAG_Y);
+	zend_declare_class_constant_long(gdkaxisflags_ce, "PRESSURE", sizeof("PRESSURE") - 1, GDK_AXIS_FLAG_PRESSURE);
+	zend_declare_class_constant_long(gdkaxisflags_ce, "XTILT", sizeof("XTILT") - 1, GDK_AXIS_FLAG_XTILT);
+	zend_declare_class_constant_long(gdkaxisflags_ce, "YTILT", sizeof("YTILT") - 1, GDK_AXIS_FLAG_YTILT);
+	zend_declare_class_constant_long(gdkaxisflags_ce, "WHEEL", sizeof("WHEEL") - 1, GDK_AXIS_FLAG_WHEEL);
+	zend_declare_class_constant_long(gdkaxisflags_ce, "DISTANCE", sizeof("DISTANCE") - 1, GDK_AXIS_FLAG_DISTANCE);
+	zend_declare_class_constant_long(gdkaxisflags_ce, "ROTATION", sizeof("ROTATION") - 1, GDK_AXIS_FLAG_ROTATION);
+	zend_declare_class_constant_long(gdkaxisflags_ce, "SLIDER", sizeof("SLIDER") - 1, GDK_AXIS_FLAG_SLIDER);
+
+	zend_class_entry tmp_gdkdragaction_ce;
+	INIT_CLASS_ENTRY(tmp_gdkdragaction_ce, "Gdk\\Drag\\Action", NULL);
+	zend_class_entry *gdkdragaction_ce = zend_register_internal_class(&tmp_gdkdragaction_ce);
+	gdkdragaction_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkdragaction_ce, "DEFAULT", sizeof("DEFAULT") - 1, GDK_ACTION_DEFAULT);
+	zend_declare_class_constant_long(gdkdragaction_ce, "COPY", sizeof("COPY") - 1, GDK_ACTION_COPY);
+	zend_declare_class_constant_long(gdkdragaction_ce, "MOVE", sizeof("MOVE") - 1, GDK_ACTION_MOVE);
+	zend_declare_class_constant_long(gdkdragaction_ce, "LINK", sizeof("LINK") - 1, GDK_ACTION_LINK);
+	zend_declare_class_constant_long(gdkdragaction_ce, "PRIVATE", sizeof("PRIVATE") - 1, GDK_ACTION_PRIVATE);
+	zend_declare_class_constant_long(gdkdragaction_ce, "ASK", sizeof("ASK") - 1, GDK_ACTION_ASK);
+
+	zend_class_entry tmp_gdkeventmask_ce;
+	INIT_CLASS_ENTRY(tmp_gdkeventmask_ce, "Gdk\\Event\\Mask", NULL);
+	zend_class_entry *gdkeventmask_ce = zend_register_internal_class(&tmp_gdkeventmask_ce);
+	gdkeventmask_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkeventmask_ce, "EXPOSURE_MASK", sizeof("EXPOSURE_MASK") - 1, GDK_EXPOSURE_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "POINTER_MOTION_MASK", sizeof("POINTER_MOTION_MASK") - 1, GDK_POINTER_MOTION_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "POINTER_MOTION_HINT_MASK", sizeof("POINTER_MOTION_HINT_MASK") - 1, GDK_POINTER_MOTION_HINT_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "BUTTON_MOTION_MASK", sizeof("BUTTON_MOTION_MASK") - 1, GDK_BUTTON_MOTION_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "BUTTON1_MOTION_MASK", sizeof("BUTTON1_MOTION_MASK") - 1, GDK_BUTTON1_MOTION_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "BUTTON2_MOTION_MASK", sizeof("BUTTON2_MOTION_MASK") - 1, GDK_BUTTON2_MOTION_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "BUTTON3_MOTION_MASK", sizeof("BUTTON3_MOTION_MASK") - 1, GDK_BUTTON3_MOTION_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "BUTTON_PRESS_MASK", sizeof("BUTTON_PRESS_MASK") - 1, GDK_BUTTON_PRESS_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "BUTTON_RELEASE_MASK", sizeof("BUTTON_RELEASE_MASK") - 1, GDK_BUTTON_RELEASE_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "KEY_PRESS_MASK", sizeof("KEY_PRESS_MASK") - 1, GDK_KEY_PRESS_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "KEY_RELEASE_MASK", sizeof("KEY_RELEASE_MASK") - 1, GDK_KEY_RELEASE_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "ENTER_NOTIFY_MASK", sizeof("ENTER_NOTIFY_MASK") - 1, GDK_ENTER_NOTIFY_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "LEAVE_NOTIFY_MASK", sizeof("LEAVE_NOTIFY_MASK") - 1, GDK_LEAVE_NOTIFY_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "FOCUS_CHANGE_MASK", sizeof("FOCUS_CHANGE_MASK") - 1, GDK_FOCUS_CHANGE_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "STRUCTURE_MASK", sizeof("STRUCTURE_MASK") - 1, GDK_STRUCTURE_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "PROPERTY_CHANGE_MASK", sizeof("PROPERTY_CHANGE_MASK") - 1, GDK_PROPERTY_CHANGE_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "VISIBILITY_NOTIFY_MASK", sizeof("VISIBILITY_NOTIFY_MASK") - 1, GDK_VISIBILITY_NOTIFY_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "PROXIMITY_IN_MASK", sizeof("PROXIMITY_IN_MASK") - 1, GDK_PROXIMITY_IN_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "PROXIMITY_OUT_MASK", sizeof("PROXIMITY_OUT_MASK") - 1, GDK_PROXIMITY_OUT_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "SUBSTRUCTURE_MASK", sizeof("SUBSTRUCTURE_MASK") - 1, GDK_SUBSTRUCTURE_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "SCROLL_MASK", sizeof("SCROLL_MASK") - 1, GDK_SCROLL_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "TOUCH_MASK", sizeof("TOUCH_MASK") - 1, GDK_TOUCH_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "SMOOTH_SCROLL_MASK", sizeof("SMOOTH_SCROLL_MASK") - 1, GDK_SMOOTH_SCROLL_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "TOUCHPAD_GESTURE_MASK", sizeof("TOUCHPAD_GESTURE_MASK") - 1, GDK_TOUCHPAD_GESTURE_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "TABLET_PAD_MASK", sizeof("TABLET_PAD_MASK") - 1, GDK_TABLET_PAD_MASK);
+	zend_declare_class_constant_long(gdkeventmask_ce, "ALL_EVENTS_MASK", sizeof("ALL_EVENTS_MASK") - 1, GDK_ALL_EVENTS_MASK);
+
+	zend_class_entry tmp_gdkframeclockphase_ce;
+	INIT_CLASS_ENTRY(tmp_gdkframeclockphase_ce, "Gdk\\Frame\\Clock\\Phase", NULL);
+	zend_class_entry *gdkframeclockphase_ce = zend_register_internal_class(&tmp_gdkframeclockphase_ce);
+	gdkframeclockphase_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkframeclockphase_ce, "NONE", sizeof("NONE") - 1, GDK_FRAME_CLOCK_PHASE_NONE);
+	zend_declare_class_constant_long(gdkframeclockphase_ce, "FLUSH_EVENTS", sizeof("FLUSH_EVENTS") - 1, GDK_FRAME_CLOCK_PHASE_FLUSH_EVENTS);
+	zend_declare_class_constant_long(gdkframeclockphase_ce, "BEFORE_PAINT", sizeof("BEFORE_PAINT") - 1, GDK_FRAME_CLOCK_PHASE_BEFORE_PAINT);
+	zend_declare_class_constant_long(gdkframeclockphase_ce, "UPDATE", sizeof("UPDATE") - 1, GDK_FRAME_CLOCK_PHASE_UPDATE);
+	zend_declare_class_constant_long(gdkframeclockphase_ce, "LAYOUT", sizeof("LAYOUT") - 1, GDK_FRAME_CLOCK_PHASE_LAYOUT);
+	zend_declare_class_constant_long(gdkframeclockphase_ce, "PAINT", sizeof("PAINT") - 1, GDK_FRAME_CLOCK_PHASE_PAINT);
+	zend_declare_class_constant_long(gdkframeclockphase_ce, "RESUME_EVENTS", sizeof("RESUME_EVENTS") - 1, GDK_FRAME_CLOCK_PHASE_RESUME_EVENTS);
+	zend_declare_class_constant_long(gdkframeclockphase_ce, "AFTER_PAINT", sizeof("AFTER_PAINT") - 1, GDK_FRAME_CLOCK_PHASE_AFTER_PAINT);
+
+	zend_class_entry tmp_gdkmodifiertype_ce;
+	INIT_CLASS_ENTRY(tmp_gdkmodifiertype_ce, "Gdk\\Modifier\\Type", NULL);
+	zend_class_entry *gdkmodifiertype_ce = zend_register_internal_class(&tmp_gdkmodifiertype_ce);
+	gdkmodifiertype_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "SHIFT_MASK", sizeof("SHIFT_MASK") - 1, GDK_SHIFT_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "LOCK_MASK", sizeof("LOCK_MASK") - 1, GDK_LOCK_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "CONTROL_MASK", sizeof("CONTROL_MASK") - 1, GDK_CONTROL_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MOD1_MASK", sizeof("MOD1_MASK") - 1, GDK_MOD1_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MOD2_MASK", sizeof("MOD2_MASK") - 1, GDK_MOD2_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MOD3_MASK", sizeof("MOD3_MASK") - 1, GDK_MOD3_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MOD4_MASK", sizeof("MOD4_MASK") - 1, GDK_MOD4_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MOD5_MASK", sizeof("MOD5_MASK") - 1, GDK_MOD5_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "BUTTON1_MASK", sizeof("BUTTON1_MASK") - 1, GDK_BUTTON1_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "BUTTON2_MASK", sizeof("BUTTON2_MASK") - 1, GDK_BUTTON2_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "BUTTON3_MASK", sizeof("BUTTON3_MASK") - 1, GDK_BUTTON3_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "BUTTON4_MASK", sizeof("BUTTON4_MASK") - 1, GDK_BUTTON4_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "BUTTON5_MASK", sizeof("BUTTON5_MASK") - 1, GDK_BUTTON5_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_13_MASK", sizeof("MODIFIER_RESERVED_13_MASK") - 1, GDK_MODIFIER_RESERVED_13_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_14_MASK", sizeof("MODIFIER_RESERVED_14_MASK") - 1, GDK_MODIFIER_RESERVED_14_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_15_MASK", sizeof("MODIFIER_RESERVED_15_MASK") - 1, GDK_MODIFIER_RESERVED_15_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_16_MASK", sizeof("MODIFIER_RESERVED_16_MASK") - 1, GDK_MODIFIER_RESERVED_16_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_17_MASK", sizeof("MODIFIER_RESERVED_17_MASK") - 1, GDK_MODIFIER_RESERVED_17_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_18_MASK", sizeof("MODIFIER_RESERVED_18_MASK") - 1, GDK_MODIFIER_RESERVED_18_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_19_MASK", sizeof("MODIFIER_RESERVED_19_MASK") - 1, GDK_MODIFIER_RESERVED_19_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_20_MASK", sizeof("MODIFIER_RESERVED_20_MASK") - 1, GDK_MODIFIER_RESERVED_20_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_21_MASK", sizeof("MODIFIER_RESERVED_21_MASK") - 1, GDK_MODIFIER_RESERVED_21_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_22_MASK", sizeof("MODIFIER_RESERVED_22_MASK") - 1, GDK_MODIFIER_RESERVED_22_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_23_MASK", sizeof("MODIFIER_RESERVED_23_MASK") - 1, GDK_MODIFIER_RESERVED_23_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_24_MASK", sizeof("MODIFIER_RESERVED_24_MASK") - 1, GDK_MODIFIER_RESERVED_24_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_25_MASK", sizeof("MODIFIER_RESERVED_25_MASK") - 1, GDK_MODIFIER_RESERVED_25_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "SUPER_MASK", sizeof("SUPER_MASK") - 1, GDK_SUPER_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "HYPER_MASK", sizeof("HYPER_MASK") - 1, GDK_HYPER_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "META_MASK", sizeof("META_MASK") - 1, GDK_META_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_RESERVED_29_MASK", sizeof("MODIFIER_RESERVED_29_MASK") - 1, GDK_MODIFIER_RESERVED_29_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "RELEASE_MASK", sizeof("RELEASE_MASK") - 1, GDK_RELEASE_MASK);
+	zend_declare_class_constant_long(gdkmodifiertype_ce, "MODIFIER_MASK", sizeof("MODIFIER_MASK") - 1, GDK_MODIFIER_MASK);
+
+	zend_class_entry tmp_gdkseatcapabilities_ce;
+	INIT_CLASS_ENTRY(tmp_gdkseatcapabilities_ce, "Gdk\\Seat\\Capabilities", NULL);
+	zend_class_entry *gdkseatcapabilities_ce = zend_register_internal_class(&tmp_gdkseatcapabilities_ce);
+	gdkseatcapabilities_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkseatcapabilities_ce, "NONE", sizeof("NONE") - 1, GDK_SEAT_CAPABILITY_NONE);
+	zend_declare_class_constant_long(gdkseatcapabilities_ce, "POINTER", sizeof("POINTER") - 1, GDK_SEAT_CAPABILITY_POINTER);
+	zend_declare_class_constant_long(gdkseatcapabilities_ce, "TOUCH", sizeof("TOUCH") - 1, GDK_SEAT_CAPABILITY_TOUCH);
+	zend_declare_class_constant_long(gdkseatcapabilities_ce, "TABLET_STYLUS", sizeof("TABLET_STYLUS") - 1, GDK_SEAT_CAPABILITY_TABLET_STYLUS);
+	zend_declare_class_constant_long(gdkseatcapabilities_ce, "KEYBOARD", sizeof("KEYBOARD") - 1, GDK_SEAT_CAPABILITY_KEYBOARD);
+	zend_declare_class_constant_long(gdkseatcapabilities_ce, "ALL_POINTING", sizeof("ALL_POINTING") - 1, GDK_SEAT_CAPABILITY_ALL_POINTING);
+	zend_declare_class_constant_long(gdkseatcapabilities_ce, "ALL", sizeof("ALL") - 1, GDK_SEAT_CAPABILITY_ALL);
+
+	zend_class_entry tmp_gdkwindowattributestype_ce;
+	INIT_CLASS_ENTRY(tmp_gdkwindowattributestype_ce, "Gdk\\Window\\Attributes\\Type", NULL);
+	zend_class_entry *gdkwindowattributestype_ce = zend_register_internal_class(&tmp_gdkwindowattributestype_ce);
+	gdkwindowattributestype_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkwindowattributestype_ce, "TITLE", sizeof("TITLE") - 1, GDK_WA_TITLE);
+	zend_declare_class_constant_long(gdkwindowattributestype_ce, "X", sizeof("X") - 1, GDK_WA_X);
+	zend_declare_class_constant_long(gdkwindowattributestype_ce, "Y", sizeof("Y") - 1, GDK_WA_Y);
+	zend_declare_class_constant_long(gdkwindowattributestype_ce, "CURSOR", sizeof("CURSOR") - 1, GDK_WA_CURSOR);
+	zend_declare_class_constant_long(gdkwindowattributestype_ce, "VISUAL", sizeof("VISUAL") - 1, GDK_WA_VISUAL);
+	zend_declare_class_constant_long(gdkwindowattributestype_ce, "WMCLASS", sizeof("WMCLASS") - 1, GDK_WA_WMCLASS);
+	zend_declare_class_constant_long(gdkwindowattributestype_ce, "NOREDIR", sizeof("NOREDIR") - 1, GDK_WA_NOREDIR);
+	zend_declare_class_constant_long(gdkwindowattributestype_ce, "TYPE_HINT", sizeof("TYPE_HINT") - 1, GDK_WA_TYPE_HINT);
+
+	zend_class_entry tmp_gdkwindowhints_ce;
+	INIT_CLASS_ENTRY(tmp_gdkwindowhints_ce, "Gdk\\Window\\Hints", NULL);
+	zend_class_entry *gdkwindowhints_ce = zend_register_internal_class(&tmp_gdkwindowhints_ce);
+	gdkwindowhints_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkwindowhints_ce, "POS", sizeof("POS") - 1, GDK_HINT_POS);
+	zend_declare_class_constant_long(gdkwindowhints_ce, "MIN_SIZE", sizeof("MIN_SIZE") - 1, GDK_HINT_MIN_SIZE);
+	zend_declare_class_constant_long(gdkwindowhints_ce, "MAX_SIZE", sizeof("MAX_SIZE") - 1, GDK_HINT_MAX_SIZE);
+	zend_declare_class_constant_long(gdkwindowhints_ce, "BASE_SIZE", sizeof("BASE_SIZE") - 1, GDK_HINT_BASE_SIZE);
+	zend_declare_class_constant_long(gdkwindowhints_ce, "ASPECT", sizeof("ASPECT") - 1, GDK_HINT_ASPECT);
+	zend_declare_class_constant_long(gdkwindowhints_ce, "RESIZE_INC", sizeof("RESIZE_INC") - 1, GDK_HINT_RESIZE_INC);
+	zend_declare_class_constant_long(gdkwindowhints_ce, "WIN_GRAVITY", sizeof("WIN_GRAVITY") - 1, GDK_HINT_WIN_GRAVITY);
+	zend_declare_class_constant_long(gdkwindowhints_ce, "USER_POS", sizeof("USER_POS") - 1, GDK_HINT_USER_POS);
+	zend_declare_class_constant_long(gdkwindowhints_ce, "USER_SIZE", sizeof("USER_SIZE") - 1, GDK_HINT_USER_SIZE);
+
+	zend_class_entry tmp_gdkwindowstate_ce;
+	INIT_CLASS_ENTRY(tmp_gdkwindowstate_ce, "Gdk\\Window\\State", NULL);
+	zend_class_entry *gdkwindowstate_ce = zend_register_internal_class(&tmp_gdkwindowstate_ce);
+	gdkwindowstate_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkwindowstate_ce, "WITHDRAWN", sizeof("WITHDRAWN") - 1, GDK_WINDOW_STATE_WITHDRAWN);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "ICONIFIED", sizeof("ICONIFIED") - 1, GDK_WINDOW_STATE_ICONIFIED);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "MAXIMIZED", sizeof("MAXIMIZED") - 1, GDK_WINDOW_STATE_MAXIMIZED);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "STICKY", sizeof("STICKY") - 1, GDK_WINDOW_STATE_STICKY);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "FULLSCREEN", sizeof("FULLSCREEN") - 1, GDK_WINDOW_STATE_FULLSCREEN);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "ABOVE", sizeof("ABOVE") - 1, GDK_WINDOW_STATE_ABOVE);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "BELOW", sizeof("BELOW") - 1, GDK_WINDOW_STATE_BELOW);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "FOCUSED", sizeof("FOCUSED") - 1, GDK_WINDOW_STATE_FOCUSED);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "TILED", sizeof("TILED") - 1, GDK_WINDOW_STATE_TILED);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "TOP_TILED", sizeof("TOP_TILED") - 1, GDK_WINDOW_STATE_TOP_TILED);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "TOP_RESIZABLE", sizeof("TOP_RESIZABLE") - 1, GDK_WINDOW_STATE_TOP_RESIZABLE);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "RIGHT_TILED", sizeof("RIGHT_TILED") - 1, GDK_WINDOW_STATE_RIGHT_TILED);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "RIGHT_RESIZABLE", sizeof("RIGHT_RESIZABLE") - 1, GDK_WINDOW_STATE_RIGHT_RESIZABLE);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "BOTTOM_TILED", sizeof("BOTTOM_TILED") - 1, GDK_WINDOW_STATE_BOTTOM_TILED);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "BOTTOM_RESIZABLE", sizeof("BOTTOM_RESIZABLE") - 1, GDK_WINDOW_STATE_BOTTOM_RESIZABLE);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "LEFT_TILED", sizeof("LEFT_TILED") - 1, GDK_WINDOW_STATE_LEFT_TILED);
+	zend_declare_class_constant_long(gdkwindowstate_ce, "LEFT_RESIZABLE", sizeof("LEFT_RESIZABLE") - 1, GDK_WINDOW_STATE_LEFT_RESIZABLE);
+
+	zend_class_entry tmp_gdkwmdecoration_ce;
+	INIT_CLASS_ENTRY(tmp_gdkwmdecoration_ce, "Gdk\\W\\M\\Decoration", NULL);
+	zend_class_entry *gdkwmdecoration_ce = zend_register_internal_class(&tmp_gdkwmdecoration_ce);
+	gdkwmdecoration_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkwmdecoration_ce, "ALL", sizeof("ALL") - 1, GDK_DECOR_ALL);
+	zend_declare_class_constant_long(gdkwmdecoration_ce, "BORDER", sizeof("BORDER") - 1, GDK_DECOR_BORDER);
+	zend_declare_class_constant_long(gdkwmdecoration_ce, "RESIZEH", sizeof("RESIZEH") - 1, GDK_DECOR_RESIZEH);
+	zend_declare_class_constant_long(gdkwmdecoration_ce, "TITLE", sizeof("TITLE") - 1, GDK_DECOR_TITLE);
+	zend_declare_class_constant_long(gdkwmdecoration_ce, "MENU", sizeof("MENU") - 1, GDK_DECOR_MENU);
+	zend_declare_class_constant_long(gdkwmdecoration_ce, "MINIMIZE", sizeof("MINIMIZE") - 1, GDK_DECOR_MINIMIZE);
+	zend_declare_class_constant_long(gdkwmdecoration_ce, "MAXIMIZE", sizeof("MAXIMIZE") - 1, GDK_DECOR_MAXIMIZE);
+
+	zend_class_entry tmp_gdkwmfunction_ce;
+	INIT_CLASS_ENTRY(tmp_gdkwmfunction_ce, "Gdk\\W\\M\\Function", NULL);
+	zend_class_entry *gdkwmfunction_ce = zend_register_internal_class(&tmp_gdkwmfunction_ce);
+	gdkwmfunction_ce->ce_flags |= ZEND_ACC_FINAL;
+	zend_declare_class_constant_long(gdkwmfunction_ce, "ALL", sizeof("ALL") - 1, GDK_FUNC_ALL);
+	zend_declare_class_constant_long(gdkwmfunction_ce, "RESIZE", sizeof("RESIZE") - 1, GDK_FUNC_RESIZE);
+	zend_declare_class_constant_long(gdkwmfunction_ce, "MOVE", sizeof("MOVE") - 1, GDK_FUNC_MOVE);
+	zend_declare_class_constant_long(gdkwmfunction_ce, "MINIMIZE", sizeof("MINIMIZE") - 1, GDK_FUNC_MINIMIZE);
+	zend_declare_class_constant_long(gdkwmfunction_ce, "MAXIMIZE", sizeof("MAXIMIZE") - 1, GDK_FUNC_MAXIMIZE);
+	zend_declare_class_constant_long(gdkwmfunction_ce, "CLOSE", sizeof("CLOSE") - 1, GDK_FUNC_CLOSE);
 
 	zend_class_entry tmp_gtkalign_ce;
 	INIT_CLASS_ENTRY(tmp_gtkalign_ce, "Gtk\\Align", NULL);

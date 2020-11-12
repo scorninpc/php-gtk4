@@ -21,15 +21,19 @@ $genConstants = new genConstants();
 
 $classes = [];
 
-
-
-
-
+exec("rm -rf " . GEN_PATH . "/def/*.cache");
+exec("rm -rf " . GEN_PATH . "/def/atk.defs");
+exec("rm -rf " . GEN_PATH . "/def/gio.defs");
+exec("rm -rf " . GEN_PATH . "/def/gdk.defs");
+exec("rm -rf " . GEN_PATH . "/def/gtk.defs");
+$first_run = !file_exists(GEN_PATH . "/def/atk.defs");
 
 // ------------------
 // Atk
-$atk_parser = new genMerge(GEN_PATH . "/def/atk_methods.defs", GEN_PATH . "/def/atk_enums.defs");
-$atk_parser->save(GEN_PATH . "/def/atk.defs");
+if($first_run) {
+	$atk_parser = new genMerge(GEN_PATH . "/def/atk_methods.defs", GEN_PATH . "/def/atk_enums.defs");
+	$atk_parser->save(GEN_PATH . "/def/atk.defs");
+}
 
 $atk_parser = new Merge_Parser(GEN_PATH . "/def/atk.defs");
 $atk_parser->start_parsing();
@@ -41,8 +45,10 @@ $genConstants->addParser($atk_parser);
 
 // ------------------
 // G
-$g_parser = new genMerge(GEN_PATH . "/def/gio_methods.defs", GEN_PATH . "/def/gio_enums.defs");
-$g_parser->save(GEN_PATH . "/def/gio.defs");
+if($first_run) {
+	$g_parser = new genMerge(GEN_PATH . "/def/gio_methods.defs", GEN_PATH . "/def/gio_enums.defs");
+	$g_parser->save(GEN_PATH . "/def/gio.defs");
+}
 
 $g_parser = new Merge_Parser(GEN_PATH . "/def/gio.defs");
 $g_parser->start_parsing();
@@ -50,12 +56,27 @@ $g_parser->start_parsing();
 \Type::getInstance()->parseEnums($g_parser);
 $genConstants->addParser($g_parser);
 
+// ------------------
+// Gdk
+if($first_run) {
+	$gdk_parser = new genMerge(GEN_PATH . "/def/gdk_methods.defs", GEN_PATH . "/def/gdk_enums.defs");
+	$gdk_parser->save(GEN_PATH . "/def/gdk.defs");
+}
+
+$gdk_parser = new Merge_Parser(GEN_PATH . "/def/gdk.defs");
+$gdk_parser->start_parsing();
+
+\Type::getInstance()->parseEnums($gdk_parser);
+$genConstants->addParser($gdk_parser);
+
 
 
 // ------------------
 // Gtk
-$gtk_parser = new genMerge(GEN_PATH . "/def/gtk_methods.defs", GEN_PATH . "/def/gtk_enums.defs");
-$gtk_parser->save(GEN_PATH . "/def/gtk.defs");
+if($first_run) {
+	$gtk_parser = new genMerge(GEN_PATH . "/def/gtk_methods.defs", GEN_PATH . "/def/gtk_enums.defs");
+	$gtk_parser->save(GEN_PATH . "/def/gtk.defs");
+}
 
 $gtk_parser = new Merge_Parser(GEN_PATH . "/def/gtk.defs");
 $gtk_parser->start_parsing();
@@ -71,6 +92,8 @@ $methods = array_merge(
 	$atk_parser->methods,
 	$g_parser->constructors,
 	$g_parser->methods, 
+	$gdk_parser->constructors,
+	$gdk_parser->methods,
 	$gtk_parser->constructors,
 	$gtk_parser->methods,
 	);
@@ -138,9 +161,10 @@ $constants = $genConstants->parse();
 // ------------------
 // Load objects
 $tmp_objects = array_merge(
-	$gtk_parser->objects,
-	$g_parser->objects, 
 	$atk_parser->objects,
+	$g_parser->objects, 
+	$gdk_parser->objects,
+	$gtk_parser->objects,
 );
 $objects = [];
 foreach($tmp_objects as $object) {
@@ -176,12 +200,6 @@ foreach($classes as $class) {
 	}
 	$init_class .= sprintf("\n");
 }
-
-die($init_class);
-
-
-var_dump($objects);
-die();
 
 
 // ------------------

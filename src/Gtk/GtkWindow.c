@@ -40,7 +40,20 @@ PHP_METHOD(GtkWindow, activate_focus) {
 }
 
 PHP_METHOD(GtkWindow, activate_key) {
+	zend_object * event;
 
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ(event)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk4_gobject_object *gtk4_event = (gtk4_gobject_object*)((char*)(event) - XtOffsetOf(gtk4_gobject_object, std));
+
+
+	bool ret = gtk_window_activate_key(GTK_WINDOW(obj->gtk4_gpointer), (GdkEventKey*)(gtk4_event->gtk4_gpointer));
+
+	RETURN_BOOL(ret);
 }
 
 PHP_METHOD(GtkWindow, add_accel_group) {
@@ -97,6 +110,23 @@ PHP_METHOD(GtkWindow, begin_move_drag) {
 }
 
 PHP_METHOD(GtkWindow, begin_resize_drag) {
+	zend_long edge;
+	long button;
+	long root_x;
+	long root_y;
+	long timestamp;
+
+	ZEND_PARSE_PARAMETERS_START(5, 5)
+		Z_PARAM_LONG(edge)
+		Z_PARAM_LONG(button)
+		Z_PARAM_LONG(root_x)
+		Z_PARAM_LONG(root_y)
+		Z_PARAM_LONG(timestamp)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk_window_begin_resize_drag(GTK_WINDOW(obj->gtk4_gpointer), edge, button, root_x, root_y, timestamp);
 
 }
 
@@ -147,7 +177,7 @@ PHP_METHOD(GtkWindow, fullscreen_on_monitor) {
 	gtk4_gobject_object *gtk4_screen = (gtk4_gobject_object*)((char*)(screen) - XtOffsetOf(gtk4_gobject_object, std));
 
 
-	gtk_window_fullscreen_on_monitor(GTK_WINDOW(obj->gtk4_gpointer), GDK_SCREEN(gtk4_screen->gtk4_gpointer), monitor);
+	gtk_window_fullscreen_on_monitor(GTK_WINDOW(obj->gtk4_gpointer), (GdkScreen*)(gtk4_screen->gtk4_gpointer), monitor);
 
 }
 
@@ -210,7 +240,26 @@ PHP_METHOD(GtkWindow, get_decorated) {
 }
 
 PHP_METHOD(GtkWindow, get_default_size) {
+	ZEND_PARSE_PARAMETERS_START(0, 0)
+	ZEND_PARSE_PARAMETERS_END();
 
+	int width;
+	int height;
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk_window_get_default_size(GTK_WINDOW(obj->gtk4_gpointer), &width, &height);
+
+	zval ret_arr;
+	array_init(&ret_arr);
+
+	add_next_index_long(&ret_arr, width);
+	add_next_index_long(&ret_arr, height);
+
+	add_assoc_long_ex(&ret_arr, "width", strlen("width"), width);
+	add_assoc_long_ex(&ret_arr, "height", strlen("height"), height);
+
+	RETURN_ARR(Z_ARRVAL(ret_arr));
 }
 
 PHP_METHOD(GtkWindow, get_default_widget) {
@@ -302,14 +351,9 @@ PHP_METHOD(GtkWindow, get_gravity) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gpointer *ret = (gpointer *)gtk_window_get_gravity(GTK_WINDOW(obj->gtk4_gpointer));
+	zend_long ret = gtk_window_get_gravity(GTK_WINDOW(obj->gtk4_gpointer));
 
-	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
-	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
-	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
-	intern->gtk4_gpointer = ret;
-
-	RETURN_OBJ(&intern->std);
+	RETURN_LONG(ret);
 }
 
 PHP_METHOD(GtkWindow, get_group) {
@@ -327,10 +371,6 @@ PHP_METHOD(GtkWindow, get_group) {
 	intern->gtk4_gpointer = ret;
 
 	RETURN_OBJ(&intern->std);
-}
-
-PHP_METHOD(GtkWindow, get_has_resize_grip) {
-
 }
 
 PHP_METHOD(GtkWindow, get_hide_titlebar_when_maximized) {
@@ -409,14 +449,9 @@ PHP_METHOD(GtkWindow, get_mnemonic_modifier) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gpointer *ret = (gpointer *)gtk_window_get_mnemonic_modifier(GTK_WINDOW(obj->gtk4_gpointer));
+	zend_long ret = gtk_window_get_mnemonic_modifier(GTK_WINDOW(obj->gtk4_gpointer));
 
-	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
-	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
-	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
-	intern->gtk4_gpointer = ret;
-
-	RETURN_OBJ(&intern->std);
+	RETURN_LONG(ret);
 }
 
 PHP_METHOD(GtkWindow, get_mnemonics_visible) {
@@ -443,12 +478,27 @@ PHP_METHOD(GtkWindow, get_modal) {
 	RETURN_BOOL(ret);
 }
 
-PHP_METHOD(GtkWindow, get_opacity) {
-
-}
-
 PHP_METHOD(GtkWindow, get_position) {
+	ZEND_PARSE_PARAMETERS_START(0, 0)
+	ZEND_PARSE_PARAMETERS_END();
 
+	int x;
+	int y;
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk_window_get_position(GTK_WINDOW(obj->gtk4_gpointer), &x, &y);
+
+	zval ret_arr;
+	array_init(&ret_arr);
+
+	add_next_index_long(&ret_arr, x);
+	add_next_index_long(&ret_arr, y);
+
+	add_assoc_long_ex(&ret_arr, "x", strlen("x"), x);
+	add_assoc_long_ex(&ret_arr, "y", strlen("y"), y);
+
+	RETURN_ARR(Z_ARRVAL(ret_arr));
 }
 
 PHP_METHOD(GtkWindow, get_resizable) {
@@ -461,10 +511,6 @@ PHP_METHOD(GtkWindow, get_resizable) {
 	bool ret = gtk_window_get_resizable(GTK_WINDOW(obj->gtk4_gpointer));
 
 	RETURN_BOOL(ret);
-}
-
-PHP_METHOD(GtkWindow, get_resize_grip_area) {
-
 }
 
 PHP_METHOD(GtkWindow, get_role) {
@@ -496,7 +542,26 @@ PHP_METHOD(GtkWindow, get_screen) {
 }
 
 PHP_METHOD(GtkWindow, get_size) {
+	ZEND_PARSE_PARAMETERS_START(0, 0)
+	ZEND_PARSE_PARAMETERS_END();
 
+	int width;
+	int height;
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk_window_get_size(GTK_WINDOW(obj->gtk4_gpointer), &width, &height);
+
+	zval ret_arr;
+	array_init(&ret_arr);
+
+	add_next_index_long(&ret_arr, width);
+	add_next_index_long(&ret_arr, height);
+
+	add_assoc_long_ex(&ret_arr, "width", strlen("width"), width);
+	add_assoc_long_ex(&ret_arr, "height", strlen("height"), height);
+
+	RETURN_ARR(Z_ARRVAL(ret_arr));
 }
 
 PHP_METHOD(GtkWindow, get_skip_pager_hint) {
@@ -575,14 +640,9 @@ PHP_METHOD(GtkWindow, get_type_hint) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gpointer *ret = (gpointer *)gtk_window_get_type_hint(GTK_WINDOW(obj->gtk4_gpointer));
+	zend_long ret = gtk_window_get_type_hint(GTK_WINDOW(obj->gtk4_gpointer));
 
-	char *ret_cn = gtk4_get_namespace(G_OBJECT_TYPE_NAME(ret));
-	zend_class_entry *ret_ce = gtk4_get_ce_by_name(ret_cn);
-	gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
-	intern->gtk4_gpointer = ret;
-
-	RETURN_OBJ(&intern->std);
+	RETURN_LONG(ret);
 }
 
 PHP_METHOD(GtkWindow, get_urgency_hint) {
@@ -680,7 +740,19 @@ PHP_METHOD(GtkWindow, maximize) {
 }
 
 PHP_METHOD(GtkWindow, mnemonic_activate) {
+	long keyval;
+	zend_long modifier;
 
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_LONG(keyval)
+		Z_PARAM_LONG(modifier)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	bool ret = gtk_window_mnemonic_activate(GTK_WINDOW(obj->gtk4_gpointer), keyval, modifier);
+
+	RETURN_BOOL(ret);
 }
 
 PHP_METHOD(GtkWindow, move) {
@@ -695,10 +767,6 @@ PHP_METHOD(GtkWindow, move) {
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
 	gtk_window_move(GTK_WINDOW(obj->gtk4_gpointer), x, y);
-
-}
-
-PHP_METHOD(GtkWindow, parse_geometry) {
 
 }
 
@@ -727,7 +795,20 @@ PHP_METHOD(GtkWindow, present_with_time) {
 }
 
 PHP_METHOD(GtkWindow, propagate_key_event) {
+	zend_object * event;
 
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ(event)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk4_gobject_object *gtk4_event = (gtk4_gobject_object*)((char*)(event) - XtOffsetOf(gtk4_gobject_object, std));
+
+
+	bool ret = gtk_window_propagate_key_event(GTK_WINDOW(obj->gtk4_gpointer), (GdkEventKey*)(gtk4_event->gtk4_gpointer));
+
+	RETURN_BOOL(ret);
 }
 
 PHP_METHOD(GtkWindow, remove_accel_group) {
@@ -764,10 +845,6 @@ PHP_METHOD(GtkWindow, remove_mnemonic) {
 
 }
 
-PHP_METHOD(GtkWindow, reshow_with_initial_size) {
-
-}
-
 PHP_METHOD(GtkWindow, resize) {
 	long width;
 	long height;
@@ -780,14 +857,6 @@ PHP_METHOD(GtkWindow, resize) {
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
 	gtk_window_resize(GTK_WINDOW(obj->gtk4_gpointer), width, height);
-
-}
-
-PHP_METHOD(GtkWindow, resize_grip_is_visible) {
-
-}
-
-PHP_METHOD(GtkWindow, resize_to_geometry) {
 
 }
 
@@ -862,10 +931,6 @@ PHP_METHOD(GtkWindow, set_default) {
 
 
 	gtk_window_set_default(GTK_WINDOW(obj->gtk4_gpointer), GTK_WIDGET(gtk4_default_widget->gtk4_gpointer));
-
-}
-
-PHP_METHOD(GtkWindow, set_default_geometry) {
 
 }
 
@@ -953,14 +1018,38 @@ PHP_METHOD(GtkWindow, set_focus_visible) {
 }
 
 PHP_METHOD(GtkWindow, set_geometry_hints) {
+	zend_object * geometry_widget;
+	zend_object * geometry;
+	zend_long geom_mask;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_OBJ(geometry_widget)
+		Z_PARAM_OBJ(geometry)
+		Z_PARAM_LONG(geom_mask)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk4_gobject_object *gtk4_geometry_widget = (gtk4_gobject_object*)((char*)(geometry_widget) - XtOffsetOf(gtk4_gobject_object, std));
+
+
+	gtk4_gobject_object *gtk4_geometry = (gtk4_gobject_object*)((char*)(geometry) - XtOffsetOf(gtk4_gobject_object, std));
+
+
+	gtk_window_set_geometry_hints(GTK_WINDOW(obj->gtk4_gpointer), GTK_WIDGET(gtk4_geometry_widget->gtk4_gpointer), (GdkGeometry*)(gtk4_geometry->gtk4_gpointer), geom_mask);
 
 }
 
 PHP_METHOD(GtkWindow, set_gravity) {
+	zend_long gravity;
 
-}
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(gravity)
+	ZEND_PARSE_PARAMETERS_END();
 
-PHP_METHOD(GtkWindow, set_has_resize_grip) {
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk_window_set_gravity(GTK_WINDOW(obj->gtk4_gpointer), gravity);
 
 }
 
@@ -1002,16 +1091,52 @@ PHP_METHOD(GtkWindow, set_icon) {
 	gtk4_gobject_object *gtk4_icon = (gtk4_gobject_object*)((char*)(icon) - XtOffsetOf(gtk4_gobject_object, std));
 
 
-	gtk_window_set_icon(GTK_WINDOW(obj->gtk4_gpointer), GDK_PIXBUF(gtk4_icon->gtk4_gpointer));
+	gtk_window_set_icon(GTK_WINDOW(obj->gtk4_gpointer), (GdkPixbuf*)(gtk4_icon->gtk4_gpointer));
 
 }
 
 PHP_METHOD(GtkWindow, set_icon_from_file) {
+	char * filename;
+	size_t filename_len;
+	GError **err;
 
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STRING(filename, filename_len)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	bool ret = gtk_window_set_icon_from_file(GTK_WINDOW(obj->gtk4_gpointer), filename, err);
+
+	RETURN_BOOL(ret);
 }
 
 PHP_METHOD(GtkWindow, set_icon_list) {
+	zval *arr_list;
+	GList *list = NULL;
 
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ARRAY(arr_list)
+	ZEND_PARSE_PARAMETERS_END();
+
+
+	// Loop array to create C char array
+	ZEND_HASH_FOREACH_KEY_VAL(Z_ARR_P(arr_list), zend_ulong long_key, zend_string *str_key, zval *val) {
+
+		// If string
+		if(Z_TYPE_P(val) == IS_OBJECT)  {
+
+			gtk4_gobject_object *gtk4_item = (gtk4_gobject_object*)((char*)(val) - XtOffsetOf(gtk4_gobject_object, std));
+
+			list = g_list_append (list, (GdkPixbuf *)gtk4_item->gtk4_gpointer);
+		}
+
+	} ZEND_HASH_FOREACH_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk_window_set_icon_list(GTK_WINDOW(obj->gtk4_gpointer), list);
 }
 
 PHP_METHOD(GtkWindow, set_icon_name) {
@@ -1055,6 +1180,15 @@ PHP_METHOD(GtkWindow, set_keep_below) {
 }
 
 PHP_METHOD(GtkWindow, set_mnemonic_modifier) {
+	zend_long modifier;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(modifier)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk_window_set_mnemonic_modifier(GTK_WINDOW(obj->gtk4_gpointer), modifier);
 
 }
 
@@ -1081,10 +1215,6 @@ PHP_METHOD(GtkWindow, set_modal) {
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
 	gtk_window_set_modal(GTK_WINDOW(obj->gtk4_gpointer), modal);
-
-}
-
-PHP_METHOD(GtkWindow, set_opacity) {
 
 }
 
@@ -1140,7 +1270,7 @@ PHP_METHOD(GtkWindow, set_screen) {
 	gtk4_gobject_object *gtk4_screen = (gtk4_gobject_object*)((char*)(screen) - XtOffsetOf(gtk4_gobject_object, std));
 
 
-	gtk_window_set_screen(GTK_WINDOW(obj->gtk4_gpointer), GDK_SCREEN(gtk4_screen->gtk4_gpointer));
+	gtk_window_set_screen(GTK_WINDOW(obj->gtk4_gpointer), (GdkScreen*)(gtk4_screen->gtk4_gpointer));
 
 }
 
@@ -1231,6 +1361,15 @@ PHP_METHOD(GtkWindow, set_transient_for) {
 }
 
 PHP_METHOD(GtkWindow, set_type_hint) {
+	zend_long hint;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(hint)
+	ZEND_PARSE_PARAMETERS_END();
+
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
+
+	gtk_window_set_type_hint(GTK_WINDOW(obj->gtk4_gpointer), hint);
 
 }
 
@@ -1244,10 +1383,6 @@ PHP_METHOD(GtkWindow, set_urgency_hint) {
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
 	gtk_window_set_urgency_hint(GTK_WINDOW(obj->gtk4_gpointer), setting);
-
-}
-
-PHP_METHOD(GtkWindow, set_wmclass) {
 
 }
 

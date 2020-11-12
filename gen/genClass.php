@@ -75,9 +75,24 @@ class genClass
 			else {
 				$method_name = $method->name;
 			}
-		
-			$output_h .= sprintf("ZEND_BEGIN_ARG_INFO_EX(arginfo_%s_%s, 0, 0, %d)\n", strtolower($this->class_name), strtolower($method_name), count($this->parsed_params));
+
+
+			// Count params length
+			$params_count = 0;
 			foreach($this->parsed_params as $index => $param) {
+				if($param['php_type'] == "GError") {
+					continue;
+				}
+
+				$params_count++;
+			}
+
+			// Create arg info
+			$output_h .= sprintf("ZEND_BEGIN_ARG_INFO_EX(arginfo_%s_%s, 0, 0, %d)\n", strtolower($this->class_name), strtolower($method_name), $params_count);
+			foreach($this->parsed_params as $index => $param) {
+				if($param['php_type'] == "GError") {
+					continue;
+				}
 				$output_h .= sprintf("	ZEND_ARG_INFO(0, %s)\n", $this->names_params[$index]['name']);
 			}
 			$output_h .= "ZEND_END_ARG_INFO()\n\n";
@@ -150,7 +165,10 @@ class genClass
 				// Parse variables creation
 				foreach($this->parsed_params as $index => $param) {
 
-					if($param['php_type'] == "STRING") {
+					if($param['php_type'] == "GError") {
+						$output_c .= sprintf("	GError **%s;\n", strtolower($this->names_params[$index]['name']));
+					}
+					else if($param['php_type'] == "STRING") {
 						$output_c .= sprintf("	char * %s;\n", strtolower($this->names_params[$index]['name']));
 						$output_c .= sprintf("	size_t %s_len;\n", strtolower($this->names_params[$index]['name']));
 					}
@@ -170,13 +188,28 @@ class genClass
 
 
 				// ------------------
-				// Parse parans fetch
-				$output_c .= sprintf("	ZEND_PARSE_PARAMETERS_START(%d, %d)\n", count($method->params), count($method->params));
+				// Parse params fetch
+
+				// Count params length
+				$params_count = 0;
+				foreach($this->parsed_params as $index => $param) {
+					if($param['php_type'] == "GError") {
+						continue;
+					}
+
+					$params_count++;
+				}
+
+
+				$output_c .= sprintf("	ZEND_PARSE_PARAMETERS_START(%d, %d)\n", $params_count, $params_count);
 
 				// Loop params
 				foreach($this->parsed_params as $index => $param) {
 
-					if($param['php_type'] == "STRING") {
+					if($param['php_type'] == "GError") {
+						continue;
+					}
+					else if($param['php_type'] == "STRING") {
 						$output_c .= sprintf("		Z_PARAM_STRING(%s, %s_len)\n", strtolower($this->names_params[$index]['name']), strtolower($this->names_params[$index]['name']));
 					}
 					elseif($param['php_type'] == "OBJ") {

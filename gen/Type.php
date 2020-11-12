@@ -135,7 +135,8 @@ class Type
 		else if(substr($type, 0, 3) == "Gdk") {
 
 			self::$types[$type]['is_object'] = TRUE;
-			self::$types[$type]['macro'] = $this->_createMacro($type);
+			self::$types[$type]['macro'] = "(" . $type . "*)";
+			// self::$types[$type]['macro'] = $this->_createMacro($type);
 			self::$types[$type]['is_va_list'] = FALSE;
 			self::$types[$type]['namespace'] = "Gdk";
 			self::$types[$type]['class'] = substr($type, 3);
@@ -157,7 +158,7 @@ class Type
 
 		}
 
-		// G objects
+		// GList type
 		else if($type == "GList") {
 
 			self::$types[$type]['is_object'] = FALSE;
@@ -167,6 +168,19 @@ class Type
 			self::$types[$type]['class'] = NULL;
 			self::$types[$type]['c_type'] = NULL;
 			self::$types[$type]['php_type'] = "GList";
+
+		}
+
+		// GError
+		else if($type == "GError") {
+
+			self::$types[$type]['is_object'] = FALSE;
+			self::$types[$type]['macro'] = NULL;
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['namespace'] = NULL;
+			self::$types[$type]['class'] = NULL;
+			self::$types[$type]['c_type'] = NULL;
+			self::$types[$type]['php_type'] = "GError";
 
 		}
 
@@ -276,10 +290,18 @@ class Type
 	 */
 	private function _createMacro($class_name)
 	{
-		$pieces = preg_split('/(?=[A-Z])/', trim($class_name));
-		unset($pieces[0]);
 
-		$macro = strtoupper(implode("_", $pieces));
+		// if($class_name == "GdkEventKey") {
+
+		// 	$macro = "(GdkEventKey *)";
+
+		// }
+		// else {
+			$pieces = preg_split('/(?=[A-Z])/', trim($class_name));
+			unset($pieces[0]);
+
+			$macro = strtoupper(implode("_", $pieces));
+		// }
 
 		return $macro;
 	}

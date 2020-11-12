@@ -151,11 +151,6 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, get_group);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_get_has_resize_grip, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, get_has_resize_grip);
-
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_get_hide_titlebar_when_maximized, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
@@ -191,11 +186,6 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, get_modal);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_get_opacity, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, get_opacity);
-
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_get_position, 0, 0, 2)
 	ZEND_ARG_INFO(0, root_x)
 	ZEND_ARG_INFO(0, root_y)
@@ -207,12 +197,6 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_get_resizable, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, get_resizable);
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_get_resize_grip_area, 0, 0, 1)
-	ZEND_ARG_INFO(0, rect)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, get_resize_grip_area);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_get_role, 0, 0, 0)
 ZEND_END_ARG_INFO()
@@ -315,12 +299,6 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, move);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_parse_geometry, 0, 0, 1)
-	ZEND_ARG_INFO(0, geometry)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, parse_geometry);
-
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_present, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
@@ -351,29 +329,12 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, remove_mnemonic);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_reshow_with_initial_size, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, reshow_with_initial_size);
-
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_resize, 0, 0, 2)
 	ZEND_ARG_INFO(0, width)
 	ZEND_ARG_INFO(0, height)
 ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, resize);
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_resize_grip_is_visible, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, resize_grip_is_visible);
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_resize_to_geometry, 0, 0, 2)
-	ZEND_ARG_INFO(0, width)
-	ZEND_ARG_INFO(0, height)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, resize_to_geometry);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_accept_focus, 0, 0, 1)
 	ZEND_ARG_INFO(0, setting)
@@ -404,13 +365,6 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_default, 0, 0, 1)
 ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, set_default);
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_default_geometry, 0, 0, 2)
-	ZEND_ARG_INFO(0, width)
-	ZEND_ARG_INFO(0, height)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, set_default_geometry);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_default_size, 0, 0, 2)
 	ZEND_ARG_INFO(0, width)
@@ -463,12 +417,6 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, set_gravity);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_has_resize_grip, 0, 0, 1)
-	ZEND_ARG_INFO(0, value)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, set_has_resize_grip);
-
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_has_user_ref_count, 0, 0, 1)
 	ZEND_ARG_INFO(0, setting)
 ZEND_END_ARG_INFO()
@@ -487,9 +435,8 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, set_icon);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_icon_from_file, 0, 0, 2)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_icon_from_file, 0, 0, 1)
 	ZEND_ARG_INFO(0, filename)
-	ZEND_ARG_INFO(0, err)
 ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, set_icon_from_file);
@@ -535,12 +482,6 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_modal, 0, 0, 1)
 ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, set_modal);
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_opacity, 0, 0, 1)
-	ZEND_ARG_INFO(0, opacity)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, set_opacity);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_position, 0, 0, 1)
 	ZEND_ARG_INFO(0, position)
@@ -614,13 +555,6 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, set_urgency_hint);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_set_wmclass, 0, 0, 2)
-	ZEND_ARG_INFO(0, wmclass_name)
-	ZEND_ARG_INFO(0, wmclass_class)
-ZEND_END_ARG_INFO()
-
-PHP_METHOD(GtkWindow, set_wmclass);
-
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_stick, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
@@ -668,7 +602,6 @@ static const zend_function_entry gtkwindow_functions[] = {
 	PHP_ME(GtkWindow, get_focus_visible, arginfo_gtkwindow_get_focus_visible, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_gravity, arginfo_gtkwindow_get_gravity, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_group, arginfo_gtkwindow_get_group, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, get_has_resize_grip, arginfo_gtkwindow_get_has_resize_grip, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_hide_titlebar_when_maximized, arginfo_gtkwindow_get_hide_titlebar_when_maximized, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_icon, arginfo_gtkwindow_get_icon, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_icon_list, arginfo_gtkwindow_get_icon_list, ZEND_ACC_PUBLIC)
@@ -676,10 +609,8 @@ static const zend_function_entry gtkwindow_functions[] = {
 	PHP_ME(GtkWindow, get_mnemonic_modifier, arginfo_gtkwindow_get_mnemonic_modifier, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_mnemonics_visible, arginfo_gtkwindow_get_mnemonics_visible, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_modal, arginfo_gtkwindow_get_modal, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, get_opacity, arginfo_gtkwindow_get_opacity, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_position, arginfo_gtkwindow_get_position, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_resizable, arginfo_gtkwindow_get_resizable, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, get_resize_grip_area, arginfo_gtkwindow_get_resize_grip_area, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_role, arginfo_gtkwindow_get_role, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_screen, arginfo_gtkwindow_get_screen, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, get_size, arginfo_gtkwindow_get_size, ZEND_ACC_PUBLIC)
@@ -699,22 +630,17 @@ static const zend_function_entry gtkwindow_functions[] = {
 	PHP_ME(GtkWindow, maximize, arginfo_gtkwindow_maximize, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, mnemonic_activate, arginfo_gtkwindow_mnemonic_activate, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, move, arginfo_gtkwindow_move, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, parse_geometry, arginfo_gtkwindow_parse_geometry, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, present, arginfo_gtkwindow_present, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, present_with_time, arginfo_gtkwindow_present_with_time, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, propagate_key_event, arginfo_gtkwindow_propagate_key_event, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, remove_accel_group, arginfo_gtkwindow_remove_accel_group, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, remove_mnemonic, arginfo_gtkwindow_remove_mnemonic, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, reshow_with_initial_size, arginfo_gtkwindow_reshow_with_initial_size, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, resize, arginfo_gtkwindow_resize, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, resize_grip_is_visible, arginfo_gtkwindow_resize_grip_is_visible, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, resize_to_geometry, arginfo_gtkwindow_resize_to_geometry, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_accept_focus, arginfo_gtkwindow_set_accept_focus, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_application, arginfo_gtkwindow_set_application, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_attached_to, arginfo_gtkwindow_set_attached_to, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_decorated, arginfo_gtkwindow_set_decorated, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_default, arginfo_gtkwindow_set_default, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, set_default_geometry, arginfo_gtkwindow_set_default_geometry, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_default_size, arginfo_gtkwindow_set_default_size, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_deletable, arginfo_gtkwindow_set_deletable, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_destroy_with_parent, arginfo_gtkwindow_set_destroy_with_parent, ZEND_ACC_PUBLIC)
@@ -723,7 +649,6 @@ static const zend_function_entry gtkwindow_functions[] = {
 	PHP_ME(GtkWindow, set_focus_visible, arginfo_gtkwindow_set_focus_visible, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_geometry_hints, arginfo_gtkwindow_set_geometry_hints, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_gravity, arginfo_gtkwindow_set_gravity, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, set_has_resize_grip, arginfo_gtkwindow_set_has_resize_grip, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_has_user_ref_count, arginfo_gtkwindow_set_has_user_ref_count, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_hide_titlebar_when_maximized, arginfo_gtkwindow_set_hide_titlebar_when_maximized, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_icon, arginfo_gtkwindow_set_icon, ZEND_ACC_PUBLIC)
@@ -735,7 +660,6 @@ static const zend_function_entry gtkwindow_functions[] = {
 	PHP_ME(GtkWindow, set_mnemonic_modifier, arginfo_gtkwindow_set_mnemonic_modifier, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_mnemonics_visible, arginfo_gtkwindow_set_mnemonics_visible, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_modal, arginfo_gtkwindow_set_modal, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, set_opacity, arginfo_gtkwindow_set_opacity, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_position, arginfo_gtkwindow_set_position, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_resizable, arginfo_gtkwindow_set_resizable, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_role, arginfo_gtkwindow_set_role, ZEND_ACC_PUBLIC)
@@ -748,7 +672,6 @@ static const zend_function_entry gtkwindow_functions[] = {
 	PHP_ME(GtkWindow, set_transient_for, arginfo_gtkwindow_set_transient_for, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_type_hint, arginfo_gtkwindow_set_type_hint, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, set_urgency_hint, arginfo_gtkwindow_set_urgency_hint, ZEND_ACC_PUBLIC)
-	PHP_ME(GtkWindow, set_wmclass, arginfo_gtkwindow_set_wmclass, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, stick, arginfo_gtkwindow_stick, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, unfullscreen, arginfo_gtkwindow_unfullscreen, ZEND_ACC_PUBLIC)
 	PHP_ME(GtkWindow, unmaximize, arginfo_gtkwindow_unmaximize, ZEND_ACC_PUBLIC)
