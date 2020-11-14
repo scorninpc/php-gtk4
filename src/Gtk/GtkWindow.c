@@ -438,8 +438,13 @@ PHP_METHOD(GtkWindow, get_icon_name) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gtk_window_get_icon_name(GTK_WINDOW(obj->gtk4_gpointer));
+	const char *ret = gtk_window_get_icon_name(GTK_WINDOW(obj->gtk4_gpointer));
 
+	if(!ret) {
+		RETURN_NULL();
+	}
+
+	RETURN_STRING(ret);
 }
 
 PHP_METHOD(GtkWindow, get_mnemonic_modifier) {
@@ -520,8 +525,13 @@ PHP_METHOD(GtkWindow, get_role) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gtk_window_get_role(GTK_WINDOW(obj->gtk4_gpointer));
+	const char *ret = gtk_window_get_role(GTK_WINDOW(obj->gtk4_gpointer));
 
+	if(!ret) {
+		RETURN_NULL();
+	}
+
+	RETURN_STRING(ret);
 }
 
 PHP_METHOD(GtkWindow, get_screen) {
@@ -595,8 +605,13 @@ PHP_METHOD(GtkWindow, get_title) {
 
 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
-	gtk_window_get_title(GTK_WINDOW(obj->gtk4_gpointer));
+	const char *ret = gtk_window_get_title(GTK_WINDOW(obj->gtk4_gpointer));
 
+	if(!ret) {
+		RETURN_NULL();
+	}
+
+	RETURN_STRING(ret);
 }
 
 PHP_METHOD(GtkWindow, get_titlebar) {
@@ -1126,9 +1141,7 @@ PHP_METHOD(GtkWindow, set_icon_list) {
 
 		// If string
 		if(Z_TYPE_P(val) == IS_OBJECT)  {
-
 			gtk4_gobject_object *gtk4_item = (gtk4_gobject_object*)((char*)(val) - XtOffsetOf(gtk4_gobject_object, std));
-
 			list = g_list_append (list, (GdkPixbuf *)gtk4_item->gtk4_gpointer);
 		}
 

@@ -101,6 +101,8 @@ class Test
 		$this->window->set_icon_list(["/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk3/logo.png"]);
 		$this->window->connect("destroy", [$this, "callback_test"]);
 		
+		$this->window->set_title("TEST");
+
 		echo "-- Resize: \n";
 		var_dump($this->window->get_size());
 		$this->window->set_default_size(1280, 720);
@@ -108,11 +110,16 @@ class Test
 
 
 		echo "-- Position: \n";
-		var_dump($this->window->get_position());
-		$this->window->move((1920/2)-(1280/2), (1080/2)-(720/2));
-		var_dump($this->window->get_position());
+		// var_dump($this->window->get_position());
+		// $this->window->move((1920/2)-(1280/2), (1080/2)-(720/2));
+		// var_dump($this->window->get_position());
+		$this->window->set_position(Gtk\Window\Position::MOUSE);
+
+
 
 		$this->window->show_all();
+
+		var_dump($this->window->get_title());
 
 	}
 

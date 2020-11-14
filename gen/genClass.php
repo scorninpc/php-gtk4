@@ -267,7 +267,7 @@ class genClass
 
 					// String
 					else if($return_type['php_type'] == "STRING") {
-						
+						$output_c .= sprintf("%s char *ret = ", ($return_type['const']) ? "const" : "");
 					}
 
 					else {
@@ -300,6 +300,10 @@ class genClass
 				}
 
 
+				if($method->c_name == "gtk_window_get_icon_name") {
+					// var_dump($return_type);
+					// die();
+				}
 
 
 				// ------------------
@@ -346,7 +350,11 @@ class genClass
 
 				// Return an string
 				else if($return_type['php_type'] == "STRING") {
+					$output_c .= sprintf("	if(!ret) {\n");
+					$output_c .= sprintf("		RETURN_NULL();\n");
+					$output_c .= sprintf("	}\n\n");
 
+					$output_c .= sprintf("	RETURN_STRING(ret);\n");
 				}
 
 				// Return others
