@@ -31,7 +31,6 @@
 		zval *extra_params;
 		int extra_params_n;
 
-		zval *self;
 		gtk4_gobject_object *self_object;
 
 		// Store signal infos
@@ -78,6 +77,9 @@
 		PHP_ME(GObject, test, arginfo_gobject_test, ZEND_ACC_PUBLIC)
 		PHP_FE_END
 	};	
+
+
+	#include "../../helper.h"
 
 
 #endif

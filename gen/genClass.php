@@ -42,7 +42,7 @@ class genClass
 		$this->parsed_params = [];
 		$this->names_params = [];
 		foreach($params as $index => $param) {
-			
+
 			$this->parsed_params[$index] = \Type::getInstance()->getType($param[0]);
 			$this->names_params[$index]['name'] = $param[1];
 
@@ -175,6 +175,13 @@ class genClass
 					else if($param['php_type'] == "OBJ") {
 						$output_c .= sprintf("	zend_object * %s;\n", strtolower($this->names_params[$index]['name']));
 					}
+					else if($param['php_type'] == "GList") {
+						$output_c .= sprintf("	zval *arr_%s;\n", strtolower($this->names_params[$index]['name']));
+						$output_c .= sprintf("	GList *%s = NULL;\n", strtolower($this->names_params[$index]['name']));
+					}
+					else if($param['php_type'] == "GValue") {
+						$output_c .= sprintf("	zval *gv_%s;\n", strtolower($this->names_params[$index]['name']));
+					}
 					else {
 						$output_c .= sprintf("	%s %s;\n", $param['c_type'], strtolower($this->names_params[$index]['name']));
 					}
@@ -184,6 +191,10 @@ class genClass
 
 
 
+				/*if($method->c_name == "gtk_container_child_set_property") {
+					var_dump($method);
+					die();
+				}*/
 
 
 
@@ -215,6 +226,12 @@ class genClass
 					elseif($param['php_type'] == "OBJ") {
 						$output_c .= sprintf("		Z_PARAM_OBJ(%s)\n", strtolower($this->names_params[$index]['name']));
 					}
+					elseif($param['php_type'] == "GList") {
+						$output_c .= sprintf("		Z_PARAM_ARRAY(arr_%s)\n", strtolower($this->names_params[$index]['name']));
+					}
+					elseif($param['php_type'] == "GValue") {
+						$output_c .= sprintf("		Z_PARAM_ZVAL(gv_%s)\n", strtolower($this->names_params[$index]['name']));
+					}
 					else {
 						$output_c .= sprintf("		Z_PARAM_%s(%s)\n", $param['php_type'], strtolower($this->names_params[$index]['name']));
 					}
@@ -236,10 +253,17 @@ class genClass
 
 
 				// ------------------
-				// If param are an object, fetch ZEND object of this parameter
+				// Post-fetch args
 				foreach($this->parsed_params as $index => $param) {
+
+					// Fetch ZEND object of this parameter
 					if($param['php_type'] == "OBJ") {
 						$output_c .= sprintf("	gtk4_gobject_object *gtk4_%s = (gtk4_gobject_object*)((char*)(%s) - XtOffsetOf(gtk4_gobject_object, std));\n\n\n", strtolower($this->names_params[$index]['name']), strtolower($this->names_params[$index]['name']));
+					}
+
+					// Fetch GValue from zval
+					else if($param['php_type'] == "GValue") {
+						$output_c .= sprintf("	GValue %s = zval_to_gvalue(gv_%s);\n\n\n", strtolower($this->names_params[$index]['name']), strtolower($this->names_params[$index]['name']));
 					}
 				}
 
@@ -276,7 +300,10 @@ class genClass
 				}
 				$output_c .= sprintf("%s(", $method->c_name);
 
-				
+				// if($method->c_name == "gtk_container_child_set_property") {
+				// 	var_dump($this->parsed_params);
+				// 	die();
+				// }
 
 				// Loop params
 				$output_params = "";
@@ -286,6 +313,9 @@ class genClass
 				foreach($this->parsed_params as $index => $param) {
 					if($param['php_type'] == "OBJ") {
 						$output_params .= sprintf(", %s(gtk4_%s->gtk4_gpointer)", $param['macro'], strtolower($this->names_params[$index]['name']));
+					}
+					else if($param['php_type'] == "GValue") {
+						$output_params .= sprintf(", %s%s", str_repeat("&", $param['pointers']), $this->names_params[$index]['name']);
 					}
 					else {
 						$output_params .= ", " . $this->names_params[$index]['name'];
@@ -297,12 +327,6 @@ class genClass
 				if(isset($method->is_constructor_of)) {
 					$output_c .= sprintf("	if(obj->gtk4_gpointer == NULL) php_printf(\"\\n\\nERROR ON OBJECT CREATION [%s] (@todo: add exception)\\n\\n\");\n", $this->class_name);
 
-				}
-
-
-				if($method->c_name == "gtk_window_get_icon_name") {
-					// var_dump($return_type);
-					// die();
 				}
 
 

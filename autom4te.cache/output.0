@@ -4108,6 +4108,8 @@ $as_echo "@%:@define HAVE_GTK4 1" >>confdefs.h
       src/Atk/AtkPlug.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
+      src/Gtk/GtkContainer.c \
+      src/Gtk/GtkBin.c \
       src/Gtk/GtkApplication.c \
       src/Gtk/GtkApplicationWindow.c \
       src/Gtk/GtkWindow.c; do
@@ -4166,6 +4168,8 @@ EOF
       src/Atk/AtkPlug.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
+      src/Gtk/GtkContainer.c \
+      src/Gtk/GtkBin.c \
       src/Gtk/GtkApplication.c \
       src/Gtk/GtkApplicationWindow.c \
       src/Gtk/GtkWindow.c; do
@@ -4256,6 +4260,8 @@ _ACEOF
       src/Atk/AtkPlug.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
+      src/Gtk/GtkContainer.c \
+      src/Gtk/GtkBin.c \
       src/Gtk/GtkApplication.c \
       src/Gtk/GtkApplicationWindow.c \
       src/Gtk/GtkWindow.c; do
@@ -4311,6 +4317,8 @@ EOF
       src/Atk/AtkPlug.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
+      src/Gtk/GtkContainer.c \
+      src/Gtk/GtkBin.c \
       src/Gtk/GtkApplication.c \
       src/Gtk/GtkApplicationWindow.c \
       src/Gtk/GtkWindow.c; do

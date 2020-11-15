@@ -3,6 +3,12 @@
 
 $override = [];
 
+
+// ------------------
+// TEMP
+$override['gtk_container_propagate_draw'] = "";
+
+
 // ------------------
 // GtkApplication
 

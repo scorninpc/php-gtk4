@@ -1,7 +1,7 @@
-srcdir = /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4
-builddir = /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4
-top_srcdir = /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4
-top_builddir = /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4
+srcdir = /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4
+builddir = /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4
+top_srcdir = /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4
+top_builddir = /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4
 EGREP = /usr/bin/grep -E
 SED = /usr/bin/sed
 CONFIGURE_COMMAND = './configure' '--with-php-config=/opt/php8/bin/php-config'
@@ -11,7 +11,7 @@ SHLIB_DL_SUFFIX_NAME = so
 ZEND_EXT_TYPE = zend_extension
 RE2C = re2c
 AWK = nawk
-shared_objects_gtk4 = gtk4.lo helper.lo src/G/GObject.lo src/G/GApplication.lo src/Atk/AtkPlug.lo src/Gtk/Gtk.lo src/Gtk/GtkWidget.lo src/Gtk/GtkApplication.lo src/Gtk/GtkApplicationWindow.lo src/Gtk/GtkWindow.lo
+shared_objects_gtk4 = gtk4.lo helper.lo src/G/GObject.lo src/G/GApplication.lo src/Atk/AtkPlug.lo src/Gtk/Gtk.lo src/Gtk/GtkWidget.lo src/Gtk/GtkContainer.lo src/Gtk/GtkBin.lo src/Gtk/GtkApplication.lo src/Gtk/GtkApplicationWindow.lo src/Gtk/GtkWindow.lo
 PHP_PECL_EXTENSION = gtk4
 PHP_MODULES = $(phplibdir)/gtk4.la
 PHP_ZEND_EX =
@@ -21,7 +21,7 @@ prefix = /opt/php8
 exec_prefix = $(prefix)
 libdir = ${exec_prefix}/lib
 prefix = /opt/php8
-phplibdir = /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/modules
+phplibdir = /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/modules
 phpincludedir = /opt/php8/include/php
 CC = cc
 CFLAGS = -g -O2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0
@@ -189,26 +189,30 @@ prof-use:
 
 .PHONY: all clean install distclean test prof-gen prof-clean prof-use
 .NOEXPORT:
-gtk4.lo: /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/gtk4.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/media/backup/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/gtk4.c -o gtk4.lo 
-helper.lo: /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/helper.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/media/backup/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/helper.c -o helper.lo 
-src/G/GObject.lo: /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/G/GObject.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/media/backup/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/G/GObject.c -o src/G/GObject.lo 
-src/G/GApplication.lo: /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/G/GApplication.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/media/backup/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/G/GApplication.c -o src/G/GApplication.lo 
-src/Atk/AtkPlug.lo: /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Atk/AtkPlug.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/media/backup/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Atk/AtkPlug.c -o src/Atk/AtkPlug.lo 
-src/Gtk/Gtk.lo: /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/Gtk.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/media/backup/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/Gtk.c -o src/Gtk/Gtk.lo 
-src/Gtk/GtkWidget.lo: /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkWidget.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/media/backup/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkWidget.c -o src/Gtk/GtkWidget.lo 
-src/Gtk/GtkApplication.lo: /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkApplication.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/media/backup/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkApplication.c -o src/Gtk/GtkApplication.lo 
-src/Gtk/GtkApplicationWindow.lo: /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkApplicationWindow.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/media/backup/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkApplicationWindow.c -o src/Gtk/GtkApplicationWindow.lo 
-src/Gtk/GtkWindow.lo: /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkWindow.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/media/backup/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /media/backup/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkWindow.c -o src/Gtk/GtkWindow.lo 
+gtk4.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gtk4.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/gtk4.c -o gtk4.lo 
+helper.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/helper.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/helper.c -o helper.lo 
+src/G/GObject.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/G/GObject.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/G/GObject.c -o src/G/GObject.lo 
+src/G/GApplication.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/G/GApplication.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/G/GApplication.c -o src/G/GApplication.lo 
+src/Atk/AtkPlug.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Atk/AtkPlug.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Atk/AtkPlug.c -o src/Atk/AtkPlug.lo 
+src/Gtk/Gtk.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/Gtk.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/Gtk.c -o src/Gtk/Gtk.lo 
+src/Gtk/GtkWidget.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkWidget.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkWidget.c -o src/Gtk/GtkWidget.lo 
+src/Gtk/GtkContainer.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkContainer.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkContainer.c -o src/Gtk/GtkContainer.lo 
+src/Gtk/GtkBin.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkBin.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkBin.c -o src/Gtk/GtkBin.lo 
+src/Gtk/GtkApplication.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkApplication.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkApplication.c -o src/Gtk/GtkApplication.lo 
+src/Gtk/GtkApplicationWindow.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkApplicationWindow.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkApplicationWindow.c -o src/Gtk/GtkApplicationWindow.lo 
+src/Gtk/GtkWindow.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkWindow.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkWindow.c -o src/Gtk/GtkWindow.lo 
 $(phplibdir)/gtk4.la: ./gtk4.la
 	$(LIBTOOL) --mode=install cp ./gtk4.la $(phplibdir)
 

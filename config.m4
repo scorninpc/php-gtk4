@@ -27,6 +27,8 @@ if test "$PHP_GTK4" != "no"; then
       src/Atk/AtkPlug.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
+      src/Gtk/GtkContainer.c \
+      src/Gtk/GtkBin.c \
       src/Gtk/GtkApplication.c \
       src/Gtk/GtkApplicationWindow.c \
       src/Gtk/GtkWindow.c, $ext_shared)

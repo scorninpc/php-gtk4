@@ -101,3 +101,51 @@ char *gtk4_exception(int code, char *format, ...)
 	// zend_throw_exception(zend_ce_exception, message, code);
 	zend_exception_error(zend_throw_exception(gtk4_get_ce_by_name("Gtk\\Exception"), message, code), E_ERROR);
 }
+
+
+/**
+ * Convert zval to a GValue
+ */
+GValue zval_to_gvalue(zval *z_value)
+{
+	GValue gv_ret = G_VALUE_INIT;
+
+	if(Z_TYPE_P(z_value) == IS_STRING) {
+		g_value_init (&gv_ret, G_TYPE_STRING);
+		g_value_set_string(&gv_ret, Z_STRVAL_P(z_value));
+	}
+
+	return gv_ret;
+}
+
+/**
+ * Convert zval to a GValue
+ */
+zval *gvalue_to_zval(GValue gz_value)
+{
+	zval *z_ret;
+
+	php_printf("\n\nOK1\n\n");
+
+	switch(G_VALUE_TYPE(&gz_value)) {
+
+		// String
+		case G_TYPE_STRING:
+        {
+			php_printf("\n\nOK2\n\n");
+			const char *char_str = g_value_get_string(&gz_value);
+
+			php_printf("\n\nOK3\n\n");
+			// zend_string *string_str = zend_string_init(char_str, strlen(char_str), 0);
+			
+
+			php_printf("\n\nOK4: %s\n\n", char_str);
+        	// ZVAL_STR(&z_ret, string_str);
+        	// ZVAL_STRING(&z_ret, char_str);
+			php_printf("\n\nOK5\n\n");
+        }
+
+	}
+
+	return z_ret;
+}

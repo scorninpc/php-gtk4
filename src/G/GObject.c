@@ -105,12 +105,10 @@ PHP_METHOD(GObject, connect)
 
 	// ----------------
 	// Get gpointer
-	zval *object = getThis();
-	gtk4_gobject_object *obj = ((gtk4_gobject_object*)(Z_OBJ_P(getThis()) + 1)) - 1;
+	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
 
 	callback_object->fci = fci;
 	callback_object->fcc = fcc;
-	callback_object->self = object;
 	callback_object->self_object = obj;
 
 
@@ -152,6 +150,83 @@ bool connect_callback(gpointer user_data, ...)
 	// Return to st_callback
 	st_callback *callback_object = (st_callback *)user_data;
 
+	// Create a new array
+	int param_count = 1; // callback_object->n_params + 1 + count(extra_params)
+	callback_object->fci.params = safe_emalloc(param_count, sizeof(zval), 0);
+
+	// Get current object
+	zval current_obj;
+	ZVAL_OBJ(&current_obj, &callback_object->self_object->std);
+	callback_object->fci.params[0] = current_obj;
+
+	// Loop va params
+	va_list ap;
+    va_start(ap, user_data);
+    for (int i=0; i<callback_object->n_params; i++) {
+
+    	// Verify the type
+    	switch (G_TYPE_FUNDAMENTAL(callback_object->param_types[i])) {
+
+    		// Verify if is object
+			case G_TYPE_BOXED:
+            {
+                gpointer *e = va_arg(ap, gpointer *);
+
+                // Create the object
+                char *obj_cn = gtk4_get_namespace(g_type_name(callback_object->param_types[i]));
+                zend_class_entry *ret_ce = gtk4_get_ce_by_name(obj_cn);
+                gtk4_gobject_object *intern = gtk4_create_new_object(ret_ce);
+                intern->gtk4_gpointer = e;
+
+                // WORKING
+				// zval extra_obj;
+				// ZVAL_OBJ(&extra_obj, &callback_object->self_object->std);
+				// callback_object->fci.params[i+1] = extra_obj;
+                
+                break;
+            }
+    	}
+    }
+
+    // Add extra params
+
+
+
+	// Call userland function
+	zval retval;
+	callback_object->fci.retval = &retval;
+	callback_object->fci.param_count = param_count;
+
+	if(zend_call_function(&callback_object->fci, &callback_object->fcc) == FAILURE) {
+		php_error_docref(NULL, E_CORE_ERROR, "Cannot call");
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/* FUNCIONANDO
+	// Return to st_callback
+	st_callback *callback_object = (st_callback *)user_data;
+
 	int params_n = callback_object->extra_params_n + 1;
 
 	// ----------------
@@ -177,7 +252,7 @@ bool connect_callback(gpointer user_data, ...)
 	// Call
 	if(zend_call_function(&callback_object->fci, &callback_object->fcc) == FAILURE) {
 		php_error_docref(NULL, E_CORE_ERROR, "Cannot call");
-	}
+	}*/
 
 
 

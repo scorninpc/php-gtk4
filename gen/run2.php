@@ -135,7 +135,7 @@ foreach($methods as $method) {
 // Run all classes for parse
 foreach($classes as $class) {
 
-	if($class->getClassName() != "GtkWindow") {
+	if($class->getClassName() != "GdkEventType") {
 		continue;
 	}
 
@@ -158,8 +158,12 @@ foreach($classes as $class) {
 $constants = $genConstants->parse();
 
 
+
+
+
+
 // ------------------
-// Load objects
+// Create assoc array of objects
 $tmp_objects = array_merge(
 	$atk_parser->objects,
 	$g_parser->objects, 
@@ -171,10 +175,57 @@ foreach($tmp_objects as $object) {
 	$objects[$object->c_name] = $object;
 }
 
-$init_class = "";
+// ------------------
+// Create class hierarchy
+$new_classes = [];
+$old_classes = $classes;
+
 foreach($classes as $class) {
 
-	
+	$classname = $class->getClassName();
+	if(
+		($classname != "GApplication") && 
+		
+		($classname != "GdkEventType") && 
+
+		($classname != "GtkApplication") && 
+		($classname != "GtkWidget") && 
+		($classname != "GtkWindow") && 
+		($classname != "GtkContainer") && 
+		($classname != "GtkBin") && 
+		($classname != "GtkApplicationWindow")) {
+		continue;		
+	}
+
+	// Look for parent index
+	if(strlen($objects[$classname]->parent) == 0) {
+		$index = 0;
+	}
+	else if($objects[$classname]->parent == "GInitiallyUnowned") {
+		$index = 0;
+	}
+	else if($objects[$classname]->parent == "GObject") {
+		$index = 0;
+	}
+	else {
+		$index = 0;
+		foreach($new_classes as $i => $tmp) {
+			if($objects[$tmp->getClassName()]->parent == $classname) {
+				$index = $i+1;
+				break;
+			}
+		}
+	}
+
+	array_splice($new_classes, $index, 0, [$class]); 
+}
+
+$classes = array_reverse($new_classes);
+
+// ------------------
+// Output extension init class
+$init_class = "";
+foreach($classes as $class) {
 
 	$classname = $class->getClassName();
 	if(!isset($objects[$classname])) {
@@ -184,16 +235,15 @@ foreach($classes as $class) {
 	$object = $objects[$classname];
 	$namespace = \Type::getInstance()->createNamespace(\Type::getInstance()->createNamespace($classname));
 
-
-	if(($classname != "GApplication") && ($classname != "GtkApplication") && ($classname != "GtkWidget") && ($classname != "GtkWindow") && ($classname != "GtkApplicationWindow")) {
-		continue;
-	}
-
 	$init_class .= sprintf("	zend_class_entry tmp_%s_ce;\n", strtolower($classname));
 	$init_class .= sprintf("	INIT_CLASS_ENTRY(tmp_%s_ce, \"%s\", %s_functions);\n", strtolower($classname), $namespace, strtolower($classname));
 
 	if($object->parent) {
-		$init_class .= sprintf("	gtk4_%s_ce = zend_register_internal_class_ex(&tmp_%s_ce, gtk4_%s_ce);\n", strtolower($classname), strtolower($classname), strtolower($object->parent));
+		$parent = $object->parent;
+		if($parent == "GInitiallyUnowned") {
+			$parent = "GObject";
+		}
+		$init_class .= sprintf("	gtk4_%s_ce = zend_register_internal_class_ex(&tmp_%s_ce, gtk4_%s_ce);\n", strtolower($classname), strtolower($classname), strtolower($parent));
 	}
 	else {
 		$init_class .= sprintf("	gtk4_%s_ce = zend_register_internal_class(&tmp_gtk_ce);\n", strtolower($classname));
@@ -201,11 +251,10 @@ foreach($classes as $class) {
 	$init_class .= sprintf("\n");
 }
 
-
 // ------------------
 // Create gtk4.c from template
 $gtk4 = file_get_contents(GEN_PATH . "/gtk4.c.template");
-$gtk4 = sprintf($gtk4, $constants);
+$gtk4 = sprintf($gtk4, $init_class, $constants);
 file_put_contents(SRC_PATH . "/../gtk4.c", $gtk4);
 
 

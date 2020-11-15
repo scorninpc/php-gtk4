@@ -8,8 +8,10 @@
 
 	#include "src/Gtk/Gtk.h"
 	#include "src/Gtk/GtkApplication.h"
-	#include "src/Gtk/GtkWidget.h"
-	#include "src/Gtk/GtkWindow.h"
 	#include "src/Gtk/GtkApplicationWindow.h"
+	#include "src/Gtk/GtkWidget.h"
+	#include "src/Gtk/GtkContainer.h"
+	#include "src/Gtk/GtkBin.h"
+	#include "src/Gtk/GtkWindow.h"
 
 #endif

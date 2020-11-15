@@ -171,6 +171,19 @@ class Type
 
 		}
 
+		// GValue type
+		else if($type == "GValue") {
+
+			self::$types[$type]['is_object'] = FALSE;
+			self::$types[$type]['macro'] = NULL;
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['namespace'] = NULL;
+			self::$types[$type]['class'] = NULL;
+			self::$types[$type]['c_type'] = NULL;
+			self::$types[$type]['php_type'] = "GValue";
+
+		}
+
 		// GError
 		else if($type == "GError") {
 
@@ -194,6 +207,11 @@ class Type
 			self::$types[$type]['class'] = substr($type, 1);
 			self::$types[$type]['c_type'] = NULL;
 			self::$types[$type]['php_type'] = "OBJ";
+
+		}
+
+		// Cairo
+		else if(substr($type, 0, 5) == "cairo") {
 
 		}
 
