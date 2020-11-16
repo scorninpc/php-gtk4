@@ -34,7 +34,7 @@ class genConstants
 
 				foreach($enum->values as $value) {
 					if(isset($override[$value[1]])) {
-						$this->constants_c .= $override[$value[1]] . "\n";
+						$this->constants_c .= $override[$value[1]]['code'] . "\n";
 					}
 					else {
 						$this->constants_c .= sprintf("	zend_declare_class_constant_long(%s_ce, \"%s\", sizeof(\"%s\") - 1, %s);\n", strtolower($enum->c_name), str_replace("-", "_", strtoupper($value[0])), str_replace("-", "_", strtoupper($value[0])), $value[1]);

@@ -6,6 +6,8 @@
 
 	#include "src/Atk/AtkPlug.h"
 
+	#include "src/Gdk/GdkEvent.h"
+
 	#include "src/Gtk/Gtk.h"
 	#include "src/Gtk/GtkApplication.h"
 	#include "src/Gtk/GtkApplicationWindow.h"

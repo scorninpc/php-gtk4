@@ -100,6 +100,19 @@ $methods = array_merge(
 
 
 // ------------------
+// Create assoc array of objects
+$tmp_objects = array_merge(
+	$atk_parser->objects,
+	$g_parser->objects, 
+	$gdk_parser->objects,
+	$gtk_parser->objects,
+);
+$objects = [];
+foreach($tmp_objects as $object) {
+	$objects[$object->c_name] = $object;
+}
+
+// ------------------
 // Loop all parsed def methods
 foreach($methods as $method) {
 
@@ -123,19 +136,30 @@ foreach($methods as $method) {
 		$classes[$name] = new genClass($name);
 	}
 
+	// Add o parent
+	if((isset($objects[$name])) && (strlen($objects[$name]->parent) > 0)) {
+		$parent = $objects[$name]->parent;
+	}
+	else {
+		$parent = "GObject";
+	}
+	$classes[$name]->setParentName($parent);
+
+	// Some GdkEvent fix
+	if($method->name == "s_get_distance") $method->name = "get_distance";
+	if($method->name == "s_get_center") $method->name = "get_center";
+	if($method->name == "s_get_angle") $method->name = "get_angle";
+
 	// Add method to class template
 	$classes[$name]->addMethod($method);
 }
-
-
-
 
 
 // ------------------
 // Run all classes for parse
 foreach($classes as $class) {
 
-	if($class->getClassName() != "GdkEventType") {
+	if($class->getClassName() != "GdkEvent") {
 		continue;
 	}
 
@@ -157,24 +181,6 @@ foreach($classes as $class) {
 // Create constants
 $constants = $genConstants->parse();
 
-
-
-
-
-
-// ------------------
-// Create assoc array of objects
-$tmp_objects = array_merge(
-	$atk_parser->objects,
-	$g_parser->objects, 
-	$gdk_parser->objects,
-	$gtk_parser->objects,
-);
-$objects = [];
-foreach($tmp_objects as $object) {
-	$objects[$object->c_name] = $object;
-}
-
 // ------------------
 // Create class hierarchy
 $new_classes = [];
@@ -185,9 +191,7 @@ foreach($classes as $class) {
 	$classname = $class->getClassName();
 	if(
 		($classname != "GApplication") && 
-		
-		($classname != "GdkEventType") && 
-
+		($classname != "GdkEvent") && 
 		($classname != "GtkApplication") && 
 		($classname != "GtkWidget") && 
 		($classname != "GtkWindow") && 
@@ -198,19 +202,16 @@ foreach($classes as $class) {
 	}
 
 	// Look for parent index
-	if(strlen($objects[$classname]->parent) == 0) {
+	if(strlen($class->getParentName()) == 0) {
 		$index = 0;
 	}
-	else if($objects[$classname]->parent == "GInitiallyUnowned") {
-		$index = 0;
-	}
-	else if($objects[$classname]->parent == "GObject") {
+	else if($class->getParentName() == "GObject") {
 		$index = 0;
 	}
 	else {
 		$index = 0;
 		foreach($new_classes as $i => $tmp) {
-			if($objects[$tmp->getClassName()]->parent == $classname) {
+			if($tmp->getParentName() == $classname) {
 				$index = $i+1;
 				break;
 			}
@@ -228,18 +229,18 @@ $init_class = "";
 foreach($classes as $class) {
 
 	$classname = $class->getClassName();
-	if(!isset($objects[$classname])) {
-		continue;
-	}
+	// if(!isset($objects[$classname])) {
+	// 	continue;
+	// }
 
-	$object = $objects[$classname];
+	// $object = $objects[$classname];
 	$namespace = \Type::getInstance()->createNamespace(\Type::getInstance()->createNamespace($classname));
 
 	$init_class .= sprintf("	zend_class_entry tmp_%s_ce;\n", strtolower($classname));
 	$init_class .= sprintf("	INIT_CLASS_ENTRY(tmp_%s_ce, \"%s\", %s_functions);\n", strtolower($classname), $namespace, strtolower($classname));
 
-	if($object->parent) {
-		$parent = $object->parent;
+	if($class->getParentName()) {
+		$parent = $class->getParentName();
 		if($parent == "GInitiallyUnowned") {
 			$parent = "GObject";
 		}

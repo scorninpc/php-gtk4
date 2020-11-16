@@ -13,6 +13,8 @@ class genClass
 
 	public $namespace;
 
+	public $parent;
+
 	public function __construct($class_name)
 	{
 		$this->class_name = $class_name;
@@ -29,6 +31,16 @@ class genClass
 	{
 		$name = $method->c_name;
 		$this->methods[$name] = $method;
+	}
+
+	public function setParentName($parent)
+	{
+		$this->parent = $parent;
+	}
+
+	public function getParentName()
+	{
+		return $this->parent;
 	}
 
 	public function getClassName()
@@ -83,6 +95,15 @@ class genClass
 				if($param['php_type'] == "GError") {
 					continue;
 				}
+				else {
+					if(isset($override_list[$method->c_name]['params'])) {
+						foreach($override_list[$method->c_name]['params'] as $ignore_param) {
+							if($this->names_params[$index]['name'] == $ignore_param) {
+								continue 2;
+							}
+						}
+					}
+				}
 
 				$params_count++;
 			}
@@ -93,6 +114,15 @@ class genClass
 				if($param['php_type'] == "GError") {
 					continue;
 				}
+
+				if(isset($override_list[$method->c_name]['params'])) {
+					foreach($override_list[$method->c_name]['params'] as $ignore_param) {
+						if($this->names_params[$index]['name'] == $ignore_param) {
+							continue 2;
+						}
+					}
+				}
+
 				$output_h .= sprintf("	ZEND_ARG_INFO(0, %s)\n", $this->names_params[$index]['name']);
 			}
 			$output_h .= "ZEND_END_ARG_INFO()\n\n";
@@ -154,7 +184,7 @@ class genClass
 
 			// Verify override
 			if(isset($override_list[$method->c_name])) {
-				$output_c .= $override_list[$method->c_name] . "\n";
+				$output_c .= $override_list[$method->c_name]['code'] . "\n";
 			}
 
 			// Generate method

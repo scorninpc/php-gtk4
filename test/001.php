@@ -2,7 +2,7 @@
 
 
 // ---------------------
-namespace Test;
+/*namespace Test;
 
 use Gtk;
 use G;
@@ -48,7 +48,7 @@ $app->connect("activate", "Test\activated");
 
 
 $app->run($argc, $argv);
-
+*/
 
 
 
@@ -92,7 +92,7 @@ new Test($argc, $argv);*/
 
 
 // ---------------------
-/*Gtk::init(NULL);
+Gtk::init(NULL);
 
 class Test
 {
@@ -103,7 +103,8 @@ class Test
 		$this->window = new Gtk\Window(Gtk\Window\Type::TOPLEVEL);
 		$this->window->set_icon_list(["/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk3/logo.png"]);
 		$this->window->connect("destroy", [$this, "callback_test"]);
-		// $this->window->connect("button-press-event", [$this, "callback_button_press"]);
+		$this->window->connect("button-press-event", [$this, "callback_button_press"]);
+		$this->window->connect("key-press-event", [$this, "callback_key_press"]);
 		
 		$this->window->set_title("TEST");
 
@@ -128,11 +129,33 @@ class Test
 
 	}
 
-	public function callback_button_press($widget=NULL)
+	public function callback_button_press($widget=NULL, $event=NULL, $s=NULL)
 	{
-		echo "-- Destroy: OK\n";
+		echo "-- Button press\n";
 
-		Gtk::main_quit();
+		echo "\$widget\n";
+
+		echo "\n\n\$event\n";
+		echo $event->get_axis(Gdk\Axis\Use::X) . "x" . $event->get_axis(Gdk\Axis\Use::Y) . "\n";
+		echo "Button: " . $event->get_button() . "\n";
+		echo "Cliques: " . $event->get_click_count() . "\n";
+		echo "Coordenadas:";
+		var_dump($event->get_coords());
+		var_dump($event->get_root_coords());
+		echo "\n";
+		// $event->get_event_type();
+	}
+
+	public function callback_key_press($widget=NULL, $event=NULL, $s=NULL)
+	{
+		echo "-- Key press\n";
+
+		echo "\$widget\n";
+
+		echo "\n\n\$event\n";
+		echo "Key: " . $event->get_keycode() . "\n";
+		echo "\n";
+		// $event->get_event_type();
 	}
 
 	public function callback_test($widget=NULL, $a=NULL, $b=NULL, $c=NULL, $d=NULL)
@@ -149,7 +172,7 @@ class Test
 
 $test = new Test();
 
-Gtk::main();*/
+Gtk::main();
 
 
 // ---------------------

@@ -104,9 +104,7 @@ ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, get_decorated);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_get_default_size, 0, 0, 2)
-	ZEND_ARG_INFO(0, width)
-	ZEND_ARG_INFO(0, height)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_gtkwindow_get_default_size, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
 PHP_METHOD(GtkWindow, get_default_size);

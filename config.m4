@@ -25,6 +25,7 @@ if test "$PHP_GTK4" != "no"; then
       src/G/GObject.c \
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \
+      src/Gdk/GdkEvent.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
       src/Gtk/GtkContainer.c \

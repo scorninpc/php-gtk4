@@ -11,7 +11,7 @@ SHLIB_DL_SUFFIX_NAME = so
 ZEND_EXT_TYPE = zend_extension
 RE2C = re2c
 AWK = nawk
-shared_objects_gtk4 = gtk4.lo helper.lo src/G/GObject.lo src/G/GApplication.lo src/Atk/AtkPlug.lo src/Gtk/Gtk.lo src/Gtk/GtkWidget.lo src/Gtk/GtkContainer.lo src/Gtk/GtkBin.lo src/Gtk/GtkApplication.lo src/Gtk/GtkApplicationWindow.lo src/Gtk/GtkWindow.lo
+shared_objects_gtk4 = gtk4.lo helper.lo src/G/GObject.lo src/G/GApplication.lo src/Atk/AtkPlug.lo src/Gdk/GdkEvent.lo src/Gtk/Gtk.lo src/Gtk/GtkWidget.lo src/Gtk/GtkContainer.lo src/Gtk/GtkBin.lo src/Gtk/GtkApplication.lo src/Gtk/GtkApplicationWindow.lo src/Gtk/GtkWindow.lo
 PHP_PECL_EXTENSION = gtk4
 PHP_MODULES = $(phplibdir)/gtk4.la
 PHP_ZEND_EX =
@@ -199,6 +199,8 @@ src/G/GApplication.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/
 	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/G/GApplication.c -o src/G/GApplication.lo 
 src/Atk/AtkPlug.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Atk/AtkPlug.c
 	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Atk/AtkPlug.c -o src/Atk/AtkPlug.lo 
+src/Gdk/GdkEvent.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gdk/GdkEvent.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gdk/GdkEvent.c -o src/Gdk/GdkEvent.lo 
 src/Gtk/Gtk.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/Gtk.c
 	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/Gtk.c -o src/Gtk/Gtk.lo 
 src/Gtk/GtkWidget.lo: /home/scorninpc/Desktop/Bruno/BUILD_PHP_GTK/php-gtk4/src/Gtk/GtkWidget.c

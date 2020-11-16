@@ -81,6 +81,10 @@ static PHP_MINIT_FUNCTION(gtk4)
 	INIT_CLASS_ENTRY(tmp_gapplication_ce, "G\\Application", gapplication_functions);
 	gtk4_gapplication_ce = zend_register_internal_class_ex(&tmp_gapplication_ce, gtk4_gobject_ce);
 
+	zend_class_entry tmp_gdkevent_ce;
+	INIT_CLASS_ENTRY(tmp_gdkevent_ce, "Gdk\\Event", gdkevent_functions);
+	gtk4_gdkevent_ce = zend_register_internal_class_ex(&tmp_gdkevent_ce, gtk4_gobject_ce);
+
 	zend_class_entry tmp_gtkapplication_ce;
 	INIT_CLASS_ENTRY(tmp_gtkapplication_ce, "Gtk\\Application", gtkapplication_functions);
 	gtk4_gtkapplication_ce = zend_register_internal_class_ex(&tmp_gtkapplication_ce, gtk4_gapplication_ce);

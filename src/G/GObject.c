@@ -151,7 +151,7 @@ bool connect_callback(gpointer user_data, ...)
 	st_callback *callback_object = (st_callback *)user_data;
 
 	// Create a new array
-	int param_count = 1; // callback_object->n_params + 1 + count(extra_params)
+	int param_count = callback_object->n_params + 1;// + count(extra_params)
 	callback_object->fci.params = safe_emalloc(param_count, sizeof(zval), 0);
 
 	// Get current object
@@ -179,9 +179,9 @@ bool connect_callback(gpointer user_data, ...)
                 intern->gtk4_gpointer = e;
 
                 // WORKING
-				// zval extra_obj;
-				// ZVAL_OBJ(&extra_obj, &callback_object->self_object->std);
-				// callback_object->fci.params[i+1] = extra_obj;
+				zval extra_obj;
+				ZVAL_OBJ(&extra_obj, &intern->std);
+				callback_object->fci.params[i+1] = extra_obj;
                 
                 break;
             }
