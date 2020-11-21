@@ -26,11 +26,13 @@ if test "$PHP_GTK4" != "no"; then
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \
       src/Gdk/GdkEvent.c \
+      src/Gdk/GdkDisplay.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
       src/Gtk/GtkContainer.c \
       src/Gtk/GtkBin.c \
       src/Gtk/GtkApplication.c \
       src/Gtk/GtkApplicationWindow.c \
+      src/Gtk/GtkClipboard.c \
       src/Gtk/GtkWindow.c, $ext_shared)
 fi

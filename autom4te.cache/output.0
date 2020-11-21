@@ -4107,12 +4107,14 @@ $as_echo "@%:@define HAVE_GTK4 1" >>confdefs.h
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \
       src/Gdk/GdkEvent.c \
+      src/Gdk/GdkDisplay.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
       src/Gtk/GtkContainer.c \
       src/Gtk/GtkBin.c \
       src/Gtk/GtkApplication.c \
       src/Gtk/GtkApplicationWindow.c \
+      src/Gtk/GtkClipboard.c \
       src/Gtk/GtkWindow.c; do
 
       IFS=.
@@ -4168,12 +4170,14 @@ EOF
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \
       src/Gdk/GdkEvent.c \
+      src/Gdk/GdkDisplay.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
       src/Gtk/GtkContainer.c \
       src/Gtk/GtkBin.c \
       src/Gtk/GtkApplication.c \
       src/Gtk/GtkApplicationWindow.c \
+      src/Gtk/GtkClipboard.c \
       src/Gtk/GtkWindow.c; do
 
       IFS=.
@@ -4261,12 +4265,14 @@ _ACEOF
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \
       src/Gdk/GdkEvent.c \
+      src/Gdk/GdkDisplay.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
       src/Gtk/GtkContainer.c \
       src/Gtk/GtkBin.c \
       src/Gtk/GtkApplication.c \
       src/Gtk/GtkApplicationWindow.c \
+      src/Gtk/GtkClipboard.c \
       src/Gtk/GtkWindow.c; do
 
       IFS=.
@@ -4319,12 +4325,14 @@ EOF
       src/G/GApplication.c \
       src/Atk/AtkPlug.c \
       src/Gdk/GdkEvent.c \
+      src/Gdk/GdkDisplay.c \
       src/Gtk/Gtk.c \
       src/Gtk/GtkWidget.c \
       src/Gtk/GtkContainer.c \
       src/Gtk/GtkBin.c \
       src/Gtk/GtkApplication.c \
       src/Gtk/GtkApplicationWindow.c \
+      src/Gtk/GtkClipboard.c \
       src/Gtk/GtkWindow.c; do
 
       IFS=.

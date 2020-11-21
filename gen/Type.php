@@ -132,6 +132,19 @@ class Type
 		}
 
 		// Gdk objects
+		else if($type == "GdkAtom") {
+
+			self::$types[$type]['is_object'] = FALSE;
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['macro'] = NULL;
+			self::$types[$type]['namespace'] = NULL;
+			self::$types[$type]['class'] = NULL;
+			self::$types[$type]['c_type'] = "long";
+			self::$types[$type]['php_type'] = "LONG";
+			
+		}
+
+		// Gdk objects
 		else if(substr($type, 0, 3) == "Gdk") {
 
 			self::$types[$type]['is_object'] = TRUE;
@@ -158,6 +171,19 @@ class Type
 
 		}
 
+		// Pango objects
+		else if(substr($type, 0, 5) == "Pango") {
+
+			self::$types[$type]['is_object'] = TRUE;
+			self::$types[$type]['macro'] = $this->_createMacro($type);
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['namespace'] = "Pango";
+			self::$types[$type]['class'] = substr($type, 3);
+			self::$types[$type]['c_type'] = NULL;
+			self::$types[$type]['php_type'] = "OBJ";
+
+		}
+
 		// GList type
 		else if($type == "GList") {
 
@@ -168,6 +194,19 @@ class Type
 			self::$types[$type]['class'] = NULL;
 			self::$types[$type]['c_type'] = NULL;
 			self::$types[$type]['php_type'] = "GList";
+
+		}
+
+		// GType type
+		else if($type == "GType") {
+
+			self::$types[$type]['is_object'] = FALSE;
+			self::$types[$type]['macro'] = NULL;
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['namespace'] = NULL;
+			self::$types[$type]['class'] = NULL;
+			self::$types[$type]['c_type'] = "GType";
+			self::$types[$type]['php_type'] = "LONG";
 
 		}
 
@@ -212,7 +251,13 @@ class Type
 
 		// Cairo
 		else if(substr($type, 0, 5) == "cairo") {
-
+			self::$types[$type]['is_object'] = TRUE;
+			self::$types[$type]['macro'] = $this->_createMacro($type);
+			self::$types[$type]['is_va_list'] = FALSE;
+			self::$types[$type]['namespace'] = "Cairo";
+			self::$types[$type]['class'] = substr($type, 1);
+			self::$types[$type]['c_type'] = NULL;
+			self::$types[$type]['php_type'] = "OBJ";
 		}
 
 		// C types

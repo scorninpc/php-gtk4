@@ -21,11 +21,11 @@ $genConstants = new genConstants();
 
 $classes = [];
 
-exec("rm -rf " . GEN_PATH . "/def/*.cache");
-exec("rm -rf " . GEN_PATH . "/def/atk.defs");
-exec("rm -rf " . GEN_PATH . "/def/gio.defs");
-exec("rm -rf " . GEN_PATH . "/def/gdk.defs");
-exec("rm -rf " . GEN_PATH . "/def/gtk.defs");
+// exec("rm -rf " . GEN_PATH . "/def/*.cache");
+// exec("rm -rf " . GEN_PATH . "/def/atk.defs");
+// exec("rm -rf " . GEN_PATH . "/def/gio.defs");
+// exec("rm -rf " . GEN_PATH . "/def/gdk.defs");
+// exec("rm -rf " . GEN_PATH . "/def/gtk.defs");
 $first_run = !file_exists(GEN_PATH . "/def/atk.defs");
 
 // ------------------
@@ -156,10 +156,57 @@ foreach($methods as $method) {
 
 
 // ------------------
+// Parse some funcions to the object
+$functions = array_merge(
+	$atk_parser->functions,
+	$g_parser->functions, 
+	$gdk_parser->functions,
+	$gtk_parser->functions,
+	);
+
+$final = [];
+$count = 0;
+foreach($functions as $function) {
+	$final[$function->c_name] = TRUE;
+
+	if($function->deprecated) {
+		continue;
+	}
+
+	if(isset($ignore_list[$function->c_name])) {
+		continue;
+	}
+
+	foreach($classes as $class) {
+
+		$class_name = $class->getClassName();
+
+		$pieces = preg_split('/(?=[A-Z])/', trim($class_name));
+		unset($pieces[0]);
+		$namespace = strtolower(implode("_", $pieces));
+
+
+		if(strlen($namespace) == 0) {
+			continue;
+		}
+
+		if(strpos($function->c_name, $namespace) !== FALSE) {
+			$class->addMethod($function, str_replace($namespace . "_", "", $function->c_name));
+			unset($final[$function->c_name]);
+			$count++;
+			break;
+		}
+
+	}
+
+}
+
+
+// ------------------
 // Run all classes for parse
 foreach($classes as $class) {
 
-	if($class->getClassName() != "GdkEvent") {
+	if($class->getClassName() != "GtkClipboard") {
 		continue;
 	}
 
@@ -192,6 +239,9 @@ foreach($classes as $class) {
 	if(
 		($classname != "GApplication") && 
 		($classname != "GdkEvent") && 
+		($classname != "GdkDisplay") && 
+		($classname != "GtkWidget") && 
+		($classname != "GtkClipboard") && 
 		($classname != "GtkApplication") && 
 		($classname != "GtkWidget") && 
 		($classname != "GtkWindow") && 

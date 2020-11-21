@@ -67,36 +67,7 @@ PHP_METHOD(GtkContainer, child_get) {
 }
 
 PHP_METHOD(GtkContainer, child_get_property) {
-// 	zend_object * child;
-// 	char * property_name;
-// 	size_t property_name_len;
-	
-// 	ZEND_PARSE_PARAMETERS_START(2, 2)
-// 		Z_PARAM_OBJ(child)
-// 		Z_PARAM_STRING(property_name, property_name_len)
-// 	ZEND_PARSE_PARAMETERS_END();
 
-// 	gtk4_gobject_object *obj = gtk4_get_current_object(getThis());
-
-// 	gtk4_gobject_object *gtk4_child = (gtk4_gobject_object*)((char*)(child) - XtOffsetOf(gtk4_gobject_object, std));
-
-// php_printf("\n\nERR01\n\n");
-
-// 	GtkLabel *label1 = GTK_LABEL(gtk_label_new("OK"));
-// 	gtk_container_add(GTK_CONTAINER(obj->gtk4_gpointer), GTK_WIDGET(label1));
-
-// 	gtk_widget_show_all(GTK_WIDGET(label1));
-
-// 	GValue value = G_VALUE_INIT;
-// 	g_value_init (&value, G_TYPE_STRING);
-// php_printf("\n\nERR02\n\n");
-// 	gtk_container_child_get_property(GTK_CONTAINER(obj->gtk4_gpointer), GTK_WIDGET(label1), "label", &value);
-
-// php_printf("\n\nERR03\n\n");
-// 	zval *ret = gvalue_to_zval(value);
-// php_printf("\n\nERR04\n\n");
-
-// 	RETURN_STRING(Z_STRVAL_P(ret));
 
 }
 

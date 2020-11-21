@@ -1,3 +1,18 @@
+## Todoo
+
+Bind Cairo objects
+Bind Pango objects
+
+Parse GtkAllocation for methods: 
+	gtk_widget_get_allocated_size
+
+Parse GtkTargetEntry for methods:
+	gtk_widget_get_allocated_size
+
+When define callback methods:
+	gtk_clipboard_request_contents
+	gtk_clipboard_request_image
+
 ## References
 
 https://developer.gnome.org/gtkmm-tutorial/unstable/sec-wrapping-defs-files.html.pt_BR
@@ -47,3 +62,4 @@ https://www.zend.com/basic-php-structures
 	Z_PARAM_OBJECT_OF_CLASS
 	Z_PARAM_OBJECT
 	Z_PARAM_*
+

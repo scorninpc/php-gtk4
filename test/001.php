@@ -94,6 +94,8 @@ new Test($argc, $argv);*/
 // ---------------------
 Gtk::init(NULL);
 
+echo Gtk::get_major_version() . "." . Gtk::get_minor_version() . "\n";
+
 class Test
 {
 	protected $window;
@@ -120,6 +122,8 @@ class Test
 		// var_dump($this->window->get_position());
 		$this->window->set_position(Gtk\Window\Position::CENTER);
 
+
+		$display = Gdk\Display::get_default();
 
 
 		$this->window->show_all();
@@ -153,7 +157,7 @@ class Test
 		echo "\$widget\n";
 
 		echo "\n\n\$event\n";
-		echo "Key: " . $event->get_keycode() . "\n";
+		echo "Key: " . chr($event->get_keyval()) . " (" . $event->get_keycode() . ")\n";
 		echo "\n";
 		// $event->get_event_type();
 	}

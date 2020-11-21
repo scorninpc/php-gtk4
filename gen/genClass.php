@@ -27,8 +27,12 @@ class genClass
 		$override_list = include(GEN_PATH . "/override.php");
 	}
 
-	public function addMethod($method)
+	public function addMethod($method, $name=NULL)
 	{
+		if($name != NULL) {
+			$method->name = $name;
+		}
+
 		$name = $method->c_name;
 		$this->methods[$name] = $method;
 	}
@@ -330,10 +334,10 @@ class genClass
 				}
 				$output_c .= sprintf("%s(", $method->c_name);
 
-				// if($method->c_name == "gtk_container_child_set_property") {
-				// 	var_dump($this->parsed_params);
-				// 	die();
-				// }
+				if($method->c_name == "gtk_container_child_set_property") {
+					var_dump($this->parsed_params);
+					die();
+				}
 
 				// Loop params
 				$output_params = "";

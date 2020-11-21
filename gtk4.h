@@ -7,6 +7,7 @@
 	#include "src/Atk/AtkPlug.h"
 
 	#include "src/Gdk/GdkEvent.h"
+	#include "src/Gdk/GdkDisplay.h"
 
 	#include "src/Gtk/Gtk.h"
 	#include "src/Gtk/GtkApplication.h"
@@ -15,5 +16,6 @@
 	#include "src/Gtk/GtkContainer.h"
 	#include "src/Gtk/GtkBin.h"
 	#include "src/Gtk/GtkWindow.h"
+	#include "src/Gtk/GtkClipboard.h"
 
 #endif

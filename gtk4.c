@@ -85,6 +85,10 @@ static PHP_MINIT_FUNCTION(gtk4)
 	INIT_CLASS_ENTRY(tmp_gdkevent_ce, "Gdk\\Event", gdkevent_functions);
 	gtk4_gdkevent_ce = zend_register_internal_class_ex(&tmp_gdkevent_ce, gtk4_gobject_ce);
 
+	zend_class_entry tmp_gdkdisplay_ce;
+	INIT_CLASS_ENTRY(tmp_gdkdisplay_ce, "Gdk\\Display", gdkdisplay_functions);
+	gtk4_gdkdisplay_ce = zend_register_internal_class_ex(&tmp_gdkdisplay_ce, gtk4_gobject_ce);
+
 	zend_class_entry tmp_gtkapplication_ce;
 	INIT_CLASS_ENTRY(tmp_gtkapplication_ce, "Gtk\\Application", gtkapplication_functions);
 	gtk4_gtkapplication_ce = zend_register_internal_class_ex(&tmp_gtkapplication_ce, gtk4_gapplication_ce);
@@ -108,6 +112,10 @@ static PHP_MINIT_FUNCTION(gtk4)
 	zend_class_entry tmp_gtkapplicationwindow_ce;
 	INIT_CLASS_ENTRY(tmp_gtkapplicationwindow_ce, "Gtk\\Application\\Window", gtkapplicationwindow_functions);
 	gtk4_gtkapplicationwindow_ce = zend_register_internal_class_ex(&tmp_gtkapplicationwindow_ce, gtk4_gtkwindow_ce);
+
+	zend_class_entry tmp_gtkclipboard_ce;
+	INIT_CLASS_ENTRY(tmp_gtkclipboard_ce, "Gtk\\Clipboard", gtkclipboard_functions);
+	gtk4_gtkclipboard_ce = zend_register_internal_class_ex(&tmp_gtkclipboard_ce, gtk4_gobject_ce);
 
 
 

@@ -53,3 +53,27 @@ PHP_METHOD(Gtk, init)
 		gtk_init((int *)&argc, &c_argv);
 	}
 }
+
+/**
+ * 
+ */
+PHP_METHOD(Gtk, get_major_version)
+{
+	RETURN_LONG(gtk_get_major_version());
+}
+
+/**
+ * 
+ */
+PHP_METHOD(Gtk, get_minor_version)
+{
+	RETURN_LONG(gtk_get_minor_version());
+}
+
+/**
+ * 
+ */
+PHP_METHOD(Gtk, get_micro_version1)
+{
+	RETURN_LONG(gtk_get_micro_version());
+}
